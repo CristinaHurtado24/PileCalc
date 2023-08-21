@@ -1,16 +1,11 @@
 import React from "react";
+import styles from "./App.modules.css";
+import Navbar from "../Components/Navbar/Navbar";
 
 export default function App() {
   return (
     <>
-      <h1>I am App Component</h1>
-      <button
-        onClick={() => {
-          electron.notificationApi.sendNotification("My custom notification!");
-        }}
-      >
-        Notify
-      </button>
+      <Navbar />
     </>
   );
 }
