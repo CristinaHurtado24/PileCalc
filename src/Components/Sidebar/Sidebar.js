@@ -7,6 +7,8 @@ export default function Sidebar() {
     <div className={styles.container}>
       <ul>
         <li>
+            //TODO Poner los métodos de cálculo como un dropdown
+            
           <div className={styles.btn_div}>
             <button className={styles.profile}>Método de Cálculo</button>
           </div>
