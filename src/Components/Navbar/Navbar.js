@@ -1,7 +1,7 @@
 import React from "react";
 import styles from './Navbar.modules.css'
 
-export default function () {
+export default function Navbar() {
   return (
     <div className={styles.container}>
       <ul className={styles.list}>

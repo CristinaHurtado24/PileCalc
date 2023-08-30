@@ -21,6 +21,22 @@ function createWindow() {
   win.loadFile("index.html");
 }
 
+function openModal() {
+  let profileWindow = new BrowserWindow({
+    parent: win,
+    modal: true,
+    show: false,
+    width: 400,
+    height: 300,
+  });
+
+  profileWindow.loadFile("modal.html");
+  profileWindow.setMenu(null);
+  profileWindow.once("ready-to-show", () => {
+    profileWindow.show();
+  });
+}
+
 if (isDev) {
   require("electron-reload")(__dirname, {
     electron: path.join(__dirname, "node_modules", ".bin", "electron"),
