@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import Select from "react-select";
 import styles from "./Sidebar.modules.css";
 
+
 export default function Sidebar() {
   const methods = [
     {
@@ -26,10 +27,15 @@ export default function Sidebar() {
     },
   ];
 
+  var args = "";
   const [selectedValue, setSelectedValue] = useState(0);
 
   const handleChange = (Obj) => {
     setSelectedValue(Obj.value);
+  };
+
+  const handleModal = (args) => {
+    window.electronApi.answerShowModal(args)
   };
 
   return (
@@ -48,14 +54,11 @@ export default function Sidebar() {
         <hr />
         <li>
           <div className={styles.btn_div}>
-
-          //I want to show a modal window that renders the profile component when the user clicks this button
-
-            <button className={styles.profile} >
+            //I want to show a modal window that renders the profile component
+            when the user clicks this button
+            <button className={styles.profile} onClick={handleModal(args)}>
               Profile
             </button>
-
-
           </div>
         </li>
         <hr />
