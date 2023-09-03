@@ -3,11 +3,8 @@ const path = require("path");
 
 const isDev = !app.isPackaged;
 
-let win;
-let profileWindow;
-
 function createWindow() {
-  win = new BrowserWindow({
+  const win = new BrowserWindow({
     width: 1200,
     height: 800,
     minWidth: 1000,
@@ -23,32 +20,6 @@ function createWindow() {
 
   win.loadFile("index.html");
 }
-
-function openModal() {
-  profileWindow = new BrowserWindow({
-    parent: win,
-    modal: true,
-    show: false,
-    width: 400,
-    height: 300,
-    webPreferences: {
-      nodeIntegration: false,
-      worldSafeExecuteJavaScript: true,
-      contextIsolation: true,
-    },
-  });
-
-  profileWindow.loadFile("modal.html");
-  profileWindow.setMenu(null);
-  profileWindow.once("ready-to-show", () => {
-    profileWindow.show();
-  });
-}
-
-ipcMain.handle("showModal_1", async (_, args) => {
-  const modal = await openModal;
-  return modal;
-});
 
 if (isDev) {
   require("electron-reload")(__dirname, {

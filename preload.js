@@ -9,8 +9,5 @@ contextBridge.exposeInMainWorld("electronApi", {
       ipcRenderer.send("notify", message);
     },
   },
-  answerShowModal:(args) =>{
-    ipcRenderer.invoke('showModal_1', args)
-  },
   filesApi: {},
 });

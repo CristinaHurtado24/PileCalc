@@ -1,0 +1,53 @@
+.div_container{
+    width: 40em;
+    height: 30em;
+    padding-right:2em;
+    background-color: lightgray;
+}
+
+.nav{
+    display: flex;
+    justify-content: flex-end;
+    
+}
+
+.nav ul{
+    list-style: none;
+    margin-right: 1em;
+}
+
+.select_soil{
+    width: 20em;
+    margin-right: 1em;
+    margin-left: -1em;
+}
+
+.comp{
+    display: flex;
+    justify-content: center;
+    
+}
+
+.comp ul{
+    list-style: none;
+    display: flex;
+    justify-content: space-evenly;
+}
+
+.comp ul li div input{
+    width: 4em;
+    margin-right: 2em;
+}
+
+.add{
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 1em;
+}
+
+.addBtn{
+    padding: 5px;
+    border-radius: 5px;
+    background-color: white;
+}
+
