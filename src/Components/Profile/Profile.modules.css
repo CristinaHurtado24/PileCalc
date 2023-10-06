@@ -1,8 +1,12 @@
 .div_container{
-    width: 40em;
+    width: 43em;
     height: 30em;
     padding-right:2em;
+    padding-bottom: 1em;
+    margin-left: 5em;
     background-color: lightgray;
+    overflow: hidden;
+        overflow-y: scroll;
 }
 
 .nav{
@@ -39,15 +43,15 @@
     margin-right: 2em;
 }
 
-.add{
-    display: flex;
-    justify-content: flex-end;
-    margin-top: 1em;
-}
-
 .addBtn{
     padding: 5px;
     border-radius: 5px;
     background-color: white;
+}
+
+.buttons ul{
+    display: flex;
+    justify-content: space-between;
+    list-style: none;
 }
 

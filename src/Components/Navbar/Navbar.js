@@ -1,7 +1,8 @@
-import React from "react";
+import React, {useState} from "react";
 import styles from './Navbar.modules.css'
 
 export default function Navbar() {
+
   return (
     <div className={styles.container}>
       <ul className={styles.list}>
@@ -28,7 +29,9 @@ export default function Navbar() {
         </li>
         <li>
           <div className={styles.marg}>
-            <a>Run</a>
+            <button>
+              Run
+              </button>
           </div>
         </li>
       </ul>

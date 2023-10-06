@@ -28,6 +28,22 @@ export default function Profile({ callback }) {
       value: "6",
       label: "Arcilla de alta plasticidad",
     },
+    {
+      value: "7",
+      label: "Limo arenoso",
+    },
+    {
+      value: "8",
+      label: "Limo arcilloso",
+    },
+    {
+      value: "9",
+      label: "Arena limosa",
+    },
+    {
+      value: "10",
+      label: "Arena arcillosa",
+    },
   ];
   const [soilList, setSoilList] = useState([
     { type: "", start: "", end: "", ngp: "" },
@@ -57,8 +73,7 @@ export default function Profile({ callback }) {
       list[index]["type"] = selectedValue;
       setSoilList(list);
       setChangedValue(false);
-    }else{
-      
+    } else {
       setSoilList(list);
     }
   };
@@ -71,8 +86,7 @@ export default function Profile({ callback }) {
       list[index]["type"] = selectedValue;
       setSoilList(list);
       setChangedValue(false);
-    }else{
-      
+    } else {
       setSoilList(list);
     }
   };
@@ -85,8 +99,7 @@ export default function Profile({ callback }) {
       list[index]["type"] = selectedValue;
       setSoilList(list);
       setChangedValue(false);
-    }else{
-      
+    } else {
       setSoilList(list);
     }
   };
@@ -96,7 +109,7 @@ export default function Profile({ callback }) {
     setChangedValue(true);
   };
 
-/*   const handleTypeChange = (index) => {
+  /*   const handleTypeChange = (index) => {
     console.log(index);
     const list = [...soilList];
     list[index]["type"] = selectedValue;
@@ -113,7 +126,7 @@ export default function Profile({ callback }) {
             <button
               className={styles.xBtn}
               onClick={() => {
-                callback(show);
+                callback(show, soilList);
               }}
             >
               X
@@ -137,7 +150,6 @@ export default function Profile({ callback }) {
                 <div>
                   <label>Inicio</label>
                   <input
-                    placeholder="0"
                     value={singleSoil.start}
                     onChange={(e) => handleStartChange(e, index)}
                   ></input>
@@ -146,19 +158,13 @@ export default function Profile({ callback }) {
               <li>
                 <div>
                   <label>Fin</label>
-                  <input
-                    placeholder="0"
-                    onChange={(e) => handleEndChange(e, index)}
-                  ></input>
+                  <input onChange={(e) => handleEndChange(e, index)}></input>
                 </div>
               </li>
               <li>
                 <div>
                   <label>Num G/P</label>
-                  <input
-                    placeholder="20"
-                    onChange={(e) => handleNgpChange(e, index)}
-                  ></input>
+                  <input onChange={(e) => handleNgpChange(e, index)}></input>
                 </div>
               </li>
               <li>
@@ -177,10 +183,21 @@ export default function Profile({ callback }) {
           </div>
         ))}
       </div>
-      <div className={styles.add}>
-        <button className={styles.addBtn} onClick={handleLayerAdd}>
-          Agregar otro estrato
-        </button>
+      <div className={styles.buttons}>
+        <ul>
+          <li>
+            <div className={styles.add}>
+              <button className={styles.addBtn} onClick={handleLayerAdd}>
+                Agregar otro estrato
+              </button>
+            </div>
+          </li>
+          <li>
+            <div className={styles.accept}>
+              <button className={styles.addBtn}>Aceptar</button>
+            </div>
+          </li>
+        </ul>
       </div>
     </div>
   );

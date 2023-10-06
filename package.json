@@ -20,14 +20,18 @@
     "@babel/core": "^7.22.11",
     "@babel/preset-env": "^7.22.10",
     "@babel/preset-react": "^7.22.5",
+    "@react-three/drei": "^9.86.3",
+    "@react-three/fiber": "^8.14.4",
     "babel-loader": "^9.1.3",
     "css-loader": "^6.8.1",
     "electron-reload": "^2.0.0-alpha.1",
+    "mathjs": "^11.11.1",
     "react-dropdown": "^1.11.0",
     "react-select": "^5.7.4",
     "sass": "^1.66.1",
     "sass-loader": "^13.3.2",
     "style-loader": "^3.3.3",
+    "three": "^0.157.0",
     "webpack": "^5.88.2",
     "webpack-cli": "^5.1.4"
   }
