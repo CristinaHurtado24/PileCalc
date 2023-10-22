@@ -1,0 +1,10 @@
+.canvas{
+    position: relative;
+}
+
+.container{
+    height: 45em;
+    width: 70em;
+    float: right;
+    position: relative;
+}

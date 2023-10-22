@@ -5,6 +5,7 @@
     padding-top:2em;
     border-color: black;
     position: relative;
+    float: left;
 }
 
 .container ul hr{

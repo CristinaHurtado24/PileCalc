@@ -5,6 +5,7 @@
     padding-bottom: 1em;
     margin-left: 5em;
     background-color: lightgray;
+    position: absolute;
     overflow: hidden;
         overflow-y: scroll;
 }
