@@ -2,6 +2,7 @@
     background-color: lightgrey;
     height: 2em;
     margin-bottom: 0px;
+    position: relative;
 }
 
 .list{
