@@ -3,20 +3,23 @@ import { Canvas, useFrame, useLoader } from "@react-three/fiber";
 import Box from "./Box";
 import Cylinder from "./Cylinder";
 import styles from "./3dModel.modules.css";
-import { OrbitControls } from "@react-three/drei";
+import { OrbitControls, useCubeTexture } from "@react-three/drei";
 
 export default function Scene() {
   const perfil = [
     { type: "1", start: "0", end: "5", ngp: "10" },
     { type: "2", start: "5", end: "10", ngp: "24" },
     { type: "4", start: "10", end: "20", ngp: "35" },
+    { type: "4", start: "20", end: "25", ngp: "35" },
   ];
 
-  var globalDif = 0;
+  // const texture = useCubeTexture(["px.png", "nx.png", "py.png", "ny.png",'pz.png','nz.png',], {path: 'TestImages/'});
+  let pileHeight = 30;
+  let globalDif = 0;
 
   return (
     <Canvas className={styles.canvas} camera={{ position: [0, 0, 40] }}>
-      <OrbitControls enableZoom={false} />
+      <OrbitControls enableZoom={true} />
       <ambientLight />
       <directionalLight position={[-2, 5, 2]} intensity={1} />
       <Suspense fallback={null}>
@@ -26,19 +29,36 @@ export default function Scene() {
           let eend = parseFloat(end);
           let dif = eend - staart;
           globalDif += dif;
-          return (
-            <Suspense fallback={null}>
-              <mesh position={[0, 6 - globalDif, 0]}>
-                <boxGeometry attach="geometry" args={[20, dif, 20]} />
-                <meshLambertMaterial
-                  attach="material"
-                  color={0xffffff}
-                  opacity={0.4}
-                  transparent
-                />
-              </mesh>
-            </Suspense>
-          );
+          let dist = globalDif - dif;
+          if (key == 0) {
+            return (
+              <Suspense fallback={null}>
+                <mesh position={[0, pileHeight / 2 - dif / 2, 0]}>
+                  <boxGeometry attach="geometry" args={[20, dif, 20]} />
+                  <meshLambertMaterial
+                    attach="material"
+                    color={0xffffff}
+                    opacity={0.4}
+                    transparent
+                  />
+                </mesh>
+              </Suspense>
+            );
+          } else {
+            return (
+              <Suspense fallback={null}>
+                <mesh position={[0, pileHeight / 2 - dif / 2 - dist, 0]}>
+                  <boxGeometry attach="geometry" args={[20, dif, 20]} />
+                  <meshLambertMaterial
+                    attach="material"
+                    color={0xffffff}
+                    opacity={0.4}
+                    transparent
+                  />
+                </mesh>
+              </Suspense>
+            );
+          }
         })}
         <Cylinder />
       </Suspense>
