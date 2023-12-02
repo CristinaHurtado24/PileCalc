@@ -1,6 +1,5 @@
-import React, { Suspense, useRef } from "react";
-import { Canvas, useFrame, useLoader } from "@react-three/fiber";
-import Box from "./Box";
+import React, { Suspense } from "react";
+import { Canvas } from "@react-three/fiber";
 import Cylinder from "./Cylinder";
 import styles from "./3dModel.modules.css";
 import { OrbitControls, useCubeTexture } from "@react-three/drei";
@@ -10,11 +9,14 @@ export default function Scene() {
     { type: "1", start: "0", end: "5", ngp: "10" },
     { type: "2", start: "5", end: "10", ngp: "24" },
     { type: "4", start: "10", end: "20", ngp: "35" },
-    { type: "4", start: "20", end: "25", ngp: "35" },
   ];
 
-  // const texture = useCubeTexture(["px.png", "nx.png", "py.png", "ny.png",'pz.png','nz.png',], {path: 'TestImages/'});
-  let pileHeight = 30;
+  const texture = useCubeTexture(
+    ["px.png", "nx.png", "py.png", "ny.png", "pz.png", "nz.png"],
+    { path: "TestImages/" }
+  );
+
+  let pileHeight = 30; //cambiar con lo que ingresa el usuario
   let globalDif = 0;
 
   return (
@@ -35,9 +37,9 @@ export default function Scene() {
               <Suspense fallback={null}>
                 <mesh position={[0, pileHeight / 2 - dif / 2, 0]}>
                   <boxGeometry attach="geometry" args={[20, dif, 20]} />
-                  <meshLambertMaterial
-                    attach="material"
+                  <meshBasicMaterial
                     color={0xffffff}
+                    envMap={texture}
                     opacity={0.4}
                     transparent
                   />

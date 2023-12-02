@@ -3,8 +3,15 @@ import Select from "react-select";
 import styles from "./Sidebar.modules.css";
 import Profile from "../Profile/Profile";
 import Dimensions from "../Dimensions/Dimensions";
+const { ipcRenderer } = window.electronApi;
 
-export default function Sidebar({callback}) {
+export default function Sidebar({ callback }) {
+  
+  const openPopup = () => {
+    //Envía un mensaje al proceso principal para abrir la ventana emergente
+    ipcRenderer.send("open-popup");
+  };
+
   const methods = [
     {
       value: "1",
@@ -42,13 +49,13 @@ export default function Sidebar({callback}) {
 
   const [showProfile, setShowProfile] = useState(false);
   const [showDimensions, setShowDimensions] = useState(false);
-  const [data, setData] = useState(true)
+  const [data, setData] = useState(true);
   const [selectedValue, setSelectedValue] = useState(0);
   const [selectedUnits, setSelectedUnits] = useState(0);
   const [dimensions, setDimensions] = useState([]);
   const [soilProfile, setSoilProfile] = useState([]);
   const [parameters, setParameters] = useState([
-    { method: "", units: "", soilProfile: [], dimensions: [] }
+    { method: "", units: "", soilProfile: [], dimensions: [] },
   ]);
 
   const handleChange = (Obj) => {
@@ -83,7 +90,8 @@ export default function Sidebar({callback}) {
     selectedValue != 0 &&
     selectedUnits != 0 &&
     soilProfile.length != 0 &&
-    dimensions.length != 0 && data
+    dimensions.length != 0 &&
+    data
   ) {
     const list = [...parameters];
     list["method"] = selectedValue;
@@ -91,10 +99,10 @@ export default function Sidebar({callback}) {
     list["soilProfile"] = soilProfile;
     list["dimensions"] = dimensions;
     setParameters(list);
-    setData(false)
+    setData(false);
   }
 
-  console.log(parameters)
+  console.log(parameters);
   return (
     <>
       <div className={styles.show_hide}>
@@ -154,6 +162,13 @@ export default function Sidebar({callback}) {
                 options={units}
                 onChange={handleChangedUnits}
               />
+            </div>
+          </li>
+          <li>
+            <div className={styles.btn_div}>
+              <button className={styles.profile} onClick={openPopup}>
+                PRUEBA
+              </button>
             </div>
           </li>
         </ul>
