@@ -1,6 +1,6 @@
+
 const { BrowserWindow, app, ipcMain, Notification } = require("electron");
 const path = require("path");
-const { mainModule } = require("process");
 
 const isDev = !app.isPackaged;
 let win;
@@ -29,7 +29,6 @@ if (isDev) {
   });
 }
 
-// Escucha el evento 'open-popup' desde el proceso de renderizado
 ipcMain.on("open-popup", () => {
   createPopupWindow();
 });
@@ -45,10 +44,12 @@ function createPopupWindow() {
       nodeIntegration: true,
     },
   });
-  popupWindow.loadFile("popup.html");
 
-  popupWindow.once("ready-to-show", () => {
-    popupWindow.show();
+  popupWindow.loadFile("popup.html");
+  popupWindow.show();
+  
+  popupWindow.on("closed", function () {
+    popupWindow = null;
   });
 }
 

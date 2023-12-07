@@ -6,9 +6,8 @@ import Dimensions from "../Dimensions/Dimensions";
 const { ipcRenderer } = window.electronApi;
 
 export default function Sidebar({ callback }) {
-  
   const openPopup = () => {
-    //Envía un mensaje al proceso principal para abrir la ventana emergente
+    
     ipcRenderer.send("open-popup");
   };
 

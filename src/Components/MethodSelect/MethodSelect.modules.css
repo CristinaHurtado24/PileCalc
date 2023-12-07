@@ -1,0 +1,30 @@
+.container {
+    background-color: lightgray;
+    width: 22.3em;
+    height: 44.3em;
+    padding-top: 2em;
+    border-color: black;
+    position: relative;
+    float: left;
+}
+.container ul hr {
+    margin-left: -2.5em;
+}
+
+.container ul {
+    list-style: none;
+}
+.select_dropdown {
+    margin-right: 2em;
+    margin-bottom: 2em;
+}
+@media screen and (height:600px) {
+    .container {
+        background-color: lightgray;
+        width: 22.3em;
+        height: 42.4em;
+        margin-top: -1em;
+        padding-top: 2em;
+        border-color: black;
+    }
+}

@@ -120,21 +120,29 @@ export default function Profile({ callback }) {
   const show = false;
   return (
     <div className={styles.div_container}>
-      <div className={styles.nav}>
-        <ul>
-          <li>
-            <button
-              className={styles.xBtn}
-              onClick={() => {
-                callback(show, soilList);
-              }}
-            >
-              X
-            </button>
-          </li>
-        </ul>
-      </div>
       <div className={styles.form}>
+        <div className={styles.labels}>
+          <ul>
+            <li>
+              <label className={styles.type}>Tipo de suelo</label>
+            </li>
+            <li>
+              <label className={styles.espesor}>Espesor</label>
+            </li>
+            <li>
+              <label>Ngp</label>
+            </li>
+            <li>
+              <label>γ</label>
+            </li>
+            <li>
+              <label className={styles.cohesion}>C</label>
+            </li>
+            <li>
+              <label className={styles.phi}>Φ</label>
+            </li>
+          </ul>
+        </div>
         {soilList.map((singleSoil, index) => (
           <div key={index} className={styles.comp}>
             <ul>
@@ -147,29 +155,49 @@ export default function Profile({ callback }) {
                 />
               </li>
               <li>
-                <div>
-                  <label>Inicio</label>
+                <div className={styles.divInputs}>
                   <input
+                    className={styles.inputs}
                     value={singleSoil.start}
                     onChange={(e) => handleStartChange(e, index)}
                   ></input>
                 </div>
               </li>
               <li>
-                <div>
-                  <label>Fin</label>
-                  <input onChange={(e) => handleEndChange(e, index)}></input>
+                <div className={styles.divInputs}>
+                  <input
+                    className={styles.inputs}
+                    onChange={(e) => handleEndChange(e, index)}
+                  ></input>
                 </div>
               </li>
               <li>
-                <div>
-                  <label>Num G/P</label>
-                  <input onChange={(e) => handleNgpChange(e, index)}></input>
+                <div className={styles.divInputs}>
+                  <input
+                    className={styles.inputs}
+                    onChange={(e) => handleNgpChange(e, index)}
+                  ></input>
+                </div>
+              </li>
+              <li>
+                <div className={styles.divInputs}>
+                  <input
+                    className={styles.inputs}
+                    onChange={(e) => handleNgpChange(e, index)}
+                  ></input>
+                </div>
+              </li>
+              <li>
+                <div className={styles.divInputs}>
+                  <input
+                    className={styles.inputs}
+                    onChange={(e) => handleNgpChange(e, index)}
+                  ></input>
                 </div>
               </li>
               <li>
                 {soilList.length > 1 && (
-                  <div>
+                  <div className={styles.divInputs}>
                     <button
                       className={styles.xBtn}
                       onClick={() => handleLayerRemove(index)}

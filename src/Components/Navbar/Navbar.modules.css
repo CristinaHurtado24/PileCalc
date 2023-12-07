@@ -1,18 +1,22 @@
 .container{
     background-color: lightgrey;
-    height: 2em;
+    height: 2.5em;
     margin-bottom: 0px;
-    position: relative;
 }
 
 .list{
     display: flex;
     align-content: center;
+    align-items: center;
     list-style: none;
-    margin-top: 1em;
+    
 }
 
 .marg{
-    margin-top: 0.30em;
+    margin-top: .55em;
     margin-right: 5em;
+}
+
+.marg button{
+    cursor: pointer;
 }

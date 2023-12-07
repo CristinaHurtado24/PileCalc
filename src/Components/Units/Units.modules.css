@@ -1,0 +1,23 @@
+.container {
+    background-color: lightgray;
+    width: 22em;
+    height: 44em;
+    padding-top: 2em;
+    border-color: black;
+    float: left;
+}
+
+.container h3{
+    display: flex;
+    justify-content: center;
+}
+
+.units_dropdown{
+    display: flex;
+    justify-content: center;
+    padding-top: 1em;
+}
+
+.select_dropdown{
+    width: 10em;
+}

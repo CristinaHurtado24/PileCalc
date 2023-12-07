@@ -1,39 +1,46 @@
 .container {
-    width: 25em;
-    height: 20em;
-    margin-left: 13em;
-    margin-top: 5em;
-    padding-right: 2em;
     background-color: lightgray;
-    position: absolute;
+    width: 22em;
+    height: 44em;
+    padding-top: 2em;
+    border-color: black;
+    float: left;
 }
 
-.form{
-    margin: 3em;
-}
-
-.nav {
+.container h3{
     display: flex;
-    justify-content: flex-end;
-
+    justify-content: center;
+    margin-bottom: 2em;
 }
 
 ul {
     list-style: none;
-    margin-right: 1em;
+    margin-right: 1.5em;
+    margin-left: -1em;
 }
 
 ul li{
     margin-bottom: 1em;
 }
 
-.rad {
+.diam {
     margin-right: 6em;
 }
+.input_diam{
+    cursor: pointer;
+}
 
+.hr{
+    margin: 2em;
+}
+
+.divForm{
+    display: flex;
+    justify-content: center;
+}
 
 .fust{
-    margin-right: 1em;
+    margin-right: 2.5em;
 }
 
 input{
