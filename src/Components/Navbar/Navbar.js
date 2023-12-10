@@ -1,8 +1,7 @@
-import React, {useState} from "react";
-import styles from './Navbar.modules.css'
+import React, { useState } from "react";
+import styles from "./Navbar.modules.css";
 
-export default function Navbar({callback}) {
-
+export default function Navbar(props) {
   const buttons = [
     { name: "Units" },
     { name: "Methods" },
@@ -11,16 +10,15 @@ export default function Navbar({callback}) {
     { name: "Run" },
   ];
 
-  const [checkedState, setCheckedState] = useState(
-    new Array(buttons.length).fill(false)
-);
+  const [checkedState, setCheckedState] = useState(props.list);
 
   const handleOnChange = (position) => {
     const updatedCheckedState = checkedState.map((item, index) =>
-      index === position ? !item : item
+      index === position ? !item : false
     );
-    setCheckedState(updatedCheckedState);}
-  console.log(checkedState)
+    setCheckedState(updatedCheckedState);
+    props.callback(checkedState);
+  };
 
   return (
     <div className={styles.container}>
@@ -29,7 +27,14 @@ export default function Navbar({callback}) {
           return (
             <li>
               <div className={styles.marg}>
-                <button onClick={() => handleOnChange(index)}>{name}</button>
+                <button
+                  onClick={() => {
+                    handleOnChange(index);
+                    props.callback(checkedState);
+                  }}
+                >
+                  {name}
+                </button>
               </div>
             </li>
           );

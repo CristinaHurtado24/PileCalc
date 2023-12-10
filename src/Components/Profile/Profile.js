@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import Select from "react-select";
 import styles from "./Profile.modules.css";
 
-export default function Profile({ callback }) {
+export default function Profile(props) {
   const soilTypes = [
     {
       value: "1",
@@ -45,9 +45,9 @@ export default function Profile({ callback }) {
       label: "Arena arcillosa",
     },
   ];
-  const [soilList, setSoilList] = useState([
-    { type: "", start: "", end: "", ngp: "" },
-  ]);
+  const [soilList, setSoilList] = useState(
+    props.soil
+  );
   const [selectedValue, setSelectedValue] = useState(0); //Almacena valor del dropdown
 
   const [changedValue, setChangedValue] = useState(false);
@@ -55,7 +55,10 @@ export default function Profile({ callback }) {
   console.log(soilList);
 
   const handleLayerAdd = () => {
-    setSoilList([...soilList, { type: "", start: "", end: "", ngp: "" }]);
+    setSoilList([
+      ...soilList,
+      { type: "", espesor: "", ngp: "", peso: "", cohesion: "", phi: "" },
+    ]);
   };
 
   const handleLayerRemove = (index) => {
@@ -64,11 +67,11 @@ export default function Profile({ callback }) {
     setSoilList(list);
   };
 
-  const handleStartChange = (e, index) => {
+  const handleEspesorChange = (e, index) => {
     console.log(index);
     const { value } = e.target;
     const list = [...soilList];
-    list[index]["start"] = value;
+    list[index]["espesor"] = value;
     if (changedValue) {
       list[index]["type"] = selectedValue;
       setSoilList(list);
@@ -78,10 +81,10 @@ export default function Profile({ callback }) {
     }
   };
 
-  const handleEndChange = (e, index) => {
+  const handlePesoChange = (e, index) => {
     const { value } = e.target;
     const list = [...soilList];
-    list[index]["end"] = value;
+    list[index]["peso"] = value;
     if (changedValue) {
       list[index]["type"] = selectedValue;
       setSoilList(list);
@@ -104,23 +107,40 @@ export default function Profile({ callback }) {
     }
   };
 
+  const handleCohesionChange = (e, index) => {
+    const { value } = e.target;
+    const list = [...soilList];
+    list[index]["cohesion"] = value;
+    if (changedValue) {
+      list[index]["type"] = selectedValue;
+      setSoilList(list);
+      setChangedValue(false);
+    } else {
+      setSoilList(list);
+    }
+  };
+
+  const handlePhiChange = (e, index) => {
+    const { value } = e.target;
+    const list = [...soilList];
+    list[index]["phi"] = value;
+    if (changedValue) {
+      list[index]["type"] = selectedValue;
+      setSoilList(list);
+      setChangedValue(false);
+    } else {
+      setSoilList(list);
+    }
+  };
   const handleSelectedValue = (Obj) => {
     setSelectedValue(Obj.value);
     setChangedValue(true);
   };
 
-  /*   const handleTypeChange = (index) => {
-    console.log(index);
-    const list = [...soilList];
-    list[index]["type"] = selectedValue;
-    setSoilList(list);
-    setChangedValue(false);
-  }; */
-
-  const show = false;
   return (
     <div className={styles.div_container}>
       <div className={styles.form}>
+        <h3>Ingrese el perfil del suelo</h3>
         <div className={styles.labels}>
           <ul>
             <li>
@@ -144,6 +164,7 @@ export default function Profile({ callback }) {
           </ul>
         </div>
         {soilList.map((singleSoil, index) => (
+          
           <div key={index} className={styles.comp}>
             <ul>
               <li>
@@ -159,15 +180,7 @@ export default function Profile({ callback }) {
                   <input
                     className={styles.inputs}
                     value={singleSoil.start}
-                    onChange={(e) => handleStartChange(e, index)}
-                  ></input>
-                </div>
-              </li>
-              <li>
-                <div className={styles.divInputs}>
-                  <input
-                    className={styles.inputs}
-                    onChange={(e) => handleEndChange(e, index)}
+                    onChange={(e) => handleEspesorChange(e, index)}
                   ></input>
                 </div>
               </li>
@@ -183,7 +196,7 @@ export default function Profile({ callback }) {
                 <div className={styles.divInputs}>
                   <input
                     className={styles.inputs}
-                    onChange={(e) => handleNgpChange(e, index)}
+                    onChange={(e) => handlePesoChange(e, index)}
                   ></input>
                 </div>
               </li>
@@ -191,7 +204,15 @@ export default function Profile({ callback }) {
                 <div className={styles.divInputs}>
                   <input
                     className={styles.inputs}
-                    onChange={(e) => handleNgpChange(e, index)}
+                    onChange={(e) => handleCohesionChange(e, index)}
+                  ></input>
+                </div>
+              </li>
+              <li>
+                <div className={styles.divInputs}>
+                  <input
+                    className={styles.inputs}
+                    onChange={(e) => handlePhiChange(e, index)}
                   ></input>
                 </div>
               </li>
@@ -222,7 +243,7 @@ export default function Profile({ callback }) {
           </li>
           <li>
             <div className={styles.accept}>
-              <button className={styles.addBtn}>Aceptar</button>
+              <button className={styles.addBtn} onClick={props.callback(soilList)}>Aceptar</button>
             </div>
           </li>
         </ul>

@@ -39,7 +39,7 @@ export default function Dimensions({ callback }) {
   };
 
   console.log(dimList);
-  const show = false;
+ 
 
   return (
     <div className={styles.container}>

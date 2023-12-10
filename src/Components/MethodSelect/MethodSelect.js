@@ -15,23 +15,20 @@ export default function MethodSelect() {
     },
     {
       value: "2",
-      label: "Caquot y Kérisel (Suelo Cohesivo)",
+      label: "L. Reese (Suelo Granular)",
     },
     {
       value: "3",
-      label: "Método para Suelo Granular",
+      label: "Caquot y Kérisel (Suelo Cohesivo)",
     },
     {
       value: "4",
-      label: "Método para Suelo Cohesivo",
-    },
-    {
-      value: "5",
-      label: "Método para Suelo Mixto",
+      label: "L. Reese (Suelo Cohesivo)",
     },
   ];
   return (
     <div className={styles.container}>
+      <h3>Seleccione un método de cálculo</h3>
       <form>
         <ul>
           <li>
