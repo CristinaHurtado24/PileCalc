@@ -1,7 +1,9 @@
-.container{
-    background-color: lightgrey;
+
+.navContainer{
+    background-color: lightgray;
     height: 2.5em;
     margin-bottom: 0px;
+    font-family: 'Inter', sans-serif;
 }
 
 .list{
@@ -18,5 +20,12 @@
 }
 
 .marg button{
+    font-family: 'Inter', sans-serif;
+    font-weight: bold;
+    border-radius: 3px;
+    border-width: .2px;
+    padding: 1.5px;
+    padding-left: 4px;
+    padding-right: 4px;
     cursor: pointer;
 }

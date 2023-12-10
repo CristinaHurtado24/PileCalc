@@ -1,3 +1,4 @@
+
 .div_container{
     background-color: lightgray;
         width: 38em;
@@ -5,12 +6,15 @@
         padding-top: 2em;
         border-color: black;
         float: left;
+        font-family: 'Inter', sans-serif;
     overflow: hidden;
         overflow-y: scroll;
 }
 
 .form h3{
     display: flex;
+    font-size: 1.1em;
+    font-weight: bolder;
     justify-content: center;
     margin-bottom: 3em;
 }
@@ -18,15 +22,20 @@
     margin-left: 1.6em;
 }
 .espesor{
-    margin-right: -1.3em;
+    margin-right: -1em;
 }
 
 .cohesion{
-    margin-left: .75em;
+    margin-left: .6em;
 }
 
 .phi {
-    margin-left: .5em;
+    margin-left: .4em;
+}
+
+
+.ngp{
+    margin-left: -.7em;
 }
 
 .labels ul{
@@ -45,18 +54,23 @@
     margin-right: 5em;
 }
 
+.divInputsA{
+    width: 1.5em;
+}
+
 .select_soil{
-    width: 10em;
+    width: 12em;
     height: 4em;
     margin-left: -3em;
     margin-right: 1em;
+    font-size: 15px;
 }
 
 .comp{
     display: flex;
     justify-content: center;
     margin-top: -2em;
-    margin-left: 1em;
+    margin-left: 2em;
     
 }
 
@@ -73,8 +87,11 @@
 
 .addBtn{
     padding: 5px;
-    border-radius: 5px;
+    border-radius: 3px;
+    border-width: .2px;
     background-color: white;
+    font-family: 'Inter', sans-serif;
+    font-weight:bold;
     cursor: pointer;
 }
 
@@ -82,6 +99,7 @@
     display: flex;
     justify-content: space-between;
     list-style: none;
+    cursor: pointer;
 }
 
 .divInputs{

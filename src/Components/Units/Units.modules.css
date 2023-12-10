@@ -10,14 +10,32 @@
 .container h3{
     display: flex;
     justify-content: center;
+    font-size: 1.1em;
+    font-weight: bolder;
 }
 
 .units_dropdown{
     display: flex;
     justify-content: center;
     padding-top: 1em;
+    font-size: 15px;
 }
 
 .select_dropdown{
     width: 10em;
+}
+
+.btn {
+    margin-top: 2.5em;
+    display: flex;
+    justify-content: flex-end;
+
+}
+
+.btn button {
+    padding: 5px;
+    border-radius: 3px;
+    border-width: .2px;
+    background-color: white;
+    cursor: pointer;
 }

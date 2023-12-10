@@ -150,10 +150,10 @@ export default function Profile(props) {
               <label className={styles.espesor}>Espesor</label>
             </li>
             <li>
-              <label>Ngp</label>
+              <label className={styles.ngp}>Ngp</label>
             </li>
             <li>
-              <label>γ</label>
+              <label className={styles.peso}>γ</label>
             </li>
             <li>
               <label className={styles.cohesion}>C</label>
@@ -164,7 +164,6 @@ export default function Profile(props) {
           </ul>
         </div>
         {soilList.map((singleSoil, index) => (
-          
           <div key={index} className={styles.comp}>
             <ul>
               <li>
@@ -217,6 +216,12 @@ export default function Profile(props) {
                 </div>
               </li>
               <li>
+                {soilList.length == 1 && (
+                  <div className={styles.divInputsA}>
+                  </div>
+                )}
+              </li>
+              <li>
                 {soilList.length > 1 && (
                   <div className={styles.divInputs}>
                     <button
@@ -243,7 +248,12 @@ export default function Profile(props) {
           </li>
           <li>
             <div className={styles.accept}>
-              <button className={styles.addBtn} onClick={props.callback(soilList)}>Aceptar</button>
+              <button
+                className={styles.addBtn}
+                onClick={props.callback(soilList)}
+              >
+                Aceptar
+              </button>
             </div>
           </li>
         </ul>

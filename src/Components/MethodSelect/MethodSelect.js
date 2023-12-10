@@ -41,6 +41,11 @@ export default function MethodSelect() {
               />
             </div>
           </li>
+          <li>
+            <div className={styles.btn}>
+              <button>Aceptar</button>
+            </div>
+          </li>
         </ul>
       </form>
     </div>

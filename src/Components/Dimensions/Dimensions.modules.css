@@ -11,6 +11,8 @@
     display: flex;
     justify-content: center;
     margin-bottom: 2em;
+    font-size: 1.1em;
+    font-weight: bolder;
 }
 
 ul {
@@ -23,11 +25,20 @@ ul li{
     margin-bottom: 1em;
 }
 
-.diam {
-    margin-right: 6em;
+.inputDiv{
+    margin-left: -1.5em;
 }
-.input_diam{
+
+.inputDiv input{
     cursor: pointer;
+}
+
+.inputDiv label {
+    margin-left: -1em;
+}
+
+.diam {
+    margin-right: 7em;
 }
 
 .hr{
@@ -40,7 +51,7 @@ ul li{
 }
 
 .fust{
-    margin-right: 2.5em;
+    margin-right: 2.8em;
 }
 
 input{
@@ -51,10 +62,13 @@ input{
     margin-top: 2.5em;
     display: flex;
     justify-content: flex-end;
+    
 }
 
 .btn button {
     padding: 5px;
-    border-radius: 5px;
+    border-radius: 3px;
+    border-width: .2px;
     background-color: white;
+    cursor: pointer;
 }
