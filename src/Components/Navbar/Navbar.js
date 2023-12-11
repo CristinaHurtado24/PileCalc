@@ -18,16 +18,38 @@ export default function Navbar(props) {
     new Array(buttons.length).fill(false)
   );
 
+  const [dimensionsConditions, setDimensionsConditions] = useState([
+    { diamIter: false, diamValue: "", lengthIter: false, lengthValue: "" },
+  ]);
+
+  const toDimensions = (list) => {
+    try {
+      setDimensionsConditions(list);
+    } catch (error) {
+      console.log("error in toDimensions");
+      console.log(error);
+    }
+  };
+
+  console.log(dimensionsConditions);
+
   const handleOnChange = (position) => {
     const updatedCheckedState = checkedState.map((item, index) =>
       index === position ? !item : false
     );
     setCheckedState(updatedCheckedState);
-    props.callback(checkedState);
   };
 
   const [soilList, setSoilList] = useState([
-    { type: "1", espesor: "", ngp: "", peso: "", cohesion: "", phi: "" },
+    {
+      typeValue: "",
+      typeDescription: "",
+      espesor: "",
+      ngp: "",
+      peso: "",
+      cohesion: "",
+      phi: "",
+    },
   ]);
 
   const toProfile = (list) => {
@@ -39,7 +61,41 @@ export default function Navbar(props) {
     }
   };
 
-  console.log(checkedState);
+  console.log(soilList);
+
+  const [unitsSelected, setUnitsSelected] = useState([
+    {
+      unitValue: "",
+      unitLabel: "",
+    },
+  ]);
+
+  const toUnits = (list) => {
+    try {
+      setUnitsSelected(list);
+    } catch (error) {
+      console.log("error in toUnits");
+      console.log(error);
+    }
+  };
+
+  console.log(unitsSelected);
+
+  const [methodSelected, setMethodSelected] = useState([
+    {
+      methodValue: "",
+      methodLabel: "",
+    },
+  ]);
+
+  const toMethods = (list) => {
+    try {
+      setMethodSelected(list);
+    } catch (error) {
+      console.log("error in toUnits");
+      console.log(error);
+    }
+  };
 
   return (
     <div className={styles.container}>
@@ -52,7 +108,6 @@ export default function Navbar(props) {
                   <button
                     onClick={() => {
                       handleOnChange(index);
-                      props.callback(checkedState);
                     }}
                   >
                     {name}
@@ -66,16 +121,26 @@ export default function Navbar(props) {
       {checkedState.map(({ value }, index) => {
         console.log(checkedState[index]);
         if (index === 0 && checkedState[index]) {
-          return <Units></Units>;
+          return <Units list={unitsSelected} callback={toUnits}></Units>;
         }
         if (index === 1 && checkedState[index]) {
-          return <MethodSelect></MethodSelect>;
+          return (
+            <MethodSelect
+              list={methodSelected}
+              callback={toMethods}
+            ></MethodSelect>
+          );
         }
         if (index === 2 && checkedState[index]) {
           return <Profile soil={soilList} callback={toProfile}></Profile>;
         }
         if (index === 3 && checkedState[index]) {
-          return <Dimensions></Dimensions>;
+          return (
+            <Dimensions
+              list={dimensionsConditions}
+              callback={toDimensions}
+            ></Dimensions>
+          );
         }
         if (index === 4 && checkedState[index]) {
           return <Run></Run>;

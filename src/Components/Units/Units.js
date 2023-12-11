@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import styles from "./Units.modules.css";
 import Select from "react-select";
 
-export default function Units() {
+export default function Units(props) {
   //AGREGAR CAMBIO DE UNIDADES
   const units = [
     {
@@ -14,12 +14,26 @@ export default function Units() {
       label: "Ton/m",
     },
   ];
+  const [selectedUnits, setSelectedUnits] = useState(props.list);
 
   const handleChangedUnits = (Obj) => {
-    setSelectedUnits(Obj.value);
+    const list = [...selectedUnits];
+    units.map((unit) => {
+      if (unit.value === Obj.value) {
+        list[0]["unitValue"] = unit.value;
+        list[0]["unitLabel"] = unit.label;
+      }
+    });
+    setSelectedUnits(list);
+  };
+  const showSelection = (unitsDescription) => {
+    if (unitsDescription === "") {
+      return "Unidades";
+    } else {
+      return unitsDescription;
+    }
   };
 
-  const [selectedUnits, setSelectedUnits] = useState(0);
   return (
     <div className={styles.container}>
       <h3>Seleccione las unidades</h3>
@@ -29,7 +43,7 @@ export default function Units() {
             <div className={styles.units_dropdown}>
               <Select
                 className={styles.select_dropdown}
-                placeholder="Unidades"
+                placeholder={showSelection(selectedUnits[0]["unitLabel"])}
                 options={units}
                 onChange={handleChangedUnits}
               />
@@ -37,7 +51,14 @@ export default function Units() {
           </li>
           <li>
             <div className={styles.btn}>
-              <button>Aceptar</button>
+              <button
+                onClick={(e) => {
+                  e.preventDefault();
+                  props.callback(selectedUnits);
+                }}
+              >
+                Aceptar
+              </button>
             </div>
           </li>
         </ul>

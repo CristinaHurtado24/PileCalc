@@ -45,9 +45,8 @@ export default function Profile(props) {
       label: "Arena arcillosa",
     },
   ];
-  const [soilList, setSoilList] = useState(
-    props.soil
-  );
+  const [soilList, setSoilList] = useState(props.soil);
+
   const [selectedValue, setSelectedValue] = useState(0); //Almacena valor del dropdown
 
   const [changedValue, setChangedValue] = useState(false);
@@ -57,7 +56,15 @@ export default function Profile(props) {
   const handleLayerAdd = () => {
     setSoilList([
       ...soilList,
-      { type: "", espesor: "", ngp: "", peso: "", cohesion: "", phi: "" },
+      {
+        typeValue: "",
+        typeDescription: "",
+        espesor: "",
+        ngp: "",
+        peso: "",
+        cohesion: "",
+        phi: "",
+      },
     ]);
   };
 
@@ -68,12 +75,16 @@ export default function Profile(props) {
   };
 
   const handleEspesorChange = (e, index) => {
-    console.log(index);
     const { value } = e.target;
     const list = [...soilList];
     list[index]["espesor"] = value;
     if (changedValue) {
-      list[index]["type"] = selectedValue;
+      list[index]["typeValue"] = selectedValue;
+      soilTypes.map((soil) => {
+        if (soil.value == selectedValue) {
+          list[index]["typeDescription"] = soil.label;
+        }
+      }, []);
       setSoilList(list);
       setChangedValue(false);
     } else {
@@ -86,7 +97,12 @@ export default function Profile(props) {
     const list = [...soilList];
     list[index]["peso"] = value;
     if (changedValue) {
-      list[index]["type"] = selectedValue;
+      list[index]["typeValue"] = selectedValue;
+      soilTypes.map((soil) => {
+        if (soil.value == selectedValue) {
+          list[index]["typeDescription"] = soil.label;
+        }
+      }, []);
       setSoilList(list);
       setChangedValue(false);
     } else {
@@ -99,7 +115,12 @@ export default function Profile(props) {
     const list = [...soilList];
     list[index]["ngp"] = value;
     if (changedValue) {
-      list[index]["type"] = selectedValue;
+      list[index]["typeValue"] = selectedValue;
+      soilTypes.map((soil) => {
+        if (soil.value == selectedValue) {
+          list[index]["typeDescription"] = soil.label;
+        }
+      }, []);
       setSoilList(list);
       setChangedValue(false);
     } else {
@@ -112,11 +133,24 @@ export default function Profile(props) {
     const list = [...soilList];
     list[index]["cohesion"] = value;
     if (changedValue) {
-      list[index]["type"] = selectedValue;
+      list[index]["typeValue"] = selectedValue;
+      soilTypes.map((soil) => {
+        if (soil.value == selectedValue) {
+          list[index]["typeDescription"] = soil.label;
+        }
+      }, []);
       setSoilList(list);
       setChangedValue(false);
     } else {
       setSoilList(list);
+    }
+  };
+
+  const showSelection = (typeDescription) => {
+    if (typeDescription === "") {
+      return "Seleccione un tipo de suelo";
+    } else {
+      return typeDescription;
     }
   };
 
@@ -125,7 +159,12 @@ export default function Profile(props) {
     const list = [...soilList];
     list[index]["phi"] = value;
     if (changedValue) {
-      list[index]["type"] = selectedValue;
+      list[index]["typeValue"] = selectedValue;
+      soilTypes.map((soil) => {
+        if (soil.value == selectedValue) {
+          list[index]["typeDescription"] = soil.label;
+        }
+      }, []);
       setSoilList(list);
       setChangedValue(false);
     } else {
@@ -169,7 +208,7 @@ export default function Profile(props) {
               <li>
                 <Select
                   className={styles.select_soil}
-                  placeholder="Seleccione un tipo de suelo"
+                  placeholder={showSelection(singleSoil.typeDescription)}
                   options={soilTypes}
                   onChange={handleSelectedValue}
                 />
@@ -178,7 +217,7 @@ export default function Profile(props) {
                 <div className={styles.divInputs}>
                   <input
                     className={styles.inputs}
-                    value={singleSoil.start}
+                    value={singleSoil.espesor}
                     onChange={(e) => handleEspesorChange(e, index)}
                   ></input>
                 </div>
@@ -187,6 +226,7 @@ export default function Profile(props) {
                 <div className={styles.divInputs}>
                   <input
                     className={styles.inputs}
+                    value={singleSoil.ngp}
                     onChange={(e) => handleNgpChange(e, index)}
                   ></input>
                 </div>
@@ -195,6 +235,7 @@ export default function Profile(props) {
                 <div className={styles.divInputs}>
                   <input
                     className={styles.inputs}
+                    value={singleSoil.peso}
                     onChange={(e) => handlePesoChange(e, index)}
                   ></input>
                 </div>
@@ -203,6 +244,7 @@ export default function Profile(props) {
                 <div className={styles.divInputs}>
                   <input
                     className={styles.inputs}
+                    value={singleSoil.cohesion}
                     onChange={(e) => handleCohesionChange(e, index)}
                   ></input>
                 </div>
@@ -211,14 +253,14 @@ export default function Profile(props) {
                 <div className={styles.divInputs}>
                   <input
                     className={styles.inputs}
+                    value={singleSoil.phi}
                     onChange={(e) => handlePhiChange(e, index)}
                   ></input>
                 </div>
               </li>
               <li>
                 {soilList.length == 1 && (
-                  <div className={styles.divInputsA}>
-                  </div>
+                  <div className={styles.divInputsA}></div>
                 )}
               </li>
               <li>
@@ -250,7 +292,9 @@ export default function Profile(props) {
             <div className={styles.accept}>
               <button
                 className={styles.addBtn}
-                onClick={props.callback(soilList)}
+                onClick={() => {
+                  props.callback(soilList);
+                }}
               >
                 Aceptar
               </button>

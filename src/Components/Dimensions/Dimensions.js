@@ -1,45 +1,75 @@
 import React, { useState } from "react";
 import styles from "./Dimensions.modules.css";
 
-export default function Dimensions({ callback }) {
+export default function Dimensions(props) {
+  const [dimensions, setDimensions] = useState(props.list);
   const [dimList, setDimList] = useState([{ radius: "", length: "" }]);
-  const [checkedStateLen, setCheckedStateLen] = useState(false);
-  const [checkedStateDiam, setCheckedStateDiam] = useState(false);
+  const [checkedStateLen, setCheckedStateLen] = useState(
+    props.list[0]["lengthIter"]
+  );
+  const [checkedStateDiam, setCheckedStateDiam] = useState(
+    props.list[0]["diamIter"]
+  );
 
   const handleOnchangeLen = (e) => {
+    const list = [...dimensions];
     if (!checkedStateDiam) {
+      list[0]["lengthIter"] = !checkedStateLen;
       setCheckedStateLen(!checkedStateLen);
     } else {
+      list[0]["diamIter"] = !checkedStateDiam;
+      list[0]["lengthIter"] = !checkedStateLen;
       setCheckedStateDiam(!checkedStateDiam);
       setCheckedStateLen(!checkedStateLen);
     }
+    setDimensions(list);
   };
 
   const handleOnchangeDiam = (e) => {
+    const list = [...dimensions];
     if (!checkedStateLen) {
+      list[0]["diamIter"] = !checkedStateDiam;
       setCheckedStateDiam(!checkedStateDiam);
     } else {
+      list[0]["lengthIter"] = !checkedStateLen;
+      list[0]["diamIter"] = !checkedStateDiam;
       setCheckedStateLen(!checkedStateLen);
       setCheckedStateDiam(!checkedStateDiam);
     }
+    setDimensions(list);
   };
 
-  const handleRadiusChange = (e) => {
+  const handleDiamChange = (e) => {
     const { value } = e.target;
-    const list = [...dimList];
-    list[0]["radius"] = value;
+    const list = [...dimensions];
+    list[0]["diamValue"] = value;
     setDimList(list);
   };
 
   const handleLengthChange = (e) => {
     const { value } = e.target;
-    const list = [...dimList];
-    list[0]["length"] = value;
+    const list = [...dimensions];
+    list[0]["lengthValue"] = value;
     setDimList(list);
   };
 
-  console.log(dimList);
- 
+  const showValueDiam = (value) => {
+    if (value === "") {
+      return "";
+    } else {
+      return value;
+    }
+  };
+
+  const showValueLen = (value) => {
+    if (value === "") {
+      return "";
+    } else {
+      return value;
+    }
+  };
+
+  console.log(dimensions);
 
   return (
     <div className={styles.container}>
@@ -52,7 +82,7 @@ export default function Dimensions({ callback }) {
                 type="checkbox"
                 name="Longitud"
                 value="Longitud"
-                checked={checkedStateLen}
+                checked={dimensions[0]["lengthIter"]}
                 onChange={handleOnchangeLen}
               />
               <label>Iterar sobre la longitud del fuste</label>
@@ -64,7 +94,7 @@ export default function Dimensions({ callback }) {
                 type="checkbox"
                 name="Longitud"
                 value="Longitud"
-                checked={checkedStateDiam}
+                checked={dimensions[0]["diamIter"]}
                 onChange={handleOnchangeDiam}
               />
               <label>Iterar sobre el diámetro del pilote</label>
@@ -77,7 +107,8 @@ export default function Dimensions({ callback }) {
               <input
                 className={styles.input_diam}
                 disabled={checkedStateDiam}
-                onChange={(e) => handleRadiusChange(e)}
+                onChange={(e) => handleDiamChange(e)}
+                placeholder={showValueDiam(dimensions[0]["diamValue"])}
               ></input>
             </div>
           </li>
@@ -88,12 +119,19 @@ export default function Dimensions({ callback }) {
                 className={styles.input_fust}
                 disabled={checkedStateLen}
                 onChange={(e) => handleLengthChange(e)}
+                placeholder={showValueLen(dimensions[0]["lengthValue"])}
               ></input>
             </div>
           </li>
           <li>
             <div className={styles.btn}>
-              <button>Aceptar</button>
+              <button
+                onClick={() => {
+                  props.callback(dimensions);
+                }}
+              >
+                Aceptar
+              </button>
             </div>
           </li>
         </ul>

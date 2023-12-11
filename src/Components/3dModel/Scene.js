@@ -9,7 +9,7 @@ export default function Scene() {
     { type: "1", start: "0", end: "5", ngp: "10" },
     { type: "2", start: "5", end: "10", ngp: "24" },
     { type: "4", start: "10", end: "20", ngp: "35" },
-    { type: "4", start: "20", end: "35", ngp: "35" },
+    { type: "4", start: "20", end: "32", ngp: "35" },
   ];
 
   const texture = useCubeTexture(
