@@ -3,7 +3,6 @@ import styles from "./Dimensions.modules.css";
 
 export default function Dimensions(props) {
   const [dimensions, setDimensions] = useState(props.list);
-  const [dimList, setDimList] = useState([{ radius: "", length: "" }]);
   const [checkedStateLen, setCheckedStateLen] = useState(
     props.list[0]["lengthIter"]
   );
@@ -43,14 +42,14 @@ export default function Dimensions(props) {
     const { value } = e.target;
     const list = [...dimensions];
     list[0]["diamValue"] = value;
-    setDimList(list);
+    setDimensions(list);
   };
 
   const handleLengthChange = (e) => {
     const { value } = e.target;
     const list = [...dimensions];
     list[0]["lengthValue"] = value;
-    setDimList(list);
+    setDimensions(list);
   };
 
   const showValueDiam = (value) => {

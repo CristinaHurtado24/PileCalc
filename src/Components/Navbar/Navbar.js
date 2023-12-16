@@ -4,13 +4,14 @@ import Units from "../Units/Units";
 import Profile from "../Profile/Profile";
 import Dimensions from "../Dimensions/Dimensions";
 import MethodSelect from "../MethodSelect/MethodSelect";
+import Run from "../Run/Run";
 
 export default function Navbar(props) {
   const buttons = [
-    { name: "Units" },
-    { name: "Methods" },
-    { name: "Profile" },
-    { name: "Dimensions" },
+    { name: "Unidades" },
+    { name: "Métodos" },
+    { name: "Perfil" },
+    { name: "Dimensiones" },
     { name: "Run" },
   ];
 
@@ -97,6 +98,8 @@ export default function Navbar(props) {
     }
   };
 
+  console.log(methodSelected);
+
   return (
     <div className={styles.container}>
       <div className={styles.navContainer}>
@@ -143,7 +146,13 @@ export default function Navbar(props) {
           );
         }
         if (index === 4 && checkedState[index]) {
-          return <Run></Run>;
+          return (
+            <Run
+              soilList={soilList}
+              units={unitsSelected}
+              dimensions={dimensionsConditions}
+            ></Run>
+          );
         }
       })}
     </div>

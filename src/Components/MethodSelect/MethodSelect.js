@@ -62,7 +62,7 @@ export default function MethodSelect(props) {
               <button
                 onClick={(e) => {
                   e.preventDefault();
-                  props.callback(selectedUnits);
+                  props.callback(selectedMethod);
                 }}
               >
                 Aceptar
