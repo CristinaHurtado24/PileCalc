@@ -5,6 +5,8 @@ import {
   MeyerhoffTonLen,
 } from "./Meyerhoff";
 
+import { CaquotKeriselBothDim } from "./CaquotKerisel";
+
 // Método de cálculo Meyerhoff suelo granular en la punta del pilote
 export const MeyerhoffBothDim = (soilList, units, dimensions) => {
   //Se tiene dimension del diametro y longitud del pilote
@@ -49,7 +51,14 @@ export const MeyerhofDiamIter = (soilList, units, dimensions) => {
         Qadm = Qres;
         diamR = diam;
       }
-      diam += 5;
+      if (diam < 65) {
+        diam += 5;
+      }
+      if (diam == 65) {
+        diam += 15;
+      } else {
+        diam += 10;
+      }
     }
     result[0]["diameter"] = diamR;
     result[0]["Qadm"] = Qadm;
@@ -67,7 +76,14 @@ export const MeyerhofDiamIter = (soilList, units, dimensions) => {
         Qadm = Qres;
         diamR = diam;
       }
-      diam += 5;
+      if (diam < 65) {
+        diam += 5;
+      }
+      if (diam == 65) {
+        diam += 15;
+      } else {
+        diam += 10;
+      }
     }
     result[0]["diameter"] = diamR;
     result[0]["Qadm"] = Qadm;
@@ -114,5 +130,31 @@ export const MeyerhofLenIter = (soilList, units, dimensions) => {
     result[0]["length"] = lengthR;
     result[0]["Qadm"] = Qadm;
     return result;
+  }
+};
+
+export const CaquotKeriselBD = (soilList, units, dimensions) => {
+  //Se tiene dimension del diametro y longitud del pilote
+  if (units[0]["unitValue"] === "1") {
+    // El usuario seleccionó unidades en kgf/cm
+    // Se trabaja en kgf/cm
+
+    const diam = parseFloat(dimensions[0]["diamValue"]);
+    const length = parseFloat(dimensions[0]["lengthValue"]);
+
+    let Qadm = CaquotKeriselBothDim(diam, length, soilList);
+    return Qadm;
+  }
+
+  if (units[0]["unitValue"] === "2") {
+    // El usuario seleccionó unidades en ton/m
+    // Se trabaja en kgf/cm
+
+    const diam = parseFloat(dimensions[0]["diamValue"]);
+    console.log(diam);
+    const length = parseFloat(dimensions[0]["lengthValue"]);
+
+    let Qadm = CaquotKeriselBothDim(diam, length, soilList);
+    return Qadm;
   }
 };

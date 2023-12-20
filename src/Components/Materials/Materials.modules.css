@@ -1,0 +1,56 @@
+.container {
+    background-color: lightgray;
+    width: 22em;
+    height: 44em;
+    padding-top: 2em;
+    border-color: black;
+    float: left;
+}
+
+.container h3 {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 2em;
+    font-size: 1.1em;
+    font-weight: bolder;
+}
+
+.form{
+    display: flex;
+    justify-content: center;
+}
+
+ul {
+    list-style: none;
+    margin-right: 1.5em;
+    margin-left: -1em;
+}
+
+ul li {
+    margin-bottom: 1em;
+}
+
+.fc{
+    margin-right: 1em;
+}
+
+.fy{
+    margin-right: 1.3em;
+}
+
+
+.btn {
+    margin-top: 2.5em;
+    margin-right: 1.5em;
+    display: flex;
+    justify-content: flex-end;
+
+}
+
+.btn button {
+    padding: 5px;
+    border-radius: 3px;
+    border-width: .2px;
+    background-color: white;
+    cursor: pointer;
+}

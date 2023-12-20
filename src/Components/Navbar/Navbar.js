@@ -4,6 +4,7 @@ import Units from "../Units/Units";
 import Profile from "../Profile/Profile";
 import Dimensions from "../Dimensions/Dimensions";
 import MethodSelect from "../MethodSelect/MethodSelect";
+import Materials from "../Materials/Materials";
 import Run from "../Run/Run";
 
 export default function Navbar(props) {
@@ -12,6 +13,7 @@ export default function Navbar(props) {
     { name: "Métodos" },
     { name: "Perfil" },
     { name: "Dimensiones" },
+    { name: "Materiales" },
     { name: "Run" },
   ];
 
@@ -22,6 +24,19 @@ export default function Navbar(props) {
   const [dimensionsConditions, setDimensionsConditions] = useState([
     { diamIter: false, diamValue: "", lengthIter: false, lengthValue: "" },
   ]);
+
+  const [materials, setMaterials] = useState([{ fc: "", fy: "" }]);
+
+  console.log(materials);
+
+  const toMaterials = (list) => {
+    try {
+      setMaterials(list);
+    } catch (error) {
+      console.log("error in toMaterials");
+      console.log(error);
+    }
+  };
 
   const toDimensions = (list) => {
     try {
@@ -147,10 +162,16 @@ export default function Navbar(props) {
         }
         if (index === 4 && checkedState[index]) {
           return (
+            <Materials list={materials} callback={toMaterials}></Materials>
+          );
+        }
+        if (index === 5 && checkedState[index]) {
+          return (
             <Run
               soilList={soilList}
               units={unitsSelected}
               dimensions={dimensionsConditions}
+              method={methodSelected}
             ></Run>
           );
         }
