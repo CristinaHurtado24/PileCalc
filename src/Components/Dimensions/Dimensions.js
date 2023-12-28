@@ -3,11 +3,18 @@ import styles from "./Dimensions.modules.css";
 
 export default function Dimensions(props) {
   const [dimensions, setDimensions] = useState(props.list);
+  const [units, setUnits] = useState(props.units);
+  const [solicitation, setSolicitation] = useState(props.solicitation);
+  const [checkedSoli, setCheckedSoli] = useState(props.solicitation[0]["Qsol"]);
   const [checkedStateLen, setCheckedStateLen] = useState(
     props.list[0]["lengthIter"]
   );
   const [checkedStateDiam, setCheckedStateDiam] = useState(
     props.list[0]["diamIter"]
+  );
+
+  const [checkedStateWoDim, setCheckedStateWoDim] = useState(
+    props.list[0]["withoutDim"]
   );
 
   const handleOnchangeLen = (e) => {
@@ -68,7 +75,37 @@ export default function Dimensions(props) {
     }
   };
 
+  const handleOnChangeQsol = (e) => {
+    const list = [...solicitation];
+    if (!checkedSoli) {
+      list[0]["Qsol"] = !checkedSoli;
+      setCheckedSoli(!checkedSoli);
+    } else {
+      list[0]["Qsol"] = !checkedSoli;
+      setCheckedSoli(!checkedSoli);
+    }
+    setSolicitation(list);
+  };
+
+  const handleOnChangeQsolValue = (e) => {
+    const { value } = e.target;
+    const list = [...solicitation];
+    list[0]["QsolValue"] = value;
+    setSolicitation(list);
+  };
   console.log(dimensions);
+
+  const handleOnChangeWoDim = (e) => {
+    const list = [...dimensions];
+    if (!checkedStateWoDim) {
+      list[0]["withoutDim"] = !checkedStateWoDim;
+      setCheckedStateWoDim(!checkedStateWoDim);
+    } else {
+      list[0]["withoutDim"] = !checkedStateWoDim;
+      setCheckedStateWoDim(!checkedStateWoDim);
+    }
+    setDimensions(list);
+  };
 
   return (
     <div className={styles.container}>
@@ -99,10 +136,50 @@ export default function Dimensions(props) {
               <label>Iterar sobre el diámetro del pilote</label>
             </div>
           </li>
+          <li>
+            <div className={styles.Qsol}>
+              <div className={styles.inputDiv}>
+                <input
+                  type="checkbox"
+                  name="QSol"
+                  value="QSol"
+                  checked={solicitation[0]["Qsol"]}
+                  onChange={handleOnChangeQsol}
+                />
+                <label>Calcular en base a una solicitación de carga</label>
+              </div>
+              <div className={styles.QsolInput}>
+                <label>
+                  Ingrese el valor de la solicitación ({units[0]["unitForce"]})
+                </label>
+                <input
+                  className={styles.inputs}
+                  disabled={!checkedSoli}
+                  value={solicitation[0]["QsolValue"]}
+                  onChange={(e) => handleOnChangeQsolValue(e)}
+                ></input>
+              </div>
+            </div>
+          </li>
+          <li>
+            <div className={styles.WoDim}>
+              <input
+                type="checkbox"
+                name="withoutDim"
+                value="withoutDim"
+                checked={dimensions[0]["withoutDim"]}
+                disabled={!solicitation[0]["Qsol"]}
+                onChange={handleOnChangeWoDim}
+              />
+              <label>Hallar ambas dimensiones y minimizar el volumen</label>
+            </div>
+          </li>
           <hr className={styles.hr}></hr>
           <li>
             <div className={styles.divForm}>
-              <label className={styles.diam}>Diámetro</label>
+              <label className={styles.diam}>
+                Diámetro ({units[0]["unitLength"]})
+              </label>
               <input
                 className={styles.input_diam}
                 disabled={checkedStateDiam}
@@ -113,7 +190,9 @@ export default function Dimensions(props) {
           </li>
           <li>
             <div className={styles.divForm}>
-              <label className={styles.fust}>Longitud del fuste</label>
+              <label className={styles.fust}>
+                Longitud del fuste ({units[0]["unitLength"]})
+              </label>
               <input
                 className={styles.input_fust}
                 disabled={checkedStateLen}
@@ -126,7 +205,7 @@ export default function Dimensions(props) {
             <div className={styles.btn}>
               <button
                 onClick={() => {
-                  props.callback(dimensions);
+                  props.callback(dimensions, solicitation);
                 }}
               >
                 Aceptar

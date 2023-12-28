@@ -1,6 +1,7 @@
+
 .container {
     background-color: lightgray;
-    width: 22.3em;
+    width: 24em;
     height: 44.3em;
     padding-top: 2em;
     border-color: black;
@@ -31,6 +32,31 @@
     border-width: .2px;
     background-color: white;
     cursor: pointer;
+}
+
+.inputDiv{
+    margin-top: 2em;
+    margin-left: -1.5em;
+}
+
+.inputDiv input {
+    cursor: pointer;
+}
+
+.inputDiv label {
+    margin-left: -1em;
+    font-size: 14px;
+}
+
+.QsolInput{
+    margin-top: 1em;
+}
+
+.QsolInput input{
+    margin-left: 1em;
+}
+.QsolInput label {
+    font-size: 14px;
 }
 
 .container ul {

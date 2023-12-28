@@ -72,7 +72,7 @@ export const CaquotKeriselBothDim = (
   fcD,
   fcEspesor
 ) => {
-  let fricc = 0.3; //Coeficiente de fricción kgf/cm2
+  let fricc = 0; //Coeficiente de fricción kgf/cm2
   let Fs = 4; //Factor de seguridad
 
   let espesorFin = 0;
@@ -119,8 +119,13 @@ export const CaquotKeriselBothDim = (
   for (let i = 0; i < soilList.length; i++) {
     if (soilList[i]["typeValue"] === "1") {
       Lrelleno += parseFloat(soilList[i]["espesor"]) / fcEspesor;
+      fricc = 0.2;
     }
-    if (!(soilList[i]["typeValue"] === "1")) {
+    if (soilList[i]["typeValue"] === "2") {
+      Lrelleno += parseFloat(soilList[i]["espesor"]) / fcEspesor;
+      fricc = 0.6;
+    }
+    if (!(soilList[i]["typeValue"] === "1") &&!(soilList[i]["typeValue"] === "2")) {
       LacumF += parseFloat(soilList[i]["espesor"]) / fcEspesor;
       if (LacumF <= length - Lrelleno) {
         console.log("entra");
@@ -214,7 +219,7 @@ export const CaquotKeriselBothDim = (
   Qadm = roundToFour((resistence * ap) / Fs - Fn / 1000);
 
   console.log("Lefect: " + Lefect);
-  console.log("6*diam: " + 6*diam);
+  console.log("6*diam: " + 6 * diam);
   if (Lefect < 6 * diam) {
     return "No se cumple la condición de que la longitud efectiva del pilote debe ser mayor o igual a 6 veces el diámetro del pilote. \n Por favor, modifique las dimensiones ingresadas.";
   }

@@ -11,6 +11,29 @@
         overflow-y: scroll;
 }
 
+.NF{
+    display: flex;
+    margin-bottom: 2em;
+    margin-left: 1em;
+}
+
+.NFInput{
+    margin-left: 1em;
+}
+
+.inputDiv {
+    margin-bottom: 2em;
+    margin-left: -1.5em;
+}
+
+.inputDiv input {
+    cursor: pointer;
+}
+
+.inputDiv label {
+    margin-left: -1em;
+    font-size: 15px;
+}
 .form h3{
     display: flex;
     font-size: 1.1em;
@@ -38,10 +61,36 @@
     margin-left: -.7em;
 }
 
+.units{
+    margin-top: -1.5em;
+}
 .labels ul{
     display: flex;
 }
 
+.units ul {
+    display: flex;
+} 
+
+.uEspesor{
+    margin-left: 16em;
+    font-size: 12px;
+}
+
+.uPeso{
+    margin-left: 8.4em;
+    font-size: 12px;
+}
+
+.uCohesion {
+    margin-left: 1.4em;
+    font-size: 12px;
+}
+
+
+.uPhi {
+    font-size: 12px;
+}
 .labels ul li{
     margin-right: 3em;
 }

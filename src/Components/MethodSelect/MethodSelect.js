@@ -4,6 +4,9 @@ import styles from "./MethodSelect.modules.css";
 
 export default function MethodSelect(props) {
   const [selectedMethod, setSelectedMethod] = useState(props.list);
+  const [checkedComparison, setCheckedComparison] = useState(
+    props.list[0]["comparison"]
+  );
 
   const methods = [
     {
@@ -34,6 +37,19 @@ export default function MethodSelect(props) {
     });
     setSelectedMethod(list);
   };
+
+  const handleOnChangeCompar = (e) => {
+    const list = [...selectedMethod];
+    if (!checkedComparison) {
+      list[0]["comparison"] = !checkedComparison;
+      setCheckedComparison(!checkedComparison);
+    } else {
+      list[0]["comparison"] = !checkedComparison;
+      setCheckedComparison(!checkedComparison);
+    }
+    setSelectedMethod(list);
+  };
+
   const showSelection = (unitsDescription) => {
     if (unitsDescription === "") {
       return "Métodos";
@@ -55,6 +71,18 @@ export default function MethodSelect(props) {
                 options={methods}
                 onChange={handleChangedMethod}
               />
+            </div>
+          </li>
+          <li>
+            <div className={styles.inputDiv}>
+              <input
+                type="checkbox"
+                name="comparacion"
+                value="comparacion"
+                checked={selectedMethod[0]["comparison"]}
+                onChange={handleOnChangeCompar}
+              />
+              <label>Mostrar comparación con otros métodos</label>
             </div>
           </li>
           <li>

@@ -33,7 +33,7 @@ export default function Materials(props) {
         <ul>
           <li>
             <div className={styles.divForm}>
-              <label className={styles.fc}>F'c</label>
+              <label className={styles.fc}>F'c (kg/cm2)</label>
               <input
                 className={styles.input_fc}
                 onChange={(e) => handleFcChange(e)}
@@ -43,7 +43,7 @@ export default function Materials(props) {
           </li>
           <li>
             <div className={styles.divForm}>
-              <label className={styles.fy}>Fy</label>
+              <label className={styles.fy}>Fy (kg/cm2)</label>
               <input
                 className={styles.input_fy}
                 onChange={(e) => handleFyChange(e)}

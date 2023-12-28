@@ -6,6 +6,7 @@ import Dimensions from "../Dimensions/Dimensions";
 import MethodSelect from "../MethodSelect/MethodSelect";
 import Materials from "../Materials/Materials";
 import Run from "../Run/Run";
+import { unit } from "mathjs";
 
 export default function Navbar(props) {
   const buttons = [
@@ -22,40 +23,14 @@ export default function Navbar(props) {
   );
 
   const [dimensionsConditions, setDimensionsConditions] = useState([
-    { diamIter: false, diamValue: "", lengthIter: false, lengthValue: "" },
+    { diamIter: false, diamValue: "", lengthIter: false, lengthValue: "", withoutDim: false },
   ]);
 
   const [materials, setMaterials] = useState([{ fc: "", fy: "" }]);
 
-  console.log(materials);
+  const [NF, setNF] = useState([{ NF: false, NFStart: "" }]);
 
-  const toMaterials = (list) => {
-    try {
-      setMaterials(list);
-    } catch (error) {
-      console.log("error in toMaterials");
-      console.log(error);
-    }
-  };
-
-  const toDimensions = (list) => {
-    try {
-      setDimensionsConditions(list);
-    } catch (error) {
-      console.log("error in toDimensions");
-      console.log(error);
-    }
-  };
-
-  console.log(dimensionsConditions);
-
-  const handleOnChange = (position) => {
-    const updatedCheckedState = checkedState.map((item, index) =>
-      index === position ? !item : false
-    );
-    setCheckedState(updatedCheckedState);
-  };
-
+  const [Qsol, setQsol] = useState([{ Qsol: false, QsolValue: "" }]);
   const [soilList, setSoilList] = useState([
     {
       typeValue: "",
@@ -68,9 +43,61 @@ export default function Navbar(props) {
     },
   ]);
 
-  const toProfile = (list) => {
+  const [unitsSelected, setUnitsSelected] = useState([
+    {
+      unitValue: "",
+      unitLabel: "",
+      unitForce: "",
+      unitLength: "",
+      unitPeso: '',
+      unitCohesion: '',
+      unitGrade: "°",
+    },
+  ]);
+
+  const [methodSelected, setMethodSelected] = useState([
+    {
+      methodValue: "",
+      methodLabel: "",
+      comparison: false,
+    },
+  ]);
+  console.log(materials);
+
+  const toMaterials = (list) => {
+    try {
+      setMaterials(list);
+    } catch (error) {
+      console.log("error in toMaterials");
+      console.log(error);
+    }
+  };
+
+  const toDimensions = (list,list2) => {
+    try {
+      setDimensionsConditions(list);
+      setQsol(list2);
+    } catch (error) {
+      console.log("error in toDimensions");
+      console.log(error);
+    }
+  };
+
+  console.log(Qsol)
+  console.log(dimensionsConditions);
+  console.log(NF);
+
+  const handleOnChange = (position) => {
+    const updatedCheckedState = checkedState.map((item, index) =>
+      index === position ? !item : false
+    );
+    setCheckedState(updatedCheckedState);
+  };
+
+  const toProfile = (list, list2) => {
     try {
       setSoilList(list);
+      setNF(list2);
     } catch (error) {
       console.log("error in toProfile");
       console.log(error);
@@ -78,13 +105,6 @@ export default function Navbar(props) {
   };
 
   console.log(soilList);
-
-  const [unitsSelected, setUnitsSelected] = useState([
-    {
-      unitValue: "",
-      unitLabel: "",
-    },
-  ]);
 
   const toUnits = (list) => {
     try {
@@ -96,13 +116,6 @@ export default function Navbar(props) {
   };
 
   console.log(unitsSelected);
-
-  const [methodSelected, setMethodSelected] = useState([
-    {
-      methodValue: "",
-      methodLabel: "",
-    },
-  ]);
 
   const toMethods = (list) => {
     try {
@@ -145,17 +158,22 @@ export default function Navbar(props) {
           return (
             <MethodSelect
               list={methodSelected}
+              units={unitsSelected}
               callback={toMethods}
             ></MethodSelect>
           );
         }
         if (index === 2 && checkedState[index]) {
-          return <Profile soil={soilList} callback={toProfile}></Profile>;
+          return (
+            <Profile soil={soilList} NF={NF} units={unitsSelected} callback={toProfile}></Profile>
+          );
         }
         if (index === 3 && checkedState[index]) {
           return (
             <Dimensions
               list={dimensionsConditions}
+              units={unitsSelected}
+              solicitation={Qsol}
               callback={toDimensions}
             ></Dimensions>
           );

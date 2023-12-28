@@ -1,6 +1,6 @@
 .container {
     background-color: lightgray;
-    width: 22em;
+    width: 26em;
     height: 44em;
     padding-top: 2em;
     border-color: black;
@@ -35,10 +35,35 @@ ul li{
 
 .inputDiv label {
     margin-left: -1em;
+    font-size: 14px;
+}
+
+.QsolInput{
+    margin-top: 1em;
+}
+
+.WoDim{
+    margin-left: -1.5em;
+}
+.WoDim label{
+    font-size: 14px;
+    margin-left: -1em;
+}
+
+.WoDim input{
+    cursor: pointer;
+}
+.QsolInput label {
+    font-size: 14px;
+}
+
+.QsolInput input{
+    margin-left: 1em;
 }
 
 .diam {
     margin-right: 7em;
+    font-size: 14px;
 }
 
 .hr{
@@ -52,6 +77,7 @@ ul li{
 
 .fust{
     margin-right: 2.8em;
+    font-size: 14px;
 }
 
 input{

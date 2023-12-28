@@ -5,7 +5,7 @@ function roundToFour(num) {
 }
 
 export const MeyerhoffKgfLen = (diam, length, soilList) => {
-  let fricc = 0.3; //Coeficiente de fricción kgf/cm2
+  let fricc = 0; //Coeficiente de fricción kgf/cm2
   let Lrelleno = 0;
   let Lefect = 0;
   let Qp = 0;
@@ -22,23 +22,42 @@ export const MeyerhoffKgfLen = (diam, length, soilList) => {
   for (let i = 0; i < soilList.length; i++) {
     if (soilList[i]["typeValue"] === "1") {
       Lrelleno = Lrelleno + parseFloat(soilList[i]["espesor"]);
+      fricc = 0.2;
       Lacum += parseFloat(soilList[i]["espesor"]);
     }
-    if (!(soilList[i]["typeValue"] === "1") && Lacum < length) {
+    if (soilList[i]["typeValue"] === "2") {
+      Lrelleno = Lrelleno + parseFloat(soilList[i]["espesor"]);
+      fricc = 0.6;
+      Lacum += parseFloat(soilList[i]["espesor"]);
+    }
+    if (
+      !(soilList[i]["typeValue"] === "1") &&
+      !(soilList[i]["typeValue"] === "2") &&
+      Lacum < length
+    ) {
       NfAcum += parseFloat(soilList[i]["ngp"]);
       Lacum += parseFloat(soilList[i]["espesor"]);
       estratosF += 1;
     }
-    if (!(soilList[i]["typeValue"] === "1") && Lacum == length) {
+    if (
+      !(soilList[i]["typeValue"] === "1") &&
+      !(soilList[i]["typeValue"] === "2") &&
+      Lacum == length
+    ) {
       Np = parseFloat(soilList[i]["ngp"]);
     }
     if (
       Lacum >= length &&
-      (soilList[i]["typeValue"] === "4" ||
-        soilList[i]["typeValue"] === "5" ||
-        soilList[i]["typeValue"] === "6" ||
-        soilList[i]["typeValue"] === "7" ||
-        soilList[i]["typeValue"] === "8")
+      (soilList[i]["typeValue"] === "7" ||
+        soilList[i]["typeValue"] === "8" ||
+        soilList[i]["typeValue"] === "9" ||
+        soilList[i]["typeValue"] === "10" ||
+        soilList[i]["typeValue"] === "11" ||
+        soilList[i]["typeValue"] === "12" ||
+        soilList[i]["typeValue"] === "32" ||
+        soilList[i]["typeValue"] === "33" ||
+        soilList[i]["typeValue"] === "34" ||
+        soilList[i]["typeValue"] === "35")
     ) {
       return "No es recomendable utilizar el método de Meyerhof para un pilote que tenga suelo cohesivo en la punta. \n Por favor, seleccione otro método de cálculo.";
     }
@@ -82,7 +101,7 @@ export const MeyerhoffKgfLen = (diam, length, soilList) => {
 };
 
 export const MeyerhoffTonLen = (diam, length, soilList) => {
-  let fricc = 0.3; //Coeficiente de fricción kgf/cm2
+  let fricc = 0; //Coeficiente de fricción kgf/cm2
   let Lrelleno = 0;
   let Lefect = 0;
   let Qp = 0;
@@ -99,23 +118,42 @@ export const MeyerhoffTonLen = (diam, length, soilList) => {
   for (let i = 0; i < soilList.length; i++) {
     if (soilList[i]["typeValue"] === "1") {
       Lrelleno = Lrelleno + parseFloat(soilList[i]["espesor"]);
+      fricc = 0.2;
       Lacum += parseFloat(soilList[i]["espesor"]);
     }
-    if (!(soilList[i]["typeValue"] === "1") && Lacum < length / 100) {
+    if (soilList[i]["typeValue"] === "2") {
+      Lrelleno = Lrelleno + parseFloat(soilList[i]["espesor"]);
+      fricc = 0.6;
+      Lacum += parseFloat(soilList[i]["espesor"]);
+    }
+    if (
+      !(soilList[i]["typeValue"] === "1") &&
+      !(soilList[i]["typeValue"] === "2") &&
+      Lacum < length / 100
+    ) {
       NfAcum += parseFloat(soilList[i]["ngp"]);
       Lacum += parseFloat(soilList[i]["espesor"]);
       estratosF += 1;
     }
-    if (!(soilList[i]["typeValue"] === "1") && Lacum == length / 100) {
+    if (
+      !(soilList[i]["typeValue"] === "1") &&
+      !(soilList[i]["typeValue"] === "2") &&
+      Lacum == length / 100
+    ) {
       Np = parseFloat(soilList[i]["ngp"]);
     }
     if (
       Lacum >= length / 100 &&
-      (soilList[i]["typeValue"] === "4" ||
-        soilList[i]["typeValue"] === "5" ||
-        soilList[i]["typeValue"] === "6" ||
-        soilList[i]["typeValue"] === "7" ||
-        soilList[i]["typeValue"] === "8")
+      (soilList[i]["typeValue"] === "7" ||
+        soilList[i]["typeValue"] === "8" ||
+        soilList[i]["typeValue"] === "9" ||
+        soilList[i]["typeValue"] === "10" ||
+        soilList[i]["typeValue"] === "11" ||
+        soilList[i]["typeValue"] === "12" ||
+        soilList[i]["typeValue"] === "32" ||
+        soilList[i]["typeValue"] === "33" ||
+        soilList[i]["typeValue"] === "34" ||
+        soilList[i]["typeValue"] === "35")
     ) {
       return "No es recomendable utilizar el método de Meyerhof para un pilote que tenga suelo cohesivo en la punta. \n Por favor, seleccione otro método de cálculo.";
     }
@@ -160,7 +198,7 @@ export const MeyerhoffTonLen = (diam, length, soilList) => {
 };
 
 export const MeyerhoffTon = (diam, length, soilList) => {
-  let fricc = 0.3; //Coeficiente de fricción kgf/cm2
+  let fricc = 0; //Coeficiente de fricción kgf/cm2
   let Lrelleno = 0;
   let Lefect = 0;
   let Qp = 0;
@@ -177,23 +215,42 @@ export const MeyerhoffTon = (diam, length, soilList) => {
   for (let i = 0; i < soilList.length; i++) {
     if (soilList[i]["typeValue"] === "1") {
       Lrelleno = Lrelleno + parseFloat(soilList[i]["espesor"]);
+      fricc = 0.2;
       Lacum += parseFloat(soilList[i]["espesor"]);
     }
-    if (!(soilList[i]["typeValue"] === "1") && Lacum < length / 100) {
+    if (soilList[i]["typeValue"] === "2") {
+      Lrelleno = Lrelleno + parseFloat(soilList[i]["espesor"]);
+      fricc = 0.6;
+      Lacum += parseFloat(soilList[i]["espesor"]);
+    }
+    if (
+      !(soilList[i]["typeValue"] === "1") &&
+      !(soilList[i]["typeValue"] === "2") &&
+      Lacum < length / 100
+    ) {
       NfAcum += parseFloat(soilList[i]["ngp"]);
       Lacum += parseFloat(soilList[i]["espesor"]);
       estratosF += 1;
     }
-    if (!(soilList[i]["typeValue"] === "1") && Lacum == length / 100) {
+    if (
+      !(soilList[i]["typeValue"] === "1") &&
+      !(soilList[i]["typeValue"] === "2") &&
+      Lacum == length / 100
+    ) {
       Np = parseFloat(soilList[i]["ngp"]);
     }
     if (
       Lacum >= length / 100 &&
-      (soilList[i]["typeValue"] === "4" ||
-        soilList[i]["typeValue"] === "5" ||
-        soilList[i]["typeValue"] === "6" ||
-        soilList[i]["typeValue"] === "7" ||
-        soilList[i]["typeValue"] === "8")
+      (soilList[i]["typeValue"] === "7" ||
+        soilList[i]["typeValue"] === "8" ||
+        soilList[i]["typeValue"] === "9" ||
+        soilList[i]["typeValue"] === "10" ||
+        soilList[i]["typeValue"] === "11" ||
+        soilList[i]["typeValue"] === "12" ||
+        soilList[i]["typeValue"] === "32" ||
+        soilList[i]["typeValue"] === "33" ||
+        soilList[i]["typeValue"] === "34" ||
+        soilList[i]["typeValue"] === "35")
     ) {
       return "No es recomendable utilizar el método de Meyerhof para un pilote que tenga suelo cohesivo en la punta. \n Por favor, seleccione otro método de cálculo.";
     }
@@ -235,7 +292,7 @@ export const MeyerhoffTon = (diam, length, soilList) => {
 };
 
 export const MeyerhoffKgf = (diam, length, soilList) => {
-  let fricc = 0.3; //Coeficiente de fricción kgf/cm2
+  let fricc = 0; //Coeficiente de fricción kgf/cm2
   let Lrelleno = 0;
   let Lefect = 0;
   let Qp = 0;
@@ -252,23 +309,42 @@ export const MeyerhoffKgf = (diam, length, soilList) => {
   for (let i = 0; i < soilList.length; i++) {
     if (soilList[i]["typeValue"] === "1") {
       Lrelleno = Lrelleno + parseFloat(soilList[i]["espesor"]);
+      fricc = 0.2;
       Lacum += parseFloat(soilList[i]["espesor"]);
     }
-    if (!(soilList[i]["typeValue"] === "1") && Lacum < length) {
+    if (soilList[i]["typeValue"] === "2") {
+      Lrelleno = Lrelleno + parseFloat(soilList[i]["espesor"]);
+      fricc = 0.6;
+      Lacum += parseFloat(soilList[i]["espesor"]);
+    }
+    if (
+      !(soilList[i]["typeValue"] === "1") &&
+      !(soilList[i]["typeValue"] === "2") &&
+      Lacum < length
+    ) {
       NfAcum += parseFloat(soilList[i]["ngp"]);
       Lacum += parseFloat(soilList[i]["espesor"]);
       estratosF += 1;
     }
-    if (!(soilList[i]["typeValue"] === "1") && Lacum == length) {
+    if (
+      !(soilList[i]["typeValue"] === "1") &&
+      !(soilList[i]["typeValue"] === "2") &&
+      Lacum == length
+    ) {
       Np = parseFloat(soilList[i]["ngp"]);
     }
     if (
       Lacum >= length &&
-      (soilList[i]["typeValue"] === "4" ||
-        soilList[i]["typeValue"] === "5" ||
-        soilList[i]["typeValue"] === "6" ||
-        soilList[i]["typeValue"] === "7" ||
-        soilList[i]["typeValue"] === "8")
+      (soilList[i]["typeValue"] === "7" ||
+        soilList[i]["typeValue"] === "8" ||
+        soilList[i]["typeValue"] === "9" ||
+        soilList[i]["typeValue"] === "10" ||
+        soilList[i]["typeValue"] === "11" ||
+        soilList[i]["typeValue"] === "12" ||
+        soilList[i]["typeValue"] === "32" ||
+        soilList[i]["typeValue"] === "33" ||
+        soilList[i]["typeValue"] === "34" ||
+        soilList[i]["typeValue"] === "35")
     ) {
       return "No es recomendable utilizar el método de Meyerhof para un pilote que tenga suelo cohesivo en la punta. \n Por favor, seleccione otro método de cálculo.";
     }
@@ -301,4 +377,12 @@ export const MeyerhoffKgf = (diam, length, soilList) => {
   Qadm = Qp + Qf - Fn;
   Qadm = roundToFour(Qadm);
   return Qadm;
+};
+
+export const Qestructural = (diam, Fconcreto, Fy) => {
+  let Q = 0;
+  Q =
+    0.225 *
+    (pi * pow(diam / 2, 2) * Fconcreto + 0.005 * pi * pow(diam / 2, 2) * Fy);
+  return Q;
 };

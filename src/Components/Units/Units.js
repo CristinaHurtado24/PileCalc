@@ -7,11 +7,11 @@ export default function Units(props) {
   const units = [
     {
       value: "1",
-      label: "Kgf/cm",
+      label: "Kgf y cm",
     },
     {
       value: "2",
-      label: "Ton/m",
+      label: "Ton y m",
     },
   ];
   const [selectedUnits, setSelectedUnits] = useState(props.list);
@@ -24,6 +24,18 @@ export default function Units(props) {
         list[0]["unitLabel"] = unit.label;
       }
     });
+    if (Obj.value === "1") {
+      list[0]["unitForce"] = "kgf";
+      list[0]["unitLength"] = "cm";
+      list[0]["unitPeso"] = "kgf/cm3";
+      list[0]["unitCohesion"] = "kgf/cm2";
+    } else {
+      list[0]["unitForce"] = "ton";
+      list[0]["unitLength"] = "m";
+      list[0]["unitPeso"] = "ton/ m3";
+      list[0]["unitCohesion"] = "ton/ m2";
+    }
+
     setSelectedUnits(list);
   };
   const showSelection = (unitsDescription) => {

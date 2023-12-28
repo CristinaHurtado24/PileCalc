@@ -3,22 +3,30 @@ import {
   MeyerhoffTon,
   MeyerhoffKgfLen,
   MeyerhoffTonLen,
+  Qestructural,
 } from "./Meyerhoff";
 
 import { CaquotKeriselBothDim } from "./CaquotKerisel";
 
 // Método de cálculo Meyerhoff suelo granular en la punta del pilote
-export const MeyerhoffBothDim = (soilList, units, dimensions) => {
+export const MeyerhoffBothDim = (soilList, units, dimensions, materials) => {
+  const result = [{ Qadm: 0, Qest: 0, diam: 0, length: 0, asent: 0 }];
   //Se tiene dimension del diametro y longitud del pilote
   if (units[0]["unitValue"] === "1") {
     // El usuario seleccionó unidades en kgf/cm
     // Se trabaja en kgf/cm
 
+    const Fc = parseFloat(materials[0]["fc"]);
+    const Fy = parseFloat(materials[0]["fy"]);
     const diam = parseFloat(dimensions[0]["diamValue"]);
     const length = parseFloat(dimensions[0]["lengthValue"]);
-
+    let Qestr = Qestructural(diam, Fc, Fy);
     let Qadm = MeyerhoffKgf(diam, length, soilList);
-    return Qadm;
+    result[0]["Qadm"] = Qadm;
+    result[0]["diam"] = diam;
+    result[0]["length"] = length;
+    result[0]["Qest"] = Qestr;
+    return result;
   }
 
   if (units[0]["unitValue"] === "2") {
@@ -29,13 +37,22 @@ export const MeyerhoffBothDim = (soilList, units, dimensions) => {
     console.log(diam);
     const length = parseFloat(dimensions[0]["lengthValue"]) * 100;
 
+    const Fc = parseFloat(materials[0]["fc"]);
+    const Fy = parseFloat(materials[0]["fy"]);
+    let Qestr = Qestructural(diam, Fc, Fy);
     let Qadm = MeyerhoffTon(diam, length, soilList);
-    return Qadm;
+    result[0]["Qadm"] = Qadm;
+    result[0]["diam"] = diam;
+    result[0]["length"] = length;
+    result[0]["Qest"] = Qestr;
+    return result;
   }
 };
 
-export const MeyerhofDiamIter = (soilList, units, dimensions) => {
-  const result = [{ diameter: 0, Qadm: 0 }];
+export const MeyerhofDiamIter = (soilList, units, dimensions, materials) => {
+  const result = [{ Qadm: 0, Qest: 0, diam: 0, length: 0, asent: 0 }];
+  const Fc = parseFloat(materials[0]["fc"]);
+  const Fy = parseFloat(materials[0]["fy"]);
   let Qadm = 0;
   let diamR = 0;
   let diam = 60;
@@ -60,8 +77,11 @@ export const MeyerhofDiamIter = (soilList, units, dimensions) => {
         diam += 10;
       }
     }
-    result[0]["diameter"] = diamR;
+    let Qestr = Qestructural(diam, Fc, Fy);
     result[0]["Qadm"] = Qadm;
+    result[0]["diam"] = diamR;
+    result[0]["length"] = length;
+    result[0]["Qest"] = Qestr;
     return result;
   }
   if (units[0]["unitValue"] === "2") {
@@ -85,17 +105,22 @@ export const MeyerhofDiamIter = (soilList, units, dimensions) => {
         diam += 10;
       }
     }
-    result[0]["diameter"] = diamR;
+    let Qestr = Qestructural(diam, Fc, Fy);
     result[0]["Qadm"] = Qadm;
+    result[0]["diam"] = diamR;
+    result[0]["length"] = length;
+    result[0]["Qest"] = Qestr;
     return result;
   }
 };
 
-export const MeyerhofLenIter = (soilList, units, dimensions) => {
-  const result = [{ length: 0, Qadm: 0 }];
+export const MeyerhofLenIter = (soilList, units, dimensions, materials) => {
+  const result = [{ Qadm: 0, Qest: 0, diam: 0, length: 0, asent: 0 }];
   let Qadm = 0;
   let lengthR = 0;
   let length = 600;
+  const Fc = parseFloat(materials[0]["fc"]);
+  const Fy = parseFloat(materials[0]["fy"]);
   //Unidades en kgf/cm
   if (units[0]["unitValue"] === "1") {
     const diam = parseFloat(dimensions[0]["diamValue"]);
@@ -110,8 +135,11 @@ export const MeyerhofLenIter = (soilList, units, dimensions) => {
       }
       length += 100;
     }
+    let Qestr = Qestructural(diam, Fc, Fy);
     result[0]["length"] = lengthR;
     result[0]["Qadm"] = Qadm;
+    result[0]["diam"] = diam;
+    result[0]["Qest"] = Qestr;
     return result;
   }
   if (units[0]["unitValue"] === "2") {
@@ -127,23 +155,34 @@ export const MeyerhofLenIter = (soilList, units, dimensions) => {
       }
       length += 100;
     }
+    let Qestr = Qestructural(diam, Fc, Fy);
     result[0]["length"] = lengthR;
     result[0]["Qadm"] = Qadm;
+    result[0]["diam"] = diam;
+    result[0]["Qest"] = Qestr;
     return result;
   }
 };
 
-export const CaquotKeriselBD = (soilList, units, dimensions) => {
+export const CaquotKeriselBD = (soilList, units, dimensions, materials) => {
+  const result = [{ Qadm: 0, Qest: 0, diam: 0, length: 0, asent: 0 }];
+  const Fc = parseFloat(materials[0]["fc"]);
+  const Fy = parseFloat(materials[0]["fy"]);
   //Se tiene dimension del diametro y longitud del pilote
   if (units[0]["unitValue"] === "1") {
     // El usuario seleccionó unidades en kgf/cm
-    // Se trabaja en kgf/cm
+    // Se trabaja en ton/m
 
     const diam = parseFloat(dimensions[0]["diamValue"]) / 100;
     const length = parseFloat(dimensions[0]["lengthValue"]) / 100;
 
     let Qadm = CaquotKeriselBothDim(diam, length, soilList, 10, 1000, 100);
-    return Qadm * 1000;
+    let Qestr = Qestructural(diam * 100, Fc, Fy);
+    result[0]["Qadm"] = Qadm * 1000;
+    result[0]["diam"] = diam * 100;
+    result[0]["length"] = length * 100;
+    result[0]["Qest"] = Qestr;
+    return result;
   }
 
   if (units[0]["unitValue"] === "2") {
@@ -155,12 +194,24 @@ export const CaquotKeriselBD = (soilList, units, dimensions) => {
     const length = parseFloat(dimensions[0]["lengthValue"]);
 
     let Qadm = CaquotKeriselBothDim(diam, length, soilList, 1, 1, 1);
-    return Qadm;
+    let Qestr = Qestructural(diam, Fc, Fy);
+    result[0]["Qadm"] = Qadm;
+    result[0]["diam"] = diam;
+    result[0]["length"] = length;
+    result[0]["Qest"] = Qestr;
+    return result;
   }
 };
 
-export const CaquotKeriselDiamIter = (soilList, units, dimensions) => {
-  const result = [{ diameter: 0, Qadm: 0 }];
+export const CaquotKeriselDiamIter = (
+  soilList,
+  units,
+  dimensions,
+  materials
+) => {
+  const result = [{ Qadm: 0, Qest: 0, diam: 0, length: 0, asent: 0 }];
+  const Fc = parseFloat(materials[0]["fc"]);
+  const Fy = parseFloat(materials[0]["fy"]);
   let Qadm = 0;
   let diamR = 0;
   let diam = 60;
@@ -185,7 +236,10 @@ export const CaquotKeriselDiamIter = (soilList, units, dimensions) => {
         diam += 10;
       }
     }
-    result[0]["diameter"] = diamR;
+    let Qestr = Qestructural(diamR, Fc, Fy);
+    result[0]["length"] = length;
+    result[0]["Qest"] = Qestr;
+    result[0]["diam"] = diamR;
     result[0]["Qadm"] = Qadm * 1000;
     return result;
   }
@@ -210,14 +264,24 @@ export const CaquotKeriselDiamIter = (soilList, units, dimensions) => {
         diam += 10;
       }
     }
-    result[0]["diameter"] = diamR / 100;
+    let Qestr = Qestructural(diamR, Fc, Fy);
+    result[0]["diam"] = diamR / 100;
+    result[0]["length"] = length;
+    result[0]["Qest"] = Qestr;
     result[0]["Qadm"] = Qadm;
     return result;
   }
 };
 
-export const CaquotKeriselLenIter = (soilList, units, dimensions) => {
-  const result = [{ length: 0, Qadm: 0 }];
+export const CaquotKeriselLenIter = (
+  soilList,
+  units,
+  dimensions,
+  materials
+) => {
+  const result = [{ Qadm: 0, Qest: 0, diam: 0, length: 0, asent: 0 }];
+  const Fc = parseFloat(materials[0]["fc"]);
+  const Fy = parseFloat(materials[0]["fy"]);
   let Qadm = 0;
   let lengthR = 0;
   let length = 6;
@@ -235,6 +299,9 @@ export const CaquotKeriselLenIter = (soilList, units, dimensions) => {
       }
       length += 1;
     }
+    let Qestr = Qestructural(diam * 100, Fc, Fy);
+    result[0]["Qest"] = Qestr;
+    result[0]["diam"] = diam * 100;
     result[0]["length"] = lengthR * 100;
     result[0]["Qadm"] = Qadm * 1000;
     return result;
@@ -252,6 +319,9 @@ export const CaquotKeriselLenIter = (soilList, units, dimensions) => {
       }
       length += 1;
     }
+    let Qestr = Qestructural(diam * 100, Fc, Fy);
+    result[0]["Qest"] = Qestr;
+    result[0]["diam"] = diam;
     result[0]["length"] = lengthR;
     result[0]["Qadm"] = Qadm;
     return result;
