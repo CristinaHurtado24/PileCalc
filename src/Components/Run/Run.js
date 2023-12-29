@@ -1,4 +1,7 @@
 import React from "react";
+import styles from "./Run.modules.css";
+import Result from "./Result";
+
 import {
   MeyerhoffBothDim,
   MeyerhofDiamIter,
@@ -12,39 +15,94 @@ import {
 } from "../../Methods/Methods";
 
 export default function Run(props) {
-  const results3 = MeyerhofDiamIter(
+  const bothDimMeyer = MeyerhoffBothDim(
     props.soilList,
     props.units,
-    props.dimensions
+    props.dimensions,
+    props.materials
   );
 
-  const results2 = MeyerhoffBothDim(
+  const diamIterMeyer = MeyerhofDiamIter(
     props.soilList,
     props.units,
-    props.dimensions
+    props.dimensions,
+    props.materials
   );
 
-  const results1 = MeyerhofLenIter(
+  const lenIterMeyer = MeyerhofLenIter(
     props.soilList,
     props.units,
-    props.dimensions
+    props.dimensions,
+    props.materials
+  );
+
+  const bothDimKerisel = CaquotKeriselBD(
+    props.soilList,
+    props.units,
+    props.dimensions,
+    props.materials
+  );
+
+  const diamIterKerisel = CaquotKeriselDiamIter(
+    props.soilList,
+    props.units,
+    props.dimensions,
+    props.materials
+  );
+
+  const lenIterKerisel = CaquotKeriselLenIter(
+    props.soilList,
+    props.units,
+    props.dimensions,
+    props.materials
   );
 
   return (
-    <div>
-      {props.method[0]["methodValue"] === "1" && (
-        <div>
-          <h3>Resultados</h3>
-          <h3>Ambas Dimensiones</h3>
-          <p>Capacidad portante:{results2}</p>
-          <h3>Itera sobre el diametro</h3>
-          <p>Longitud:{results3[0]["diameter"]}</p>
-          <p>Capacidad portante:{results3[0]["Qadm"]}</p>
-          <h3>Itera sobre la longitud</h3>
-          <p>Longitud:{results1[0]["length"]}</p>
-          <p>Capacidad portante:{results1[0]["Qadm"]}</p>
-        </div>
-      )}
+    <div className={styles.container}>
+      <h3 className={styles.titulo}>Resultados</h3>
+      <hr></hr>
+      {props.method[0]["methodValue"] === "1" &&
+        !props.method[0]["comparison"] && (
+          <div className={styles.cont}>
+            <h3>Meyerhof (1976)</h3>
+            {!props.dimensions[0]["diamIter"] &&
+              !props.dimensions[0]["lengthIter"] && (
+                <Result units={props.units} result={bothDimMeyer}></Result>
+              )}
+            {props.dimensions[0]["diamIter"] &&
+              !props.dimensions[0]["lengthIter"] && (
+                <Result units={props.units} result={diamIterMeyer}></Result>
+              )}
+            {!props.dimensions[0]["diamIter"] &&
+              props.dimensions[0]["lengthIter"] && (
+                <Result units={props.units} result={lenIterMeyer}></Result>
+              )}
+          </div>
+        )}
+      {props.method[0]["methodValue"] === "2" &&
+        !props.method[0]["comparison"] && (
+          <div className={styles.cont}>
+            <h3>Lymon Reese</h3>
+          </div>
+        )}
+      {props.method[0]["methodValue"] === "3" &&
+        !props.method[0]["comparison"] && (
+          <div className={styles.cont}>
+            <h3>Caquot y Kerisel (1961)</h3>
+            {!props.dimensions[0]["diamIter"] &&
+              !props.dimensions[0]["lengthIter"] && (
+                <Result units={props.units} result={bothDimKerisel}></Result>
+              )}
+            {props.dimensions[0]["diamIter"] &&
+              !props.dimensions[0]["lengthIter"] && (
+                <Result units={props.units} result={diamIterKerisel}></Result>
+              )}
+            {!props.dimensions[0]["diamIter"] &&
+              props.dimensions[0]["lengthIter"] && (
+                <Result units={props.units} result={lenIterKerisel}></Result>
+              )}
+          </div>
+        )}
     </div>
   );
 }

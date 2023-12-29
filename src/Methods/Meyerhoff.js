@@ -1,7 +1,11 @@
 import { pi, pow, round } from "mathjs";
 
-function roundToFour(num) {
-  return +(round(num + "e+4") + "e-4");
+function roundToCero(num) {
+  return +(round(num + "e+0") + "e-0");
+}
+
+function roundToTwo(num) {
+  return +(round(num + "e+2") + "e-2");
 }
 
 export const MeyerhoffKgfLen = (diam, length, soilList) => {
@@ -83,17 +87,12 @@ export const MeyerhoffKgfLen = (diam, length, soilList) => {
   }
 
   Qp = (4 * Np * (pi * pow(diam / 2, 2))) / 3;
-  console.log(Nf);
-  console.log(diam);
-  console.log(Lefect);
-  console.log(pi);
+
   Qf = (4 * Nf * ((2 * pi * (diam / 2) * Lefect) / 200)) / 3;
   Fn = 2 * pi * (diam / 2) * fricc * Lrelleno;
-  console.log(Qp);
-  console.log(Qf);
-  console.log(Fn);
+
   Qadm = Qp + Qf - Fn;
-  Qadm = roundToFour(Qadm);
+  Qadm = roundToCero(Qadm);
   if (Lacum <= length) {
     return "La longitud del pilote es mayor que la longitud total de los estratos. \n Por favor, modifique las dimensiones ingresadas.";
   }
@@ -183,14 +182,10 @@ export const MeyerhoffTonLen = (diam, length, soilList) => {
   Qf = (4 * Nf * ((2 * pi * (diam / 2) * Lefect) / 200)) / 3;
   Fn = 2 * pi * (diam / 2) * fricc * Lrelleno;
 
-  console.log(Qp);
-  console.log(Qf);
-  console.log(Fn);
-
   Qadm = Qp + Qf - Fn;
-  console.log(Qadm);
+
   Qadm = Qadm / 1000;
-  Qadm = roundToFour(Qadm);
+  Qadm = roundToCero(Qadm);
   if (Lacum <= length) {
     return "La longitud del pilote es mayor que la longitud total de los estratos. \n Por favor, modifique las dimensiones ingresadas.";
   }
@@ -228,6 +223,7 @@ export const MeyerhoffTon = (diam, length, soilList) => {
       !(soilList[i]["typeValue"] === "2") &&
       Lacum < length / 100
     ) {
+      console.log("entre en if");
       NfAcum += parseFloat(soilList[i]["ngp"]);
       Lacum += parseFloat(soilList[i]["espesor"]);
       estratosF += 1;
@@ -277,17 +273,14 @@ export const MeyerhoffTon = (diam, length, soilList) => {
   Lacum = Lacum * 100;
 
   Qp = (4 * Np * (pi * pow(diam / 2, 2))) / 3;
+  console.log(Nf);
+  console.log(Lefect);
   Qf = (4 * Nf * ((2 * pi * (diam / 2) * Lefect) / 200)) / 3;
   Fn = 2 * pi * (diam / 2) * fricc * Lrelleno;
 
-  console.log(Qp);
-  console.log(Qf);
-  console.log(Fn);
-
   Qadm = Qp + Qf - Fn;
-  console.log(Qadm);
   Qadm = Qadm / 1000;
-  Qadm = roundToFour(Qadm);
+  Qadm = roundToCero(Qadm);
   return Qadm;
 };
 
@@ -371,18 +364,24 @@ export const MeyerhoffKgf = (diam, length, soilList) => {
   Qp = (4 * Np * (pi * pow(diam / 2, 2))) / 3;
   Qf = 4 * Nf * ((2 * pi * (diam / 2) * Lefect) / (200 * 3));
   Fn = 2 * pi * (diam / 2) * fricc * Lrelleno;
-  console.log(Qp);
-  console.log(Qf);
-  console.log(Fn);
   Qadm = Qp + Qf - Fn;
-  Qadm = roundToFour(Qadm);
+  Qadm = roundToCero(Qadm);
   return Qadm;
 };
 
-export const Qestructural = (diam, Fconcreto, Fy) => {
+export const Qestructural = (diam, Fconcreto, Fy, factor) => {
   let Q = 0;
   Q =
     0.225 *
     (pi * pow(diam / 2, 2) * Fconcreto + 0.005 * pi * pow(diam / 2, 2) * Fy);
-  return Q;
+  return roundToCero(Q / factor);
+};
+
+export const Volume = (diam, length, factor) => {
+  let V = 0;
+  console.log(diam);
+  console.log(length);
+  console.log(V);
+  V = pi * pow(diam / 2, 2) * length;
+  return roundToTwo(V/factor);
 };

@@ -1,0 +1,23 @@
+.container{
+    background-color: lightgray;
+    width: 38em;
+    height: 44.3em;
+    padding-top: 2em;
+    border-color: black;
+    float: left;
+    font-family: 'Inter', sans-serif;
+    overflow: hidden;
+        overflow-y: scroll;
+}
+
+.titulo{
+    display: flex;
+    justify-content: center;
+}
+
+.cont{
+    margin-left: 1em;
+}
+.cont p{
+    font-size: 15px;
+}

@@ -189,6 +189,9 @@ export default function Navbar(props) {
               soilList={soilList}
               units={unitsSelected}
               dimensions={dimensionsConditions}
+              solicitation={Qsol}
+              NF={NF}
+              materials={materials}
               method={methodSelected}
             ></Run>
           );
