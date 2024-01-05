@@ -125,7 +125,10 @@ export const CaquotKeriselBothDim = (
       Lrelleno += parseFloat(soilList[i]["espesor"]) / fcEspesor;
       fricc = 0.6;
     }
-    if (!(soilList[i]["typeValue"] === "1") &&!(soilList[i]["typeValue"] === "2")) {
+    if (
+      !(soilList[i]["typeValue"] === "1") &&
+      !(soilList[i]["typeValue"] === "2")
+    ) {
       LacumF += parseFloat(soilList[i]["espesor"]) / fcEspesor;
       if (LacumF <= length - Lrelleno) {
         console.log("entra");
@@ -203,7 +206,13 @@ export const CaquotKeriselBothDim = (
       s2 = values[i]["S2"];
     }
   }
+  if (Lestratos < length) {
+    return "La longitud del pilote es mayor que la longitud total de los estratos. \n Por favor, modifique las dimensiones ingresadas.";
+  }
 
+  if (Lefect < 6 * diam) {
+    return "No se cumple la condición de que la longitud efectiva del pilote debe ser mayor o igual a 6 veces el diámetro del pilote. \n Por favor, modifique las dimensiones ingresadas.";
+  }
   r1 = (densidadP * diam * s1) / 4;
   r2 = densidadFuste * Lefect * s2 * s2p;
   r3 = (densidadFuste * 2 * pow(Lefect, 2) * s3p) / diam;
@@ -216,16 +225,10 @@ export const CaquotKeriselBothDim = (
   Fn = 2 * pi * ((diam * 100) / 2) * fricc * Lrelleno * 100;
   Q = (resistence * ap) / Fs - Fn / 1000;
   console.log("Q: " + Q);
-  Qadm = roundToFour((resistence * ap) / Fs - Fn / 1000);
+  Qadm = roundToCero((resistence * ap) / Fs - Fn / 1000);
 
   console.log("Lefect: " + Lefect);
   console.log("6*diam: " + 6 * diam);
-  if (Lefect < 6 * diam) {
-    return "No se cumple la condición de que la longitud efectiva del pilote debe ser mayor o igual a 6 veces el diámetro del pilote. \n Por favor, modifique las dimensiones ingresadas.";
-  }
-  if (Lestratos < length) {
-    return "La longitud del pilote es mayor que la longitud total de los estratos. \n Por favor, modifique las dimensiones ingresadas.";
-  }
 
   return Qadm;
 };
