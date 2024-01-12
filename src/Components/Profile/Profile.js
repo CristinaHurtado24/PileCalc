@@ -54,106 +54,78 @@ export default function Profile(props) {
     },
     {
       value: "13",
-      label: "Grava Limosa (GM)",
-    },
-    {
-      value: "14",
-      label: "Grava arcillosa (GC)",
-    },
-    {
-      value: "15",
-      label: "Grava limo-arcillosa (GM-GC)",
-    },
-    {
-      value: "16",
-      label: "Grava arenosa (GS)",
-    },
-    {
-      value: "17",
-      label: "Arena Limosa (SM)",
-    },
-    {
-      value: "18",
-      label: "Arena arcillosa (SC)",
-    },
-    {
-      value: "19",
-      label: "Arena limo-arcillosa (SM-SC)",
-    },
-    {
-      value: "20",
       label: "Grava Limosa (GP-GM)",
     },
     {
-      value: "21",
+      value: "14",
       label: "Grava arcillosa (GP-GC)",
     },
     {
-      value: "22",
+      value: "15",
       label: "Grava limo-arcillosa (GP-GM-GC)",
     },
     {
-      value: "23",
+      value: "16",
       label: "Grava Limosa (GW-GM)",
     },
     {
-      value: "24",
+      value: "17",
       label: "Grava arcillosa (GW-GC)",
     },
     {
-      value: "25",
+      value: "18",
       label: "Grava limo-arcillosa (GW-GM-GC)",
     },
     {
-      value: "26",
+      value: "19",
       label: "Arena Limosa (SP-SM)",
     },
     {
-      value: "27",
+      value: "20",
       label: "Arena arcillosa (SP-SC)",
     },
     {
-      value: "28",
+      value: "21",
       label: "Arena limo-arcillosa (SP-SM-SC)",
     },
     {
-      value: "29",
+      value: "22",
       label: "Arena Limosa (SW-SM)",
     },
     {
-      value: "30",
+      value: "23",
       label: "Arena arcillosa (SW-SC)",
     },
     {
-      value: "31",
+      value: "24",
       label: "Arena limo-arcillosa (SW-SM-SC)",
     },
     {
-      value: "32",
+      value: "25",
       label: "Limo arenoso (MS)",
     },
     {
-      value: "33",
+      value: "26",
       label: "Limo arcilloso (MC)",
     },
     {
-      value: "34",
+      value: "27",
       label: "Arcilla arenosa (CS)",
     },
     {
-      value: "35",
+      value: "28",
       label: "Arcilla limosa (CM)",
     },
     {
-      value: "36",
+      value: "29",
       label: "Roca descompuesta",
     },
     {
-      value: "37",
+      value: "30",
       label: "Roca meteorizada",
     },
     {
-      value: "38",
+      value: "31",
       label: "Roca fresca",
     },
   ];
@@ -165,7 +137,18 @@ export default function Profile(props) {
 
   const [changedValue, setChangedValue] = useState(false);
 
+  //funcion regex para validar que solo se ingresen numeros positivos y con punto como separador decimal
+  const regex = /^[0-9]*[.]?[0-9]*$/;
+
   console.log(soilList);
+
+  const inputValidation = (badInput) => {
+    if (badInput) {
+      return "Debe ingresar caracteres numéricos, positivos y utilizar punto (.) como separador decimal";
+    } else {
+      return "";
+    }
+  };
 
   const handleLayerAdd = () => {
     setSoilList([
@@ -191,12 +174,19 @@ export default function Profile(props) {
   const handleEspesorChange = (e, index) => {
     const { value } = e.target;
     const list = [...soilList];
+    const onlyNumbers = regex.test(value);
+    list[index]["errorMsg"] = !onlyNumbers;
     list[index]["espesor"] = value;
     if (changedValue) {
       list[index]["typeValue"] = selectedValue;
       soilTypes.map((soil) => {
         if (soil.value == selectedValue) {
           list[index]["typeDescription"] = soil.label;
+        }
+        if (selectedValue == 1 || selectedValue == 2) {
+          list[index]["isRelleno"] = true;
+        } else {
+          list[index]["isRelleno"] = false;
         }
       }, []);
       setSoilList(list);
@@ -210,11 +200,18 @@ export default function Profile(props) {
     const { value } = e.target;
     const list = [...soilList];
     list[index]["peso"] = value;
+    const onlyNumbers = regex.test(value);
+    list[index]["errorMsg"] = !onlyNumbers;
     if (changedValue) {
       list[index]["typeValue"] = selectedValue;
       soilTypes.map((soil) => {
         if (soil.value == selectedValue) {
           list[index]["typeDescription"] = soil.label;
+        }
+        if (selectedValue == 1 || selectedValue == 2) {
+          list[index]["isRelleno"] = true;
+        } else {
+          list[index]["isRelleno"] = false;
         }
       }, []);
       setSoilList(list);
@@ -228,11 +225,18 @@ export default function Profile(props) {
     const { value } = e.target;
     const list = [...soilList];
     list[index]["ngp"] = value;
+    const onlyNumbers = regex.test(value);
+    list[index]["errorMsg"] = !onlyNumbers;
     if (changedValue) {
       list[index]["typeValue"] = selectedValue;
       soilTypes.map((soil) => {
         if (soil.value == selectedValue) {
           list[index]["typeDescription"] = soil.label;
+        }
+        if (selectedValue == 1 || selectedValue == 2) {
+          list[index]["isRelleno"] = true;
+        } else {
+          list[index]["isRelleno"] = false;
         }
       }, []);
       setSoilList(list);
@@ -246,11 +250,18 @@ export default function Profile(props) {
     const { value } = e.target;
     const list = [...soilList];
     list[index]["cohesion"] = value;
+    const onlyNumbers = regex.test(value);
+    list[index]["errorMsg"] = !onlyNumbers;
     if (changedValue) {
       list[index]["typeValue"] = selectedValue;
       soilTypes.map((soil) => {
         if (soil.value == selectedValue) {
           list[index]["typeDescription"] = soil.label;
+        }
+        if (selectedValue == 1 || selectedValue == 2) {
+          list[index]["isRelleno"] = true;
+        } else {
+          list[index]["isRelleno"] = false;
         }
       }, []);
       setSoilList(list);
@@ -272,6 +283,8 @@ export default function Profile(props) {
     const { value } = e.target;
     const list = [...NF];
     list[0]["NFStart"] = value;
+    const onlyNumbers = regex.test(value);
+    list[index]["errorMsg"] = !onlyNumbers;
     setNF(list);
   };
 
@@ -291,11 +304,18 @@ export default function Profile(props) {
     const { value } = e.target;
     const list = [...soilList];
     list[index]["phi"] = value;
+    const onlyNumbers = regex.test(value);
+    list[index]["errorMsg"] = !onlyNumbers;
     if (changedValue) {
       list[index]["typeValue"] = selectedValue;
       soilTypes.map((soil) => {
         if (soil.value == selectedValue) {
           list[index]["typeDescription"] = soil.label;
+        }
+        if (selectedValue == 1 || selectedValue == 2) {
+          list[index]["isRelleno"] = true;
+        } else {
+          list[index]["isRelleno"] = false;
         }
       }, []);
       setSoilList(list);
@@ -307,6 +327,37 @@ export default function Profile(props) {
   const handleSelectedValue = (Obj) => {
     setSelectedValue(Obj.value);
     setChangedValue(true);
+  };
+
+  const handleRequired = (soilList, NF) => {
+    const list = [...soilList];
+    let count = 0;
+    list.map((soil) => {
+      console.log(soil);
+      if (soil["typeValue"] == 1 || soil["typeValue"] == 2) {
+        if (soil["espesor"] == "") {
+          count += 1;
+        }
+      } else {
+        if (
+          soil["espesor"] == "" ||
+          soil["ngp"] == "" ||
+          soil["peso"] == "" ||
+          soil["cohesion"] == "" ||
+          soil["phi"] == ""
+        ) {
+          count += 1;
+        }
+      }
+    });
+    if (NF[0]["NF"] && NF[0]["NFStart"] == "") {
+      count += 1;
+    }
+    if (count > 0) {
+      return window.alert("Debe completar todos los campos");
+    } else {
+      return "";
+    }
   };
 
   return (
@@ -360,79 +411,95 @@ export default function Profile(props) {
           </ul>
         </div>
         {soilList.map((singleSoil, index) => (
-          <div key={index} className={styles.comp}>
-            <ul>
-              <li>
-                <Select
-                  className={styles.select_soil}
-                  placeholder={showSelection(singleSoil.typeDescription)}
-                  options={soilTypes}
-                  onChange={handleSelectedValue}
-                />
-              </li>
-              <li>
-                <div className={styles.divInputs}>
-                  <input
-                    className={styles.inputs}
-                    value={singleSoil.espesor}
-                    onChange={(e) => handleEspesorChange(e, index)}
-                  ></input>
-                </div>
-              </li>
-              <li>
-                <div className={styles.divInputs}>
-                  <input
-                    className={styles.inputs}
-                    value={singleSoil.ngp}
-                    onChange={(e) => handleNgpChange(e, index)}
-                  ></input>
-                </div>
-              </li>
-              <li>
-                <div className={styles.divInputs}>
-                  <input
-                    className={styles.inputs}
-                    value={singleSoil.peso}
-                    onChange={(e) => handlePesoChange(e, index)}
-                  ></input>
-                </div>
-              </li>
-              <li>
-                <div className={styles.divInputs}>
-                  <input
-                    className={styles.inputs}
-                    value={singleSoil.cohesion}
-                    onChange={(e) => handleCohesionChange(e, index)}
-                  ></input>
-                </div>
-              </li>
-              <li>
-                <div className={styles.divInputs}>
-                  <input
-                    className={styles.inputs}
-                    value={singleSoil.phi}
-                    onChange={(e) => handlePhiChange(e, index)}
-                  ></input>
-                </div>
-              </li>
-              <li>
-                {soilList.length == 1 && (
-                  <div className={styles.divInputsA}></div>
-                )}
-              </li>
-              <li>
-                {soilList.length > 1 && (
+          <div key={index} className={styles.contComp}>
+            <div className={styles.comp}>
+              <ul>
+                <li>
+                  <Select
+                    className={styles.select_soil}
+                    placeholder={showSelection(singleSoil.typeDescription)}
+                    options={soilTypes}
+                    onChange={handleSelectedValue}
+                  />
+                </li>
+                <li>
                   <div className={styles.divInputs}>
-                    <button
-                      className={styles.xBtn}
-                      onClick={() => handleLayerRemove(index)}
-                    >
-                      X
-                    </button>
+                    <input
+                      className={styles.inputs}
+                      value={singleSoil.espesor}
+                      required={!singleSoil.isRelleno}
+                      onChange={(e) => handleEspesorChange(e, index)}
+                    ></input>
                   </div>
-                )}
-              </li>
-            </ul>
+                </li>
+                <li>
+                  <div className={styles.divInputs}>
+                    <input
+                      className={styles.inputs}
+                      value={singleSoil.ngp}
+                      disabled={singleSoil.isRelleno}
+                      required={!singleSoil.isRelleno}
+                      onChange={(e) => handleNgpChange(e, index)}
+                    ></input>
+                  </div>
+                </li>
+                <li>
+                  <div className={styles.divInputs}>
+                    <input
+                      className={styles.inputs}
+                      value={singleSoil.peso}
+                      disabled={singleSoil.isRelleno}
+                      required={!singleSoil.isRelleno}
+                      onChange={(e) => handlePesoChange(e, index)}
+                    ></input>
+                  </div>
+                </li>
+                <li>
+                  <div className={styles.divInputs}>
+                    <input
+                      className={styles.inputs}
+                      value={singleSoil.cohesion}
+                      disabled={singleSoil.isRelleno}
+                      required={!singleSoil.isRelleno}
+                      onChange={(e) => handleCohesionChange(e, index)}
+                    ></input>
+                  </div>
+                </li>
+                <li>
+                  <div className={styles.divInputs}>
+                    <input
+                      className={styles.inputs}
+                      value={singleSoil.phi}
+                      disabled={singleSoil.isRelleno}
+                      required={!singleSoil.isRelleno}
+                      onChange={(e) => handlePhiChange(e, index)}
+                    ></input>
+                  </div>
+                </li>
+                <li>
+                  {soilList.length == 1 && (
+                    <div className={styles.divInputsA}></div>
+                  )}
+                </li>
+                <li>
+                  {soilList.length > 1 && (
+                    <div className={styles.divInputs}>
+                      <button
+                        className={styles.xBtn}
+                        onClick={() => handleLayerRemove(index)}
+                      >
+                        X
+                      </button>
+                    </div>
+                  )}
+                </li>
+              </ul>
+            </div>
+            <div className={styles.errorDiv}>
+              <label className={styles.error}>
+                {inputValidation(singleSoil.errorMsg)}
+              </label>
+            </div>
           </div>
         ))}
       </div>
@@ -448,7 +515,9 @@ export default function Profile(props) {
           <label>Presencia de Nivel Freático</label>
         </div>
         <div className={styles.NFInput}>
-          <label className={styles.NfUbic}>Ubicación ({units[0]['unitLength']}): </label>
+          <label className={styles.NfUbic}>
+            Ubicación ({units[0]["unitLength"]}):{" "}
+          </label>
           <input
             className={styles.inputs}
             disabled={!checkedNF}
@@ -472,6 +541,7 @@ export default function Profile(props) {
               <button
                 className={styles.addBtn}
                 onClick={() => {
+                  handleRequired(soilList, NF);
                   props.callback(soilList, NF);
                 }}
               >

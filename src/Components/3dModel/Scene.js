@@ -14,7 +14,7 @@ export default function Scene() {
 
   const texture = useCubeTexture(
     ["px.png", "nx.png", "py.png", "ny.png", "pz.png", "nz.png"],
-    { path: "TestImages/" }
+    { path: "imagesRelleno/" }
   );
 
   let pileHeight = 30; //cambiar con lo que ingresa el usuario
@@ -39,7 +39,6 @@ export default function Scene() {
                 <mesh position={[0, pileHeight / 2 - dif / 2, 0]}>
                   <boxGeometry attach="geometry" args={[20, dif, 20]} />
                   <meshBasicMaterial
-                    color={0xffffff}
                     envMap={texture}
                     opacity={0.4}
                     transparent

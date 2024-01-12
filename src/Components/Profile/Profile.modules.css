@@ -11,8 +11,19 @@
         overflow-y: scroll;
 }
 
+.errorDiv{
+
+    margin-top:-3em;
+}
+.error{
+    color: red;
+    font-weight: bold;
+    font-size: 13px;
+    margin-left: 1em;
+}
 .NF{
     display: flex;
+    margin-top: 2em;
     margin-bottom: 2em;
     margin-left: 1em;
 }
@@ -30,6 +41,9 @@
     cursor: pointer;
 }
 
+.contComp{
+    margin-top: 2em;
+}
 .inputDiv label {
     margin-left: -1em;
     font-size: 15px;
@@ -97,10 +111,15 @@
 
 .div form comp ul{
     list-style: none;
+    margin-top: 2em;
 }
 
 .div form comp ul li{
     margin-right: 5em;
+}
+
+.comp{
+    margin-top: 2em;
 }
 
 .divInputsA{

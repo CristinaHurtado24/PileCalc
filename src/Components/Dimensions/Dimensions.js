@@ -17,6 +17,17 @@ export default function Dimensions(props) {
     props.list[0]["withoutDim"]
   );
 
+  //funcion regex para validar que solo se ingresen numeros positivos y con punto como separador decimal
+  const regex = /^[0-9]*[.]?[0-9]*$/;
+
+  const inputValidation = (badInput) => {
+    if (badInput) {
+      return "Debe ingresar caracteres numéricos, positivos y utilizar punto (.) como separador decimal";
+    } else {
+      return "";
+    }
+  };
+
   const handleOnchangeLen = (e) => {
     const list = [...dimensions];
     if (!checkedStateDiam) {
@@ -48,6 +59,8 @@ export default function Dimensions(props) {
   const handleDiamChange = (e) => {
     const { value } = e.target;
     const list = [...dimensions];
+    const onlyNumbers = regex.test(value);
+    list[0]["errorMsg"] = !onlyNumbers;
     list[0]["diamValue"] = value;
     setDimensions(list);
   };
@@ -55,6 +68,8 @@ export default function Dimensions(props) {
   const handleLengthChange = (e) => {
     const { value } = e.target;
     const list = [...dimensions];
+    const onlyNumbers = regex.test(value);
+    list[0]["errorMsg"] = !onlyNumbers;
     list[0]["lengthValue"] = value;
     setDimensions(list);
   };
@@ -90,6 +105,8 @@ export default function Dimensions(props) {
   const handleOnChangeQsolValue = (e) => {
     const { value } = e.target;
     const list = [...solicitation];
+    const onlyNumbers = regex.test(value);
+    list[0]["errorMsg"] = !onlyNumbers;
     list[0]["QsolValue"] = value;
     setSolicitation(list);
   };
@@ -174,6 +191,13 @@ export default function Dimensions(props) {
               <label>Hallar ambas dimensiones y minimizar el volumen</label>
             </div>
           </li>
+          <li>
+            <div className={styles.errorDiv}>
+              <label className={styles.error}>
+                {inputValidation(solicitation[0]["errorMsg"])}
+              </label>
+            </div>
+          </li>
           <hr className={styles.hr}></hr>
           <li>
             <div className={styles.divForm}>
@@ -199,6 +223,13 @@ export default function Dimensions(props) {
                 onChange={(e) => handleLengthChange(e)}
                 placeholder={showValueLen(dimensions[0]["lengthValue"])}
               ></input>
+            </div>
+          </li>
+          <li>
+            <div className={styles.errorDiv}>
+              <label className={styles.error}>
+                {inputValidation(dimensions[0]["errorMsg"])}
+              </label>
             </div>
           </li>
           <li>

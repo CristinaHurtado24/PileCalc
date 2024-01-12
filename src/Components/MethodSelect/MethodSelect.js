@@ -19,7 +19,7 @@ export default function MethodSelect(props) {
     },
     {
       value: "3",
-      label: "Caquot y Kérisel (Suelo Cohesivo)",
+      label: "Caquot y Kérisel",
     },
     {
       value: "4",

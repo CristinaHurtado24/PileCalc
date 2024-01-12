@@ -7,6 +7,8 @@ export default function Materials(props) {
   const handleFcChange = (e) => {
     const { value } = e.target;
     const list = [...userMaterials];
+    const onlyNumbers = regex.test(value);
+    list[0]["errorMsg"] = !onlyNumbers;
     list[0]["fc"] = value;
     setUserMaterials(list);
   };
@@ -14,6 +16,8 @@ export default function Materials(props) {
   const handleFyChange = (e) => {
     const { value } = e.target;
     const list = [...userMaterials];
+    const onlyNumbers = regex.test(value);
+    list[0]["errorMsg"] = !onlyNumbers;
     list[0]["fy"] = value;
     setUserMaterials(list);
   };
@@ -23,6 +27,17 @@ export default function Materials(props) {
       return "";
     } else {
       return value;
+    }
+  };
+
+  //funcion regex para validar que solo se ingresen numeros positivos y con punto como separador decimal
+  const regex = /^[0-9]*[.]?[0-9]*$/;
+
+  const inputValidation = (badInput) => {
+    if (badInput) {
+      return "Debe ingresar caracteres numéricos, positivos y utilizar punto (.) como separador decimal";
+    } else {
+      return "";
     }
   };
 
@@ -51,8 +66,12 @@ export default function Materials(props) {
               ></input>
             </div>
           </li>
-          <li></li>
         </ul>
+      </div>
+      <div className={styles.errorDiv}>
+        <label className={styles.error}>
+          {inputValidation(userMaterials[0]["errorMsg"])}
+        </label>
       </div>
       <div className={styles.btn}>
         <button
