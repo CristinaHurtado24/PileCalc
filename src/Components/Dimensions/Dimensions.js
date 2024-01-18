@@ -136,6 +136,7 @@ export default function Dimensions(props) {
                 name="Longitud"
                 value="Longitud"
                 checked={dimensions[0]["lengthIter"]}
+                disabled={checkedStateWoDim}
                 onChange={handleOnchangeLen}
               />
               <label>Iterar sobre la longitud del fuste</label>
@@ -148,6 +149,7 @@ export default function Dimensions(props) {
                 name="Longitud"
                 value="Longitud"
                 checked={dimensions[0]["diamIter"]}
+                disabled={checkedStateWoDim}
                 onChange={handleOnchangeDiam}
               />
               <label>Iterar sobre el diámetro del pilote</label>
@@ -206,9 +208,9 @@ export default function Dimensions(props) {
               </label>
               <input
                 className={styles.input_diam}
-                disabled={checkedStateDiam}
+                disabled={checkedStateDiam || checkedStateWoDim}
                 onChange={(e) => handleDiamChange(e)}
-                placeholder={showValueDiam(dimensions[0]["diamValue"])}
+                value={dimensions[0]["diamValue"]}
               ></input>
             </div>
           </li>
@@ -219,9 +221,9 @@ export default function Dimensions(props) {
               </label>
               <input
                 className={styles.input_fust}
-                disabled={checkedStateLen}
+                disabled={checkedStateLen || checkedStateWoDim}
                 onChange={(e) => handleLengthChange(e)}
-                placeholder={showValueLen(dimensions[0]["lengthValue"])}
+                value={dimensions[0]["lengthValue"]}
               ></input>
             </div>
           </li>

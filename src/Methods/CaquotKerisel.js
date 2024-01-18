@@ -1,6 +1,6 @@
 import { pi, pow, tan, round } from "mathjs";
 
-function roundToCero(num) {
+export function roundToCero(num) {
   return +(round(num + "e+0") + "e-0");
 }
 

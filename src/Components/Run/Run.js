@@ -11,6 +11,15 @@ import {
 } from "../../Methods/Methods";
 
 import {
+  PGCBothDim,
+  PGCLenIter,
+  PGCDiamIter,
+  PGCQsolWth,
+  PGCLenInterQsol,
+  PGCDiamIterQsol,
+} from "../../Methods/Methods";
+
+import {
   CaquotKeriselBD,
   CaquotKeriselLenIter,
   CaquotKeriselDiamIter,
@@ -76,6 +85,57 @@ export default function Run(props) {
     props.solicitation
   );
 
+  const bothDimPGC = PGCBothDim(
+    props.soilList,
+    props.units,
+    props.dimensions,
+    props.materials,
+    props.NF
+  );
+
+  const diamIterPGC = PGCDiamIter(
+    props.soilList,
+    props.units,
+    props.dimensions,
+    props.materials,
+    props.NF
+  );
+
+  const lenIterPGC = PGCLenIter(
+    props.soilList,
+    props.units,
+    props.dimensions,
+    props.materials,
+    props.NF
+  );
+
+  const QsolWTDimPGC = PGCQsolWth(
+    props.soilList,
+    props.units,
+    props.dimensions,
+    props.materials,
+    props.solicitation,
+    props.NF
+  );
+
+  const PGCLenIterQsol = PGCLenInterQsol(
+    props.soilList,
+    props.units,
+    props.dimensions,
+    props.materials,
+    props.solicitation,
+    props.NF
+  );
+
+  const PGCDiameIterQsol = PGCDiamIterQsol(
+    props.soilList,
+    props.units,
+    props.dimensions,
+    props.materials,
+    props.solicitation,
+    props.NF
+  );
+
   return (
     <div className={styles.container}>
       <h3 className={styles.titulo}>Resultados</h3>
@@ -116,12 +176,6 @@ export default function Run(props) {
       {props.method[0]["methodValue"] === "2" &&
         !props.method[0]["comparison"] && (
           <div className={styles.cont}>
-            <h3>Lymon Reese</h3>
-          </div>
-        )}
-      {props.method[0]["methodValue"] === "3" &&
-        !props.method[0]["comparison"] && (
-          <div className={styles.cont}>
             <h3>Caquot y Kerisel (1961)</h3>
             {!props.dimensions[0]["diamIter"] &&
               !props.dimensions[0]["lengthIter"] &&
@@ -148,6 +202,57 @@ export default function Run(props) {
                 <ResultQsol
                   units={props.units}
                   result={QsolWTDimKerisel}
+                ></ResultQsol>
+              )}
+          </div>
+        )}
+      {props.method[0]["methodValue"] === "3" &&
+        !props.method[0]["comparison"] && (
+          <div className={styles.cont}>
+            <h3>Compilación Pérez Guerra-Carrillo (1981)</h3>
+            {!props.dimensions[0]["diamIter"] &&
+              !props.dimensions[0]["lengthIter"] &&
+              !props.dimensions[0]["withoutDim"] &&
+              !props.solicitation[0]["Qsol"] && (
+                <Result units={props.units} result={bothDimPGC}></Result>
+              )}
+            {props.dimensions[0]["diamIter"] &&
+              !props.dimensions[0]["lengthIter"] &&
+              !props.dimensions[0]["withoutDim"] &&
+              !props.solicitation[0]["Qsol"] && (
+                <Result units={props.units} result={diamIterPGC}></Result>
+              )}
+            {!props.dimensions[0]["diamIter"] &&
+              props.dimensions[0]["lengthIter"] &&
+              !props.dimensions[0]["withoutDim"] &&
+              !props.solicitation[0]["Qsol"] && (
+                <Result units={props.units} result={lenIterPGC}></Result>
+              )}
+            {!props.dimensions[0]["diamIter"] &&
+              !props.dimensions[0]["lengthIter"] &&
+              props.dimensions[0]["withoutDim"] &&
+              props.solicitation[0]["Qsol"] && (
+                <ResultQsol
+                  units={props.units}
+                  result={QsolWTDimPGC}
+                ></ResultQsol>
+              )}
+            {!props.dimensions[0]["diamIter"] &&
+              props.dimensions[0]["lengthIter"] &&
+              !props.dimensions[0]["withoutDim"] &&
+              props.solicitation[0]["Qsol"] && (
+                <ResultQsol
+                  units={props.units}
+                  result={PGCLenIterQsol}
+                ></ResultQsol>
+              )}
+            {props.dimensions[0]["diamIter"] &&
+              !props.dimensions[0]["lengthIter"] &&
+              !props.dimensions[0]["withoutDim"] &&
+              props.solicitation[0]["Qsol"] && (
+                <ResultQsol
+                  units={props.units}
+                  result={PGCDiameIterQsol}
                 ></ResultQsol>
               )}
           </div>

@@ -11,19 +11,15 @@ export default function MethodSelect(props) {
   const methods = [
     {
       value: "1",
-      label: "Meyerhof (Suelo Granular)",
+      label: "Meyerhof (1976)",
     },
     {
       value: "2",
-      label: "L. Reese (Suelo Granular)",
+      label: "Caquot y Kérisel (1961)",
     },
     {
       value: "3",
-      label: "Caquot y Kérisel",
-    },
-    {
-      value: "4",
-      label: "L. Reese (Suelo Cohesivo)",
+      label: "Compilación Pérez Guerra-Carrillo (1981)",
     },
   ];
 

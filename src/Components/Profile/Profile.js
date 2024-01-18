@@ -46,87 +46,91 @@ export default function Profile(props) {
     },
     {
       value: "11",
-      label: "Materia orgánica alta plasticidad (OH)",
+      label: "Materia orgánica",
     },
     {
       value: "12",
-      label: "Materia orgánica baja plasticidad (OL)",
-    },
-    {
-      value: "13",
       label: "Grava Limosa (GP-GM)",
     },
     {
-      value: "14",
+      value: "13",
       label: "Grava arcillosa (GP-GC)",
     },
     {
-      value: "15",
+      value: "14",
       label: "Grava limo-arcillosa (GP-GM-GC)",
     },
     {
-      value: "16",
+      value: "15",
       label: "Grava Limosa (GW-GM)",
     },
     {
-      value: "17",
+      value: "16",
       label: "Grava arcillosa (GW-GC)",
     },
     {
-      value: "18",
+      value: "17",
       label: "Grava limo-arcillosa (GW-GM-GC)",
     },
     {
-      value: "19",
+      value: "18",
       label: "Arena Limosa (SP-SM)",
     },
     {
-      value: "20",
+      value: "19",
       label: "Arena arcillosa (SP-SC)",
     },
     {
-      value: "21",
+      value: "20",
       label: "Arena limo-arcillosa (SP-SM-SC)",
     },
     {
-      value: "22",
+      value: "21",
       label: "Arena Limosa (SW-SM)",
     },
     {
-      value: "23",
+      value: "22",
       label: "Arena arcillosa (SW-SC)",
     },
     {
-      value: "24",
+      value: "23",
       label: "Arena limo-arcillosa (SW-SM-SC)",
     },
     {
-      value: "25",
+      value: "24",
       label: "Limo arenoso (MS)",
     },
     {
-      value: "26",
+      value: "25",
       label: "Limo arcilloso (MC)",
     },
     {
-      value: "27",
+      value: "26",
       label: "Arcilla arenosa (CS)",
     },
     {
-      value: "28",
+      value: "27",
       label: "Arcilla limosa (CM)",
     },
     {
+      value: "28",
+      label: "Esquisto (SR: Granular)",
+    },
+    {
       value: "29",
-      label: "Roca descompuesta",
+      label: "Esquisto (SR: Fino)",
     },
     {
       value: "30",
-      label: "Roca meteorizada",
+      label: "Gneiss",
     },
     {
       value: "31",
-      label: "Roca fresca",
+      label: "Arenisca",
+    },
+    {
+      value: "32",
+      label: "Lutita",
     },
   ];
   const [soilList, setSoilList] = useState(props.soil);
@@ -141,6 +145,7 @@ export default function Profile(props) {
   const regex = /^[0-9]*[.]?[0-9]*$/;
 
   console.log(soilList);
+  console.log(NF);
 
   const inputValidation = (badInput) => {
     if (badInput) {
@@ -284,7 +289,7 @@ export default function Profile(props) {
     const list = [...NF];
     list[0]["NFStart"] = value;
     const onlyNumbers = regex.test(value);
-    list[index]["errorMsg"] = !onlyNumbers;
+    list[0]["errorMsg"] = !onlyNumbers;
     setNF(list);
   };
 
@@ -354,7 +359,9 @@ export default function Profile(props) {
       count += 1;
     }
     if (count > 0) {
-      return window.alert("Debe completar todos los campos");
+      electronApi.notificationApi.sendNotification(
+        "Debe completar todos los campos"
+      );
     } else {
       return "";
     }

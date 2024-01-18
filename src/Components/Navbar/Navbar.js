@@ -52,7 +52,7 @@ export default function Navbar(props) {
       cohesion: "",
       phi: "",
       isRelleno: false,
-      errorMsg: false
+      errorMsg: false,
     },
   ]);
 
@@ -197,7 +197,7 @@ export default function Navbar(props) {
           (unitsSelected[0]["unitValue"] == "" ||
             methodSelected[0]["methodValue"] == "")
         ) {
-          return window.alert(
+          electronApi.notificationApi.sendNotification(
             "Debe seleccionar las unidades y/o el método de cálculo antes de continuar"
           );
         }
@@ -220,7 +220,7 @@ export default function Navbar(props) {
           checkedState[index] &&
           unitsSelected[0]["unitValue"] == ""
         ) {
-          return window.alert(
+          electronApi.notificationApi.sendNotification(
             "Debe seleccionar las unidades antes de continuar"
           );
         }
@@ -274,15 +274,19 @@ export default function Navbar(props) {
             Qsol[0]["Qsol"] === true)
         ) {
           if (index === 5 && unitsSelected[0]["unitValue"] == "") {
-            return window.alert(
-              "Debe seleccionar las unidades en las que desea trabajar"
+            electronApi.notificationApi.sendNotification(
+              "Debe seleccionar las unidades y/o el método de cálculo antes de continuar"
             );
           }
           if (index === 5 && methodSelected[0]["methodValue"] == "") {
-            return window.alert("Debe seleccionar un método de cálculo");
+            electronApi.notificationApi.sendNotification(
+              "Debe seleccionar un método de cálculo"
+            );
           }
           if (index === 5 && soilList[0]["typeValue"] == "") {
-            return window.alert("Debe ingresar el perfil del suelo");
+            electronApi.notificationApi.sendNotification(
+              "Debe seleccionar un método de cálculo"
+            );
           }
           if (
             index === 5 &&
@@ -293,7 +297,7 @@ export default function Navbar(props) {
             (dimensionsConditions[0]["diamValue"] == "" ||
               dimensionsConditions[0]["lengthValue"] == "")
           ) {
-            return window.alert(
+            electronApi.notificationApi.sendNotification(
               "Debe ingresar las dimensiones del pilote o seleccionar iterar sobre alguna de ellas"
             );
           }
@@ -302,21 +306,27 @@ export default function Navbar(props) {
             dimensionsConditions[0]["diamIter"] === true &&
             dimensionsConditions[0]["lengthValue"] == ""
           ) {
-            return window.alert("Debe ingresar la longitud del pilote");
+            electronApi.notificationApi.sendNotification(
+              "Debe ingresar la longitud del pilote"
+            );
           }
           if (
             index === 5 &&
             dimensionsConditions[0]["lengthIter"] === true &&
             dimensionsConditions[0]["diamValue"] == ""
           ) {
-            return window.alert("Debe ingresar el diámetro del pilote");
+            electronApi.notificationApi.sendNotification(
+              "Debe ingresar el diámetro del pilote"
+            );
           }
           if (
             index === 5 &&
             Qsol[0]["Qsol"] === true &&
             Qsol[0]["QsolValue"] == ""
           ) {
-            return window.alert("Debe ingresar la solicitación del pilote");
+            electronApi.notificationApi.sendNotification(
+              "Debe ingresar la solicitación del pilote"
+            );
           }
           if (
             (index === 5 &&
@@ -325,18 +335,24 @@ export default function Navbar(props) {
               dimensionsConditions[0]["lengthValue"] == "") ||
             dimensionsConditions[0]["diamValue"] == ""
           ) {
-            return window.alert("Debe ingresar las dimensiones del pilote");
+            electronApi.notificationApi.sendNotification(
+              "Debe ingresar las dimensiones del pilote"
+            );
           }
           if (index === 5 && NF[0]["NF"] === true && NF[0]["NFStart"] == "") {
-            return window.alert(
+            electronApi.notificationApi.sendNotification(
               "Debe ingresar la ubicación del nivel freático"
             );
           }
           if (index === 5 && materials[0]["fc"] == "") {
-            return window.alert("Debe ingresar la resistencia del concreto");
+            electronApi.notificationApi.sendNotification(
+              "Debe ingresar la resistencia del concreto"
+            );
           }
           if (index === 5 && materials[0]["fy"] == "") {
-            return window.alert("Debe ingresar la resistencia del acero");
+            electronApi.notificationApi.sendNotification(
+              "Debe ingresar la resistencia del acero"
+            );
           }
         }
       })}

@@ -57,11 +57,12 @@ export const MeyerhoffKgfLen = (diam, length, soilList) => {
         soilList[i]["typeValue"] === "9" ||
         soilList[i]["typeValue"] === "10" ||
         soilList[i]["typeValue"] === "11" ||
-        soilList[i]["typeValue"] === "12" ||
+        soilList[i]["typeValue"] === "24" ||
         soilList[i]["typeValue"] === "25" ||
         soilList[i]["typeValue"] === "26" ||
         soilList[i]["typeValue"] === "27" ||
-        soilList[i]["typeValue"] === "28")
+        soilList[i]["typeValue"] === "29" ||
+        soilList[i]["typeValue"] === "32")
     ) {
       return "No es recomendable utilizar el método de Meyerhof para un pilote que tenga suelo cohesivo en la punta. \n Por favor, seleccione otro método de cálculo.";
     }
@@ -148,11 +149,12 @@ export const MeyerhoffTonLen = (diam, length, soilList) => {
         soilList[i]["typeValue"] === "9" ||
         soilList[i]["typeValue"] === "10" ||
         soilList[i]["typeValue"] === "11" ||
-        soilList[i]["typeValue"] === "12" ||
+        soilList[i]["typeValue"] === "24" ||
         soilList[i]["typeValue"] === "25" ||
         soilList[i]["typeValue"] === "26" ||
         soilList[i]["typeValue"] === "27" ||
-        soilList[i]["typeValue"] === "28")
+        soilList[i]["typeValue"] === "29" ||
+        soilList[i]["typeValue"] === "32")
     ) {
       return "No es recomendable utilizar el método de Meyerhof para un pilote que tenga suelo cohesivo en la punta. \n Por favor, seleccione otro método de cálculo.";
     }
@@ -242,11 +244,12 @@ export const MeyerhoffTon = (diam, length, soilList) => {
         soilList[i]["typeValue"] === "9" ||
         soilList[i]["typeValue"] === "10" ||
         soilList[i]["typeValue"] === "11" ||
-        soilList[i]["typeValue"] === "12" ||
+        soilList[i]["typeValue"] === "24" ||
         soilList[i]["typeValue"] === "25" ||
         soilList[i]["typeValue"] === "26" ||
         soilList[i]["typeValue"] === "27" ||
-        soilList[i]["typeValue"] === "28")
+        soilList[i]["typeValue"] === "29" ||
+        soilList[i]["typeValue"] === "32")
     ) {
       return "No es recomendable utilizar el método de Meyerhof para un pilote que tenga suelo cohesivo en la punta. \n Por favor, seleccione otro método de cálculo.";
     }
@@ -280,6 +283,9 @@ export const MeyerhoffTon = (diam, length, soilList) => {
 
   Qadm = Qp + Qf - Fn;
   Qadm = Qadm / 1000;
+  if (Lacum <= length) {
+    return "La longitud del pilote es mayor que la longitud total de los estratos. \n Por favor, modifique las dimensiones ingresadas.";
+  }
   Qadm = roundToCero(Qadm);
   return Qadm;
 };
@@ -333,11 +339,12 @@ export const MeyerhoffKgf = (diam, length, soilList) => {
         soilList[i]["typeValue"] === "9" ||
         soilList[i]["typeValue"] === "10" ||
         soilList[i]["typeValue"] === "11" ||
-        soilList[i]["typeValue"] === "12" ||
+        soilList[i]["typeValue"] === "24" ||
         soilList[i]["typeValue"] === "25" ||
         soilList[i]["typeValue"] === "26" ||
         soilList[i]["typeValue"] === "27" ||
-        soilList[i]["typeValue"] === "28")
+        soilList[i]["typeValue"] === "29" ||
+        soilList[i]["typeValue"] === "32")
     ) {
       return "No es recomendable utilizar el método de Meyerhof para un pilote que tenga suelo cohesivo en la punta. \n Por favor, seleccione otro método de cálculo.";
     }
@@ -366,6 +373,10 @@ export const MeyerhoffKgf = (diam, length, soilList) => {
   Fn = 2 * pi * (diam / 2) * fricc * Lrelleno;
   Qadm = Qp + Qf - Fn;
   Qadm = roundToCero(Qadm);
+
+  if (Lacum <= length) {
+    return "La longitud del pilote es mayor que la longitud total de los estratos. \n Por favor, modifique las dimensiones ingresadas.";
+  }
   return Qadm;
 };
 
