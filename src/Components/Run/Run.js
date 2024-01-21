@@ -8,6 +8,8 @@ import {
   MeyerhofDiamIter,
   MeyerhofLenIter,
   MeyerhofQsolWth,
+  MeyerhofDiamIterQsol,
+  MeyerhofLenIterQsol,
 } from "../../Methods/Methods";
 
 import {
@@ -24,6 +26,8 @@ import {
   CaquotKeriselLenIter,
   CaquotKeriselDiamIter,
   CaquotKeriselQsolWth,
+  CaquotKeriselDiamIterQsol,
+  CaquotKeriselLenIterQsol,
 } from "../../Methods/Methods";
 
 export default function Run(props) {
@@ -136,6 +140,38 @@ export default function Run(props) {
     props.NF
   );
 
+  const MeyerhofDiamIterQsol1 = MeyerhofDiamIterQsol(
+    props.soilList,
+    props.units,
+    props.dimensions,
+    props.materials,
+    props.solicitation
+  );
+
+  const MeyerhofLenIterQsol1 = MeyerhofLenIterQsol(
+    props.soilList,
+    props.units,
+    props.dimensions,
+    props.materials,
+    props.solicitation
+  );
+
+  const CKDiamIterQsol = CaquotKeriselDiamIterQsol(
+    props.soilList,
+    props.units,
+    props.dimensions,
+    props.materials,
+    props.solicitation
+  );
+
+  const CKLenIterQsol = CaquotKeriselLenIterQsol(
+    props.soilList,
+    props.units,
+    props.dimensions,
+    props.materials,
+    props.solicitation
+  );
+
   return (
     <div className={styles.container}>
       <h3 className={styles.titulo}>Resultados</h3>
@@ -171,6 +207,24 @@ export default function Run(props) {
                   result={QsolWTDimMeyerhof}
                 ></ResultQsol>
               )}
+            {!props.dimensions[0]["diamIter"] &&
+              props.dimensions[0]["lengthIter"] &&
+              !props.dimensions[0]["withoutDim"] &&
+              props.solicitation[0]["Qsol"] && (
+                <ResultQsol
+                  units={props.units}
+                  result={MeyerhofLenIterQsol1}
+                ></ResultQsol>
+              )}
+            {props.dimensions[0]["diamIter"] &&
+              !props.dimensions[0]["lengthIter"] &&
+              !props.dimensions[0]["withoutDim"] &&
+              props.solicitation[0]["Qsol"] && (
+                <ResultQsol
+                  units={props.units}
+                  result={MeyerhofDiamIterQsol1}
+                ></ResultQsol>
+              )}
           </div>
         )}
       {props.method[0]["methodValue"] === "2" &&
@@ -202,6 +256,24 @@ export default function Run(props) {
                 <ResultQsol
                   units={props.units}
                   result={QsolWTDimKerisel}
+                ></ResultQsol>
+              )}
+            {!props.dimensions[0]["diamIter"] &&
+              props.dimensions[0]["lengthIter"] &&
+              !props.dimensions[0]["withoutDim"] &&
+              props.solicitation[0]["Qsol"] && (
+                <ResultQsol
+                  units={props.units}
+                  result={CKLenIterQsol}
+                ></ResultQsol>
+              )}
+            {props.dimensions[0]["diamIter"] &&
+              !props.dimensions[0]["lengthIter"] &&
+              !props.dimensions[0]["withoutDim"] &&
+              props.solicitation[0]["Qsol"] && (
+                <ResultQsol
+                  units={props.units}
+                  result={CKDiamIterQsol}
                 ></ResultQsol>
               )}
           </div>

@@ -223,12 +223,10 @@ export const CaquotKeriselBothDim = (
 
   ap = pi * pow(diam / 2, 2);
   Fn = 2 * pi * ((diam * 100) / 2) * fricc * Lrelleno * 100;
-  Q = (resistence * ap) / Fs - Fn / 1000;
-  console.log("Q: " + Q);
-  Qadm = roundToCero((resistence * ap) / Fs - Fn / 1000);
 
-  console.log("Lefect: " + Lefect);
-  console.log("6*diam: " + 6 * diam);
+  Q = (resistence * ap) / Fs - Fn / 1000;
+
+  Qadm = roundToCero((resistence * ap) / Fs - Fn / 1000);
 
   return Qadm;
 };

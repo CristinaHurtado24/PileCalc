@@ -434,7 +434,6 @@ export default function Profile(props) {
                     <input
                       className={styles.inputs}
                       value={singleSoil.espesor}
-                      required={!singleSoil.isRelleno}
                       onChange={(e) => handleEspesorChange(e, index)}
                     ></input>
                   </div>
@@ -444,8 +443,6 @@ export default function Profile(props) {
                     <input
                       className={styles.inputs}
                       value={singleSoil.ngp}
-                      disabled={singleSoil.isRelleno}
-                      required={!singleSoil.isRelleno}
                       onChange={(e) => handleNgpChange(e, index)}
                     ></input>
                   </div>
@@ -455,8 +452,6 @@ export default function Profile(props) {
                     <input
                       className={styles.inputs}
                       value={singleSoil.peso}
-                      disabled={singleSoil.isRelleno}
-                      required={!singleSoil.isRelleno}
                       onChange={(e) => handlePesoChange(e, index)}
                     ></input>
                   </div>
@@ -466,8 +461,6 @@ export default function Profile(props) {
                     <input
                       className={styles.inputs}
                       value={singleSoil.cohesion}
-                      disabled={singleSoil.isRelleno}
-                      required={!singleSoil.isRelleno}
                       onChange={(e) => handleCohesionChange(e, index)}
                     ></input>
                   </div>
@@ -477,8 +470,6 @@ export default function Profile(props) {
                     <input
                       className={styles.inputs}
                       value={singleSoil.phi}
-                      disabled={singleSoil.isRelleno}
-                      required={!singleSoil.isRelleno}
                       onChange={(e) => handlePhiChange(e, index)}
                     ></input>
                   </div>

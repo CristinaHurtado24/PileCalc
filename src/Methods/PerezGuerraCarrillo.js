@@ -214,7 +214,6 @@ const N160 = (soilList, NF, conv1, conv4, N60) => {
     stress = vertEfectStress(soilList, freatico, conv1, conv4);
   }
 
-  console.log("Stress: ", stress);
   for (let i = 0; i < N60.length; i++) {
     let N160 = N60[i] * sqrt(10 / stress[i]);
     ArrayN160.push(N160);
@@ -267,8 +266,6 @@ export const MethodPGC = (
   Lefect = Ltotal - Lrelleno;
 
   cont = cont - 1;
-  console.log("Cont: ", cont);
-  console.log("Laux: ", Laux);
   if (Laux >= Ltotal) {
     for (let u = 0; u < capacityFactorsMixedSoil.length; u++) {
       if (
@@ -280,8 +277,6 @@ export const MethodPGC = (
     }
   }
 
-  console.log("Nqp: ", Nqp);
-
   if (parseFloat(soilList[cont]["phi"]) > 20) {
     Lc = pow(10, (parseFloat(soilList[cont]["phi"]) - 7) / 27) * diameter;
   }
@@ -289,16 +284,12 @@ export const MethodPGC = (
     Lc = 3 * diameter;
   }
 
-  console.log("Lc: ", Lc);
   let densP = parseFloat(soilList[cont]["peso"]) * factor4;
-  console.log("densP: ", densP);
+
   st = densP * Lc;
   cu = parseFloat(soilList[cont]["cohesion"]) * factor5;
-  console.log("cu: ", cu);
 
   Qp = 9 * cu + st * Nqp;
-
-  console.log("Qp: ", Qp);
 
   let qpmax = N160values[length - 1] * 20;
   if (Qp > qpmax) {
@@ -316,6 +307,7 @@ export const MethodPGC = (
     verticalStresses = vertEfectStress(soilList, 0, factor1, factor4);
   }
 
+  let Fsrelleno = 0;
   let counter = 0;
   const Pa = 10.33;
   let FsLim = 0;
@@ -328,7 +320,36 @@ export const MethodPGC = (
     let d = (2 / 3) * phi;
     let b = tan(unit(d, "deg"));
     let K = 1 - sin(unit(phi, "deg"));
-    if (cohesion != 0) {
+    if (
+      (soilList[i]["typeValue"] == 1 || soilList[i]["typeValue"] == 2) &&
+      cohesion != 0
+    ) {
+      alpha = 0.31 + 0.17 * (Pa / cohesion);
+      while (espesor > 0 && counter < length) {
+        if (alpha > 1) {
+          alpha = 1;
+        }
+        Fsrelleno += verticalStresses[counter] * b * K + alpha * cohesion;
+        espesor = espesor - 1;
+        counter++;
+      }
+    }
+    if (
+      (soilList[i]["typeValue"] == 1 || soilList[i]["typeValue"] == 2) &&
+      cohesion == 0
+    ) {
+      while (espesor > 0 && counter < length) {
+        Fsrelleno += verticalStresses[counter] * b * K;
+
+        espesor = espesor - 1;
+        counter++;
+      }
+    }
+    if (
+      !soilList[i]["typeValue"] == 1 &&
+      !soilList[i]["typeValue"] == 2 &&
+      cohesion != 0
+    ) {
       alpha = 0.31 + 0.17 * (Pa / cohesion);
       while (espesor > 0 && counter < length) {
         if (alpha > 1) {
@@ -340,9 +361,11 @@ export const MethodPGC = (
         counter++;
       }
     }
-    if (cohesion === 0) {
-    }
-    {
+    if (
+      !soilList[i]["typeValue"] == 1 &&
+      !soilList[i]["typeValue"] == 2 &&
+      cohesion === 0
+    ) {
       while (espesor > 0 && counter < length) {
         Fs += verticalStresses[counter] * b * K;
         FsLim += N160values[counter] * 0.1;
@@ -364,17 +387,12 @@ export const MethodPGC = (
     Fs = FsLim;
   }
 
-  console.log("counter: ", counter);
-
-  console.log("Qp: ", Qp);
-  console.log("QpMax: ", qpmax);
-  console.log("FsLim: ", FsLim);
-
   if (diameter >= 1.2) {
     Qp = (120 / (diameter * 100)) * Qp;
   }
 
-  Qadm = Qp / 3 + Fs / 2;
+  console.log("Fsrelleno: " + Fsrelleno);
+  Qadm = Qp / 3 + (Fs - Fsrelleno) / 2;
 
   return roundToCero(Qadm * factor4);
 };

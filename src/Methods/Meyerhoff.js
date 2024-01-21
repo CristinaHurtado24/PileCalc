@@ -23,6 +23,10 @@ export const MeyerhoffKgfLen = (diam, length, soilList) => {
   let NfAcum = 0; //Numero acum de golpes en el fuste
   let estratosF = 0; //Numero de estratos en el fuste
 
+  let longPerfil = 0;
+  for (let i = 0; i < soilList.length; i++) {
+    longPerfil += parseFloat(soilList[i]["espesor"]);
+  }
   for (let i = 0; i < soilList.length; i++) {
     if (soilList[i]["typeValue"] === "1") {
       Lrelleno = Lrelleno + parseFloat(soilList[i]["espesor"]);
@@ -94,7 +98,9 @@ export const MeyerhoffKgfLen = (diam, length, soilList) => {
 
   Qadm = Qp + Qf - Fn;
   Qadm = roundToCero(Qadm);
-  if (Lacum <= length) {
+  console.log("longPerfil" + longPerfil);
+  console.log(length);
+  if (longPerfil <= length) {
     return "La longitud del pilote es mayor que la longitud total de los estratos. \n Por favor, modifique las dimensiones ingresadas.";
   }
   return Qadm;
@@ -114,7 +120,10 @@ export const MeyerhoffTonLen = (diam, length, soilList) => {
   let estatrosTot = 0; //Numero de estratos totales
   let NfAcum = 0; //Numero acum de golpes en el fuste
   let estratosF = 0; //Numero de estratos en el fuste
-
+  let longPerfil = 0;
+  for (let i = 0; i < soilList.length; i++) {
+    longPerfil += parseFloat(soilList[i]["espesor"]);
+  }
   for (let i = 0; i < soilList.length; i++) {
     if (soilList[i]["typeValue"] === "1") {
       Lrelleno = Lrelleno + parseFloat(soilList[i]["espesor"]);
@@ -188,7 +197,9 @@ export const MeyerhoffTonLen = (diam, length, soilList) => {
 
   Qadm = Qadm / 1000;
   Qadm = roundToCero(Qadm);
-  if (Lacum <= length) {
+  console.log("longPerfil" + longPerfil);
+  console.log(length);
+  if (longPerfil <= length / 100) {
     return "La longitud del pilote es mayor que la longitud total de los estratos. \n Por favor, modifique las dimensiones ingresadas.";
   }
   return Qadm;
@@ -209,6 +220,10 @@ export const MeyerhoffTon = (diam, length, soilList) => {
   let NfAcum = 0; //Numero acum de golpes en el fuste
   let estratosF = 0; //Numero de estratos en el fuste
 
+  let longPerfil = 0;
+  for (let i = 0; i < soilList.length; i++) {
+    longPerfil += parseFloat(soilList[i]["espesor"]);
+  }
   for (let i = 0; i < soilList.length; i++) {
     if (soilList[i]["typeValue"] === "1") {
       Lrelleno = Lrelleno + parseFloat(soilList[i]["espesor"]);
@@ -258,6 +273,9 @@ export const MeyerhoffTon = (diam, length, soilList) => {
 
   Lrelleno = Lrelleno * 100;
   Lefect = length - Lrelleno;
+  console.log("Lefect: " + Lefect);
+  console.log("diam: " + diam);
+  console.log("Lrelleno: " + Lrelleno);
   if (Lefect < 6 * diam) {
     return "No se cumple la condición de que la longitud efectiva del pilote debe ser mayor o igual a 6 veces el diámetro del pilote. \n Por favor, modifique las dimensiones ingresadas.";
   }
@@ -274,16 +292,22 @@ export const MeyerhoffTon = (diam, length, soilList) => {
   }
 
   Lacum = Lacum * 100;
+  console.log("Np: " + Np);
 
   Qp = (4 * Np * (pi * pow(diam / 2, 2))) / 3;
-  console.log(Nf);
+  console.log("Nf: " + Nf);
   console.log(Lefect);
   Qf = (4 * Nf * ((2 * pi * (diam / 2) * Lefect) / 200)) / 3;
   Fn = 2 * pi * (diam / 2) * fricc * Lrelleno;
 
+  console.log("Qp: " + Qp);
+  console.log("Qf: " + Qf);
+  console.log("Fn: " + Fn);
   Qadm = Qp + Qf - Fn;
   Qadm = Qadm / 1000;
-  if (Lacum <= length) {
+  console.log("longPerfil" + longPerfil);
+  console.log(length);
+  if (longPerfil <= length / 100) {
     return "La longitud del pilote es mayor que la longitud total de los estratos. \n Por favor, modifique las dimensiones ingresadas.";
   }
   Qadm = roundToCero(Qadm);
@@ -304,6 +328,11 @@ export const MeyerhoffKgf = (diam, length, soilList) => {
   let estatrosTot = 0; //Numero de estratos totales
   let NfAcum = 0; //Numero acum de golpes en el fuste
   let estratosF = 0; //Numero de estratos en el fuste
+
+  let longPerfil = 0;
+  for (let i = 0; i < soilList.length; i++) {
+    longPerfil += parseFloat(soilList[i]["espesor"]);
+  }
 
   for (let i = 0; i < soilList.length; i++) {
     if (soilList[i]["typeValue"] === "1") {
@@ -373,8 +402,9 @@ export const MeyerhoffKgf = (diam, length, soilList) => {
   Fn = 2 * pi * (diam / 2) * fricc * Lrelleno;
   Qadm = Qp + Qf - Fn;
   Qadm = roundToCero(Qadm);
-
-  if (Lacum <= length) {
+  console.log("longPerfil" + longPerfil);
+  console.log(length);
+  if (longPerfil <= length) {
     return "La longitud del pilote es mayor que la longitud total de los estratos. \n Por favor, modifique las dimensiones ingresadas.";
   }
   return Qadm;
