@@ -1,10 +1,13 @@
 import React, { useState } from "react";
 import styles from "./Units.modules.css";
-import Select from "react-select";
 
 export default function Units(props) {
   //AGREGAR CAMBIO DE UNIDADES
   const units = [
+    {
+      value: "0",
+      label: "--",
+    },
     {
       value: "1",
       label: "Kgf y cm",
@@ -16,20 +19,26 @@ export default function Units(props) {
   ];
   const [selectedUnits, setSelectedUnits] = useState(props.list);
 
-  const handleChangedUnits = (Obj) => {
+  const handleChangedUnits = (e) => {
+    let value = e.target.value;
+
     const list = [...selectedUnits];
     units.map((unit) => {
-      if (unit.value === Obj.value) {
+      if (unit.value === value) {
         list[0]["unitValue"] = unit.value;
         list[0]["unitLabel"] = unit.label;
       }
     });
-    if (Obj.value === "1") {
+    if (value === "Kgf y cm") {
+      list[0]["unitValue"] = "1";
+      list[0]["unitLabel"] = "Kgf y cm";
       list[0]["unitForce"] = "kgf";
       list[0]["unitLength"] = "cm";
       list[0]["unitPeso"] = "kgf/cm3";
       list[0]["unitCohesion"] = "kgf/cm2";
-    } else {
+    } else if (value === "Ton y m") {
+      list[0]["unitValue"] = "2";
+      list[0]["unitLabel"] = "Ton y m";
       list[0]["unitForce"] = "ton";
       list[0]["unitLength"] = "m";
       list[0]["unitPeso"] = "ton/ m3";
@@ -37,13 +46,6 @@ export default function Units(props) {
     }
 
     setSelectedUnits(list);
-  };
-  const showSelection = (unitsDescription) => {
-    if (unitsDescription === "") {
-      return "Unidades";
-    } else {
-      return unitsDescription;
-    }
   };
 
   return (
@@ -53,12 +55,18 @@ export default function Units(props) {
         <ul>
           <li>
             <div className={styles.units_dropdown}>
-              <Select
-                className={styles.select_dropdown}
-                placeholder={showSelection(selectedUnits[0]["unitLabel"])}
-                options={units}
-                onChange={handleChangedUnits}
-              />
+              <select
+                className={styles.select_test}
+                defaultValue={"--"}
+                value={selectedUnits[0]["unitLabel"]}
+                onChange={(e) => handleChangedUnits(e)}
+              >
+                {units.map((unit) => (
+                  <option key={unit.value} value={unit.label}>
+                    {unit.label}
+                  </option>
+                ))}
+              </select>
             </div>
           </li>
           <li>

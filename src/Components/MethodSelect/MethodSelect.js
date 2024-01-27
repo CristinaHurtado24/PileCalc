@@ -10,6 +10,10 @@ export default function MethodSelect(props) {
 
   const methods = [
     {
+      value: "0",
+      label: "--",
+    },
+    {
       value: "1",
       label: "Meyerhof (1976)",
     },
@@ -23,17 +27,6 @@ export default function MethodSelect(props) {
     },
   ];
 
-  const handleChangedMethod = (Obj) => {
-    const list = [...selectedMethod];
-    methods.map((unit) => {
-      if (unit.value === Obj.value) {
-        list[0]["methodValue"] = unit.value;
-        list[0]["methodLabel"] = unit.label;
-      }
-    });
-    setSelectedMethod(list);
-  };
-
   const handleOnChangeCompar = (e) => {
     const list = [...selectedMethod];
     if (!checkedComparison) {
@@ -46,12 +39,16 @@ export default function MethodSelect(props) {
     setSelectedMethod(list);
   };
 
-  const showSelection = (unitsDescription) => {
-    if (unitsDescription === "") {
-      return "Métodos";
-    } else {
-      return unitsDescription;
-    }
+  const handleOnChangeMethod = (e) => {
+    let value = e.target.value;
+    const list = [...selectedMethod];
+    methods.map((method) => {
+      if (method.value === value) {
+        list[0]["methodValue"] = method.value;
+        list[0]["methodLabel"] = method.label;
+      }
+    });
+    setSelectedMethod(list);
   };
 
   return (
@@ -61,12 +58,18 @@ export default function MethodSelect(props) {
         <ul>
           <li>
             <div className={styles.dropdown}>
-              <Select
-                className={styles.select_dropdown}
-                placeholder={showSelection(selectedMethod[0]["methodLabel"])}
-                options={methods}
-                onChange={handleChangedMethod}
-              />
+              <select
+                className={styles.select_test}
+                defaultValue={"4"}
+                value={selectedMethod[0]["methodValue"]}
+                onChange={(e) => handleOnChangeMethod(e)}
+              >
+                {methods.map((method) => (
+                  <option key={method.value} value={method.value}>
+                    {method.label}
+                  </option>
+                ))}
+              </select>
             </div>
           </li>
           <li>

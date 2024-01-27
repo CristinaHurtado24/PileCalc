@@ -2,13 +2,20 @@
 .div_container{
     background-color: lightgray;
         width: 38em;
-        height: 44.3em;
+        height: 44em;
         padding-top: 2em;
         border-color: black;
         float: left;
         font-family: 'Inter', sans-serif;
     overflow: hidden;
         overflow-y: scroll;
+}
+.select_test {
+    width: 11em;
+    height: 2.2em;
+    margin-right: 2em;
+    margin-top: 0.4em;
+    margin-left: -1.5em;
 }
 
 .errorDiv{

@@ -5,6 +5,10 @@ import styles from "./Profile.modules.css";
 export default function Profile(props) {
   const soilTypes = [
     {
+      value: "0",
+      label: "Seleccione un tipo de suelo",
+    },
+    {
       value: "1",
       label: "Relleno compacto",
     },
@@ -54,19 +58,19 @@ export default function Profile(props) {
     },
     {
       value: "13",
-      label: "Grava arcillosa (GP-GC)",
-    },
-    {
-      value: "14",
-      label: "Grava limo-arcillosa (GP-GM-GC)",
-    },
-    {
-      value: "15",
       label: "Grava Limosa (GW-GM)",
     },
     {
-      value: "16",
+      value: "14",
+      label: "Grava arcillosa (GP-GC)",
+    },
+    {
+      value: "15",
       label: "Grava arcillosa (GW-GC)",
+    },
+    {
+      value: "16",
+      label: "Grava limo-arcillosa (GP-GM-GC)",
     },
     {
       value: "17",
@@ -78,19 +82,19 @@ export default function Profile(props) {
     },
     {
       value: "19",
-      label: "Arena arcillosa (SP-SC)",
-    },
-    {
-      value: "20",
-      label: "Arena limo-arcillosa (SP-SM-SC)",
-    },
-    {
-      value: "21",
       label: "Arena Limosa (SW-SM)",
     },
     {
-      value: "22",
+      value: "20",
+      label: "Arena arcillosa (SP-SC)",
+    },
+    {
+      value: "21",
       label: "Arena arcillosa (SW-SC)",
+    },
+    {
+      value: "22",
+      label: "Arena limo-arcillosa (SP-SM-SC)",
     },
     {
       value: "23",
@@ -138,6 +142,7 @@ export default function Profile(props) {
   const [checkedNF, setCheckedNF] = useState(props.NF[0]["NF"]);
   const [units, setUnits] = useState(props.units);
   const [selectedValue, setSelectedValue] = useState(0); //Almacena valor del dropdown
+  const [changedIndex, setChangedIndex] = useState(0); //Almacena el indice del dropdown que se cambio
 
   const [changedValue, setChangedValue] = useState(false);
 
@@ -148,7 +153,7 @@ export default function Profile(props) {
   console.log(NF);
 
   const inputValidation = (badInput) => {
-    if (badInput) {
+    if (badInput > 0) {
       return "Debe ingresar caracteres numéricos, positivos y utilizar punto (.) como separador decimal";
     } else {
       return "";
@@ -166,6 +171,12 @@ export default function Profile(props) {
         peso: "",
         cohesion: "",
         phi: "",
+        isRelleno: false,
+        e1: false,
+        e2: false,
+        e3: false,
+        e4: false,
+        e5: false,
       },
     ]);
   };
@@ -179,26 +190,15 @@ export default function Profile(props) {
   const handleEspesorChange = (e, index) => {
     const { value } = e.target;
     const list = [...soilList];
-    const onlyNumbers = regex.test(value);
-    list[index]["errorMsg"] = !onlyNumbers;
     list[index]["espesor"] = value;
-    if (changedValue) {
-      list[index]["typeValue"] = selectedValue;
-      soilTypes.map((soil) => {
-        if (soil.value == selectedValue) {
-          list[index]["typeDescription"] = soil.label;
-        }
-        if (selectedValue == 1 || selectedValue == 2) {
-          list[index]["isRelleno"] = true;
-        } else {
-          list[index]["isRelleno"] = false;
-        }
-      }, []);
-      setSoilList(list);
-      setChangedValue(false);
-    } else {
-      setSoilList(list);
+    const onlyNumbers = regex.test(value);
+    if (list[index]["e1"] == false && !onlyNumbers) {
+      list[index]["e1"] = true;
     }
+    if (list[index]["e1"] == true && onlyNumbers) {
+      list[index]["e1"] = false;
+    }
+    setSoilList(list);
   };
 
   const handlePesoChange = (e, index) => {
@@ -206,24 +206,13 @@ export default function Profile(props) {
     const list = [...soilList];
     list[index]["peso"] = value;
     const onlyNumbers = regex.test(value);
-    list[index]["errorMsg"] = !onlyNumbers;
-    if (changedValue) {
-      list[index]["typeValue"] = selectedValue;
-      soilTypes.map((soil) => {
-        if (soil.value == selectedValue) {
-          list[index]["typeDescription"] = soil.label;
-        }
-        if (selectedValue == 1 || selectedValue == 2) {
-          list[index]["isRelleno"] = true;
-        } else {
-          list[index]["isRelleno"] = false;
-        }
-      }, []);
-      setSoilList(list);
-      setChangedValue(false);
-    } else {
-      setSoilList(list);
+    if (list[index]["e3"] == false && !onlyNumbers) {
+      list[index]["e3"] = true;
     }
+    if (list[index]["e3"] == true && onlyNumbers) {
+      list[index]["e3"] = false;
+    }
+    setSoilList(list);
   };
 
   const handleNgpChange = (e, index) => {
@@ -231,24 +220,14 @@ export default function Profile(props) {
     const list = [...soilList];
     list[index]["ngp"] = value;
     const onlyNumbers = regex.test(value);
-    list[index]["errorMsg"] = !onlyNumbers;
-    if (changedValue) {
-      list[index]["typeValue"] = selectedValue;
-      soilTypes.map((soil) => {
-        if (soil.value == selectedValue) {
-          list[index]["typeDescription"] = soil.label;
-        }
-        if (selectedValue == 1 || selectedValue == 2) {
-          list[index]["isRelleno"] = true;
-        } else {
-          list[index]["isRelleno"] = false;
-        }
-      }, []);
-      setSoilList(list);
-      setChangedValue(false);
-    } else {
-      setSoilList(list);
+    if (list[index]["e2"] == false && !onlyNumbers) {
+      list[index]["e2"] = true;
     }
+    if (list[index]["e2"] == true && onlyNumbers) {
+      list[index]["e2"] = false;
+    }
+
+    setSoilList(list);
   };
 
   const handleCohesionChange = (e, index) => {
@@ -256,32 +235,13 @@ export default function Profile(props) {
     const list = [...soilList];
     list[index]["cohesion"] = value;
     const onlyNumbers = regex.test(value);
-    list[index]["errorMsg"] = !onlyNumbers;
-    if (changedValue) {
-      list[index]["typeValue"] = selectedValue;
-      soilTypes.map((soil) => {
-        if (soil.value == selectedValue) {
-          list[index]["typeDescription"] = soil.label;
-        }
-        if (selectedValue == 1 || selectedValue == 2) {
-          list[index]["isRelleno"] = true;
-        } else {
-          list[index]["isRelleno"] = false;
-        }
-      }, []);
-      setSoilList(list);
-      setChangedValue(false);
-    } else {
-      setSoilList(list);
+    if (list[index]["e4"] == false && !onlyNumbers) {
+      list[index]["e4"] = true;
     }
-  };
-
-  const showSelection = (typeDescription) => {
-    if (typeDescription === "") {
-      return "Seleccione un tipo de suelo";
-    } else {
-      return typeDescription;
+    if (list[index]["e4"] == true && onlyNumbers) {
+      list[index]["e4"] = false;
     }
+    setSoilList(list);
   };
 
   const handleNFValue = (e) => {
@@ -289,8 +249,13 @@ export default function Profile(props) {
     const list = [...NF];
     list[0]["NFStart"] = value;
     const onlyNumbers = regex.test(value);
-    list[0]["errorMsg"] = !onlyNumbers;
-    setNF(list);
+    if (list[0]["errorMsg"] == false && !onlyNumbers) {
+      list[0]["errorMsg"] = true;
+    }
+    if (list[0]["errorMsg"] == true && onlyNumbers) {
+      list[0]["errorMsg"] = false;
+    }
+    setSoilList(list);
   };
 
   const handleOnChangeNFCheck = (e) => {
@@ -310,39 +275,45 @@ export default function Profile(props) {
     const list = [...soilList];
     list[index]["phi"] = value;
     const onlyNumbers = regex.test(value);
-    list[index]["errorMsg"] = !onlyNumbers;
-    if (changedValue) {
-      list[index]["typeValue"] = selectedValue;
-      soilTypes.map((soil) => {
-        if (soil.value == selectedValue) {
-          list[index]["typeDescription"] = soil.label;
-        }
-        if (selectedValue == 1 || selectedValue == 2) {
-          list[index]["isRelleno"] = true;
-        } else {
-          list[index]["isRelleno"] = false;
-        }
-      }, []);
-      setSoilList(list);
-      setChangedValue(false);
-    } else {
-      setSoilList(list);
+    if (list[index]["e5"] == false && !onlyNumbers) {
+      list[index]["e5"] = true;
     }
+    if (list[index]["e5"] == true && onlyNumbers) {
+      list[index]["e5"] = false;
+    }
+    setSoilList(list);
   };
-  const handleSelectedValue = (Obj) => {
-    setSelectedValue(Obj.value);
-    setChangedValue(true);
+
+  const handleOnChangeSoil = (e, index) => {
+    const value = e.target.value;
+    const list = [...soilList];
+    list[index]["typeValue"] = value;
+    soilTypes.map((soil) => {
+      if (soil.value == value) {
+        list[index]["typeDescription"] = soil.label;
+      }
+      if (value == 1 || value == 2) {
+        list[index]["isRelleno"] = true;
+      } else {
+        list[index]["isRelleno"] = false;
+      }
+    }, []);
+    setSoilList(list);
   };
 
   const handleRequired = (soilList, NF) => {
     const list = [...soilList];
     let count = 0;
+    let countE = 0;
     list.map((soil) => {
       console.log(soil);
       if (soil["typeValue"] == 1 || soil["typeValue"] == 2) {
         if (soil["espesor"] == "") {
           count += 1;
         }
+      }
+      if (soil["e1"] || soil["e2"] || soil["e3"] || soil["e4"] || soil["e5"]) {
+        countE += 1;
       } else {
         if (
           soil["espesor"] == "" ||
@@ -360,8 +331,15 @@ export default function Profile(props) {
     }
     if (count > 0) {
       electronApi.notificationApi.sendNotification(
-        "Debe completar todos los campos"
+        "Debe completar todos los campos e ingresar los datos correctamente"
       );
+      return "";
+    }
+    if (countE > 0) {
+      electronApi.notificationApi.sendNotification(
+        "Por favor ingrese los datos correctamente"
+      );
+      return "";
     } else {
       return "";
     }
@@ -422,12 +400,18 @@ export default function Profile(props) {
             <div className={styles.comp}>
               <ul>
                 <li>
-                  <Select
-                    className={styles.select_soil}
-                    placeholder={showSelection(singleSoil.typeDescription)}
-                    options={soilTypes}
-                    onChange={handleSelectedValue}
-                  />
+                  <select
+                    className={styles.select_test}
+                    defaultValue={"33"}
+                    value={singleSoil.typeValue}
+                    onChange={(e) => handleOnChangeSoil(e, index)}
+                  >
+                    {soilTypes.map((soil) => (
+                      <option key={soil.value} value={soil.value}>
+                        {soil.label}
+                      </option>
+                    ))}
+                  </select>
                 </li>
                 <li>
                   <div className={styles.divInputs}>
@@ -495,7 +479,13 @@ export default function Profile(props) {
             </div>
             <div className={styles.errorDiv}>
               <label className={styles.error}>
-                {inputValidation(singleSoil.errorMsg)}
+                {inputValidation(
+                  singleSoil.e1 ||
+                    singleSoil.e2 ||
+                    singleSoil.e3 ||
+                    singleSoil.e4 ||
+                    singleSoil.e5
+                )}
               </label>
             </div>
           </div>
@@ -523,6 +513,11 @@ export default function Profile(props) {
             onChange={(e) => handleNFValue(e)}
           ></input>
         </div>
+      </div>
+      <div className={styles.errorDiv}>
+        <label className={styles.error}>
+          {inputValidation(NF[0]["errorMsg"])}
+        </label>
       </div>
 
       <div className={styles.buttons}>

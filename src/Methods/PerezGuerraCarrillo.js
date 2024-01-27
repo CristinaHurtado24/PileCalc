@@ -277,6 +277,8 @@ export const MethodPGC = (
     }
   }
 
+  console.log("Nqp: " + Nqp);
+
   if (parseFloat(soilList[cont]["phi"]) > 20) {
     Lc = pow(10, (parseFloat(soilList[cont]["phi"]) - 7) / 27) * diameter;
   }
@@ -284,17 +286,30 @@ export const MethodPGC = (
     Lc = 3 * diameter;
   }
 
-  let densP = parseFloat(soilList[cont]["peso"]) * factor4;
+  let aux = 0;
+  let Lcritica = 0;
+  console.log("Lc: " + Lc);
+  while (Lc > Lcritica && aux < soilList.length) {
+    Lcritica += parseFloat(soilList[aux]["espesor"]) / factor1;
+    aux++;
+  }
 
+  let densP = parseFloat(soilList[aux - 1]["peso"]) * factor4;
+  console.log("densP: " + densP);
   st = densP * Lc;
+  console.log("st: " + st);
   cu = parseFloat(soilList[cont]["cohesion"]) * factor5;
-
+  console.log("cu: " + cu);
   Qp = 9 * cu + st * Nqp;
 
+  console.log("Qp: " + Qp);
+
   let qpmax = N160values[length - 1] * 20;
+  console.log("qpmax: " + qpmax);
   if (Qp > qpmax) {
     Qp = qpmax;
   }
+  console.log("Qp: " + Qp);
 
   //Capacidad por fuste
 
@@ -307,8 +322,11 @@ export const MethodPGC = (
     verticalStresses = vertEfectStress(soilList, 0, factor1, factor4);
   }
 
+  console.log("verticalStresses: " + verticalStresses);
+
   let Fsrelleno = 0;
   let counter = 0;
+
   const Pa = 10.33;
   let FsLim = 0;
   for (let i = 0; i < soilList.length; i++) {
@@ -346,8 +364,8 @@ export const MethodPGC = (
       }
     }
     if (
-      !soilList[i]["typeValue"] == 1 &&
-      !soilList[i]["typeValue"] == 2 &&
+      soilList[i]["typeValue"] != 2 &&
+      soilList[i]["typeValue"] != 1 &&
       cohesion != 0
     ) {
       alpha = 0.31 + 0.17 * (Pa / cohesion);
@@ -362,8 +380,8 @@ export const MethodPGC = (
       }
     }
     if (
-      !soilList[i]["typeValue"] == 1 &&
-      !soilList[i]["typeValue"] == 2 &&
+      soilList[i]["typeValue"] != 1 &&
+      soilList[i]["typeValue"] != 2 &&
       cohesion === 0
     ) {
       while (espesor > 0 && counter < length) {
@@ -374,6 +392,10 @@ export const MethodPGC = (
       }
     }
   }
+
+  console.log("Fs: " + Fs);
+  console.log("FsLim: " + FsLim);
+  console.log("Fsrelleno: " + Fsrelleno);
 
   if (Lacum < length) {
     return "La longitud del pilote es mayor que la longitud total de los estratos. \n Por favor, modifique las dimensiones ingresadas.";
@@ -386,12 +408,12 @@ export const MethodPGC = (
   if (Fs > FsLim) {
     Fs = FsLim;
   }
+  console.log("Fs: " + Fs);
 
   if (diameter >= 1.2) {
     Qp = (120 / (diameter * 100)) * Qp;
   }
 
-  console.log("Fsrelleno: " + Fsrelleno);
   Qadm = Qp / 3 + (Fs - Fsrelleno) / 2;
 
   return roundToCero(Qadm * factor4);

@@ -2,24 +2,14 @@ import React from "react";
 import { useCubeTexture } from "@react-three/drei";
 import { Canvas } from "@react-three/fiber";
 
-export default function Box() {
-  /* const boxTexture = useCubeTexture([
-    "Relleno.png",
-    "Arcilla.png",
-    "Grava.png",
-  ], {path:'../../Images/'}); */
-
+export default function Box(props) {
   return (
-    <Canvas>
-      <mesh position={[0, 6, 0]}>
-        <boxGeometry attach="geometry" args={[20, 5, 20]} />
-        <meshBasicMaterial
-          attach="material"
-          color={0xffffff}
-          opacity={0.4}
-          transparent
-        />
-      </mesh>
-    </Canvas>
+    <mesh
+      position={[0, props.pile / 2 - props.dif / 2 - props.dist, 0]}
+      key={props.key}
+    >
+      <boxGeometry attach="geometry" args={[10, props.dif, 10]} />
+      <meshBasicMaterial envMap={props.texture} opacity={0.55} transparent />
+    </mesh>
   );
 }

@@ -6,7 +6,6 @@ import Dimensions from "../Dimensions/Dimensions";
 import MethodSelect from "../MethodSelect/MethodSelect";
 import Materials from "../Materials/Materials";
 import Run from "../Run/Run";
-import { unit } from "mathjs";
 
 export default function Navbar(props) {
   const buttons = [
@@ -29,15 +28,18 @@ export default function Navbar(props) {
       lengthIter: false,
       lengthValue: "",
       withoutDim: false,
-      errorMsg: false,
+      e1: false,
+      e2: false,
     },
   ]);
 
   const [materials, setMaterials] = useState([
-    { fc: "", fy: "", errorMsg: false },
+    { fc: "", fy: "", e1: false, e2: false },
   ]);
 
-  const [NF, setNF] = useState([{ NF: false, NFStart: "", errorMsg: false }]);
+  const [NF, setNF] = useState([
+    { NF: false, NFStart: "", errorMsg: false, cont: 0 },
+  ]);
 
   const [Qsol, setQsol] = useState([
     { Qsol: false, QsolValue: "", errorMsg: false },
@@ -52,7 +54,11 @@ export default function Navbar(props) {
       cohesion: "",
       phi: "",
       isRelleno: false,
-      errorMsg: false,
+      e1: false,
+      e2: false,
+      e3: false,
+      e4: false,
+      e5: false,
     },
   ]);
 
@@ -70,7 +76,7 @@ export default function Navbar(props) {
 
   const [methodSelected, setMethodSelected] = useState([
     {
-      methodValue: "",
+      methodValue: "--",
       methodLabel: "",
       comparison: false,
     },
@@ -200,6 +206,7 @@ export default function Navbar(props) {
           electronApi.notificationApi.sendNotification(
             "Debe seleccionar las unidades y/o el método de cálculo antes de continuar"
           );
+          return "";
         }
         if (
           index === 3 &&
@@ -223,6 +230,7 @@ export default function Navbar(props) {
           electronApi.notificationApi.sendNotification(
             "Debe seleccionar las unidades antes de continuar"
           );
+          return "";
         }
         if (index === 4 && checkedState[index]) {
           return (
@@ -277,16 +285,19 @@ export default function Navbar(props) {
             electronApi.notificationApi.sendNotification(
               "Debe seleccionar las unidades y/o el método de cálculo antes de continuar"
             );
+            return "";
           }
           if (index === 5 && methodSelected[0]["methodValue"] == "") {
             electronApi.notificationApi.sendNotification(
               "Debe seleccionar un método de cálculo"
             );
+            return "";
           }
           if (index === 5 && soilList[0]["typeValue"] == "") {
             electronApi.notificationApi.sendNotification(
               "Debe seleccionar un método de cálculo"
             );
+            return "";
           }
           if (
             index === 5 &&
@@ -300,6 +311,7 @@ export default function Navbar(props) {
             electronApi.notificationApi.sendNotification(
               "Debe ingresar las dimensiones del pilote o seleccionar iterar sobre alguna de ellas"
             );
+            return "";
           }
           if (
             index === 5 &&
@@ -309,6 +321,7 @@ export default function Navbar(props) {
             electronApi.notificationApi.sendNotification(
               "Debe ingresar la longitud del pilote"
             );
+            return "";
           }
           if (
             index === 5 &&
@@ -318,6 +331,7 @@ export default function Navbar(props) {
             electronApi.notificationApi.sendNotification(
               "Debe ingresar el diámetro del pilote"
             );
+            return "";
           }
           if (
             index === 5 &&
@@ -327,6 +341,7 @@ export default function Navbar(props) {
             electronApi.notificationApi.sendNotification(
               "Debe ingresar la solicitación del pilote"
             );
+            return "";
           }
           if (
             (index === 5 &&
@@ -338,21 +353,25 @@ export default function Navbar(props) {
             electronApi.notificationApi.sendNotification(
               "Debe ingresar las dimensiones del pilote"
             );
+            return "";
           }
           if (index === 5 && NF[0]["NF"] === true && NF[0]["NFStart"] == "") {
             electronApi.notificationApi.sendNotification(
               "Debe ingresar la ubicación del nivel freático"
             );
+            return "";
           }
           if (index === 5 && materials[0]["fc"] == "") {
             electronApi.notificationApi.sendNotification(
               "Debe ingresar la resistencia del concreto"
             );
+            return "";
           }
           if (index === 5 && materials[0]["fy"] == "") {
             electronApi.notificationApi.sendNotification(
               "Debe ingresar la resistencia del acero"
             );
+            return "";
           }
         }
       })}

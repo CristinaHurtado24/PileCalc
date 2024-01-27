@@ -2,11 +2,21 @@
 .container {
     background-color: lightgray;
     width: 24em;
-    height: 44.3em;
+    height: 44em;
     padding-top: 2em;
     border-color: black;
     position: relative;
     float: left;
+}
+.select_test {
+    width: 15em;
+    height: 2.2em;
+}
+
+.dropdown{
+    display: flex;
+    justify-content: center;
+    margin-top: 2em;
 }
 
 .container h3{

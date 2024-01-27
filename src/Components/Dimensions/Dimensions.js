@@ -56,38 +56,56 @@ export default function Dimensions(props) {
     setDimensions(list);
   };
 
+  const handleRequired = (dimensions, solicitation) => {
+    let count = 0;
+    let countE = 0;
+
+    if (
+      dimensions[0]["e1"] ||
+      dimensions[0]["e2"] ||
+      solicitation[0]["errorMsg"]
+    ) {
+      countE += 1;
+    }
+
+    if (countE > 0) {
+      electronApi.notificationApi.sendNotification(
+        "Por favor ingrese los datos correctamente"
+      );
+      return "";
+    } else {
+      return "";
+    }
+  };
+
   const handleDiamChange = (e) => {
     const { value } = e.target;
     const list = [...dimensions];
-    const onlyNumbers = regex.test(value);
-    list[0]["errorMsg"] = !onlyNumbers;
     list[0]["diamValue"] = value;
+    const onlyNumbers = regex.test(value);
+
+    if (list[0]["e1"] == false && !onlyNumbers) {
+      list[0]["e1"] = true;
+    }
+    if (list[0]["e1"] == true && onlyNumbers) {
+      list[0]["e1"] = false;
+    }
     setDimensions(list);
   };
 
   const handleLengthChange = (e) => {
     const { value } = e.target;
     const list = [...dimensions];
-    const onlyNumbers = regex.test(value);
-    list[0]["errorMsg"] = !onlyNumbers;
     list[0]["lengthValue"] = value;
+    const onlyNumbers = regex.test(value);
+
+    if (list[0]["e2"] == false && !onlyNumbers) {
+      list[0]["e2"] = true;
+    }
+    if (list[0]["e2"] == true && onlyNumbers) {
+      list[0]["e2"] = false;
+    }
     setDimensions(list);
-  };
-
-  const showValueDiam = (value) => {
-    if (value === "") {
-      return "";
-    } else {
-      return value;
-    }
-  };
-
-  const showValueLen = (value) => {
-    if (value === "") {
-      return "";
-    } else {
-      return value;
-    }
   };
 
   const handleOnChangeQsol = (e) => {
@@ -187,7 +205,11 @@ export default function Dimensions(props) {
                 name="withoutDim"
                 value="withoutDim"
                 checked={dimensions[0]["withoutDim"]}
-                disabled={!solicitation[0]["Qsol"]}
+                disabled={
+                  !solicitation[0]["Qsol"] ||
+                  checkedStateLen ||
+                  checkedStateDiam
+                }
                 onChange={handleOnChangeWoDim}
               />
               <label>Hallar ambas dimensiones y minimizar el volumen</label>
@@ -230,7 +252,7 @@ export default function Dimensions(props) {
           <li>
             <div className={styles.errorDiv}>
               <label className={styles.error}>
-                {inputValidation(dimensions[0]["errorMsg"])}
+                {inputValidation(dimensions[0]["e1"] || dimensions[0]["e2"])}
               </label>
             </div>
           </li>
@@ -238,6 +260,7 @@ export default function Dimensions(props) {
             <div className={styles.btn}>
               <button
                 onClick={() => {
+                  handleRequired(dimensions);
                   props.callback(dimensions, solicitation);
                 }}
               >

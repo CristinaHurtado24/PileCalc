@@ -7,6 +7,10 @@
     float: left;
 }
 
+.select_test{
+    width: 10em;
+    height: 2.2em;
+}
 .container h3{
     display: flex;
     justify-content: center;

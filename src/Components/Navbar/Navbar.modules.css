@@ -6,6 +6,10 @@
     font-family: 'Inter', sans-serif;
 }
 
+.container{
+    margin-top: -1.2em;
+}
+
 .list{
     display: flex;
     align-content: center;

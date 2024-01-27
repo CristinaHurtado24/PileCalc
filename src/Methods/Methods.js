@@ -151,7 +151,7 @@ export const MeyerhofDiamIter = (soilList, units, dimensions, materials) => {
       }
     }
     let Qestr = Qestructural(diamR, Fc, Fy, 1000);
-    let volume = Volume(diamR, length, 1000);
+    let volume = Volume(diamR / 100, length / 100, 1);
     result[0]["vol"] = volume;
     result[0]["Qadm"] = Qadm;
     result[0]["diam"] = diamR / 100;
@@ -213,11 +213,11 @@ export const MeyerhofLenIter = (soilList, units, dimensions, materials) => {
       length += 100;
     }
     let Qestr = Qestructural(diam, Fc, Fy, 1000);
-    let volume = Volume(diam, lengthR, 1000);
+    let volume = Volume(diam / 100, lengthR / 100, 1);
     result[0]["vol"] = volume;
-    result[0]["length"] = lengthR;
+    result[0]["length"] = lengthR / 100;
     result[0]["Qadm"] = Qadm;
-    result[0]["diam"] = diam;
+    result[0]["diam"] = diam / 100;
     result[0]["Qest"] = Qestr;
     return result;
   } else {
@@ -424,8 +424,8 @@ export const MeyerhofDiamIterQsol = (
         diam += 10;
       }
     }
-    let Qestr = Qestructural(diam, Fc, Fy, 1);
-    let volume = Volume(diam, length, 1);
+    let Qestr = Qestructural(diamR, Fc, Fy, 1);
+    let volume = Volume(diamR, length, 1);
     result[0]["vol"] = volume;
     result[0]["Qadm"] = Qadm;
     result[0]["diam"] = diamR;
@@ -459,8 +459,8 @@ export const MeyerhofDiamIterQsol = (
         diam += 10;
       }
     }
-    let Qestr = Qestructural(diam, Fc, Fy, 1000);
-    let volume = Volume(diam / 100, length / 100, 1);
+    let Qestr = Qestructural(diamR, Fc, Fy, 1000);
+    let volume = Volume(diamR / 100, length / 100, 1);
     result[0]["vol"] = volume;
     result[0]["Qadm"] = Qadm;
     result[0]["diam"] = diamR / 100;
@@ -645,7 +645,7 @@ export const CaquotKeriselDiamIter = (
     let Qestr = Qestructural(diamR, Fc, Fy, 1);
     let volume = Volume(diamR, length, 1);
     result[0]["vol"] = volume;
-    result[0]["length"] = length;
+    result[0]["length"] = length * 100;
     result[0]["Qest"] = Qestr;
     result[0]["diam"] = diamR;
     result[0]["Qadm"] = Qadm * 1000;
@@ -677,7 +677,7 @@ export const CaquotKeriselDiamIter = (
       }
     }
     let Qestr = Qestructural(diamR, Fc, Fy, 1000);
-    let volume = Volume(diamR, length, 1000);
+    let volume = Volume(diamR / 100, length, 1);
     result[0]["vol"] = volume;
     result[0]["diam"] = diamR / 100;
     result[0]["length"] = length;
@@ -997,7 +997,7 @@ export const CaquotKeriselDiamIterQsol = (
     }
 
     let Qestr = Qestructural(diamR, Fc, Fy, 1000);
-    let volume = Volume(diamR, length, 1000);
+    let volume = Volume(diamR / 100, length, 1);
     result[0]["vol"] = volume;
     result[0]["diam"] = diamR / 100;
     result[0]["length"] = length;
@@ -1270,7 +1270,7 @@ export const PGCDiamIter = (soilList, units, dimensions, materials, NF) => {
       }
     }
     let Qestr = Qestructural(diamR, Fc, Fy, 1000);
-    let volume = Volume(diamR, length, 1000);
+    let volume = Volume(diamR / 100, length, 1);
     result[0]["vol"] = volume;
     result[0]["diam"] = diamR / 100;
     result[0]["length"] = length;

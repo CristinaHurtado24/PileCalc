@@ -7,9 +7,14 @@ export default function Materials(props) {
   const handleFcChange = (e) => {
     const { value } = e.target;
     const list = [...userMaterials];
-    const onlyNumbers = regex.test(value);
-    list[0]["errorMsg"] = !onlyNumbers;
     list[0]["fc"] = value;
+    const onlyNumbers = regex.test(value);
+    if (list[0]["e1"] == false && !onlyNumbers) {
+      list[0]["e1"] = true;
+    }
+    if (list[0]["e1"] == true && onlyNumbers) {
+      list[0]["e1"] = false;
+    }
     setUserMaterials(list);
   };
 
@@ -17,8 +22,13 @@ export default function Materials(props) {
     const { value } = e.target;
     const list = [...userMaterials];
     const onlyNumbers = regex.test(value);
-    list[0]["errorMsg"] = !onlyNumbers;
     list[0]["fy"] = value;
+    if (list[0]["e2"] == false && !onlyNumbers) {
+      list[0]["e2"] = true;
+    }
+    if (list[0]["e2"] == true && onlyNumbers) {
+      list[0]["e2"] = false;
+    }
     setUserMaterials(list);
   };
 
@@ -27,6 +37,34 @@ export default function Materials(props) {
       return "";
     } else {
       return value;
+    }
+  };
+  const handleRequired = (userMaterials) => {
+   
+    const list = [...userMaterials];
+    let count = 0;
+    let countE = 0;
+
+    if (list[0]["e1"] || list[0]["e2"]) {
+      countE += 1;
+    } else {
+      if (list[0]["fc"] == "" || list[0]["fy"] == "") {
+        count += 1;
+      }
+    }
+    if (count > 0) {
+      electronApi.notificationApi.sendNotification(
+        "Debe completar todos los campos"
+      );
+      return "";
+    }
+    if (countE > 0) {
+      electronApi.notificationApi.sendNotification(
+        "Por favor ingrese los datos correctamente"
+      );
+      return "";
+    } else {
+      return "";
     }
   };
 
@@ -70,12 +108,13 @@ export default function Materials(props) {
       </div>
       <div className={styles.errorDiv}>
         <label className={styles.error}>
-          {inputValidation(userMaterials[0]["errorMsg"])}
+          {inputValidation(userMaterials[0]["e1"] || userMaterials[0]["e2"])}
         </label>
       </div>
       <div className={styles.btn}>
         <button
           onClick={() => {
+            handleRequired(userMaterials);
             props.callback(userMaterials);
           }}
         >
