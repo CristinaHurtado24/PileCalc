@@ -1,9 +1,162 @@
-
-const { BrowserWindow, app, ipcMain, Notification } = require("electron");
+const {
+  BrowserWindow,
+  app,
+  ipcMain,
+  Notification,
+  Menu,
+  dialog,
+} = require("electron");
+const fs = require("fs");
 const path = require("path");
 
 const isDev = !app.isPackaged;
 let win;
+let active = false;
+
+console.log("active: " + active);
+
+ipcMain.on("save-file", (event, data) => {
+  dialog
+    .showSaveDialog(win, {
+      title: "Guardar archivo",
+      buttonLabel: "Guardar",
+      filters: [{ name: "Archivos de texto", extensions: ["pile"] }],
+    })
+    .then((result) => {
+      if (!result.canceled && result.filePath) {
+        const directory = path.dirname(result.filePath);
+        if (!fs.existsSync(directory)) {
+          fs.mkdirSync(directory, { recursive: true });
+        }
+        fs.writeFile(result.filePath, data, (err) => {
+          if (err) {
+            console.error("Error al guardar el archivo:", err);
+          } else {
+            console.log("Archivo guardado exitosamente:", result.filePath);
+          }
+        });
+      }
+    })
+    .catch((err) => {
+      console.error(
+        "Error al mostrar el cuadro de diálogo de guardar archivo:",
+        err
+      );
+    });
+});
+
+ipcMain.on("open-file", (event) => {
+  dialog
+    .showOpenDialog(win, {
+      title: "Abrir archivo",
+      buttonLabel: "Abrir",
+      filters: [{ name: "Archivos de texto", extensions: ["pile"] }],
+      properties: ["openFile"],
+    })
+    .then((result) => {
+      if (!result.canceled && result.filePaths.length > 0) {
+        const filePath = result.filePaths[0];
+        fs.readFile(filePath, "utf-8", (err, data) => {
+          if (err) {
+            console.error("Error al abrir el archivo:", err);
+          } else {
+            event.reply("opened-file", filePath, data); // Cambia "file-opened" por "opened-file"
+          }
+        });
+      }
+    })
+    .catch((err) => {
+      console.error(
+        "Error al mostrar el cuadro de diálogo de abrir archivo:",
+        err
+      );
+    });
+});
+
+// Definir la plantilla del menú
+const template = [
+  {
+    label: "Archivo",
+    submenu: [
+      {
+        label: "Guardar como",
+        accelerator: "CmdOrCtrl+N",
+        click: () => {
+          win.webContents.send("boolean-from-main", !active);
+        },
+      },
+      {
+        label: "Guardar",
+        accelerator: "CmdOrCtrl+N",
+        click: () => {
+          win.webContents.send("boolean-from-main", !active);
+        },
+      },
+      {
+        label: "Abrir",
+        accelerator: "CmdOrCtrl+O",
+        click: () => {
+          win.webContents.send("boolean-from-main2", !active);
+        },
+      },
+      { type: "separator" },
+      {
+        label: "Salir",
+        role: "quit",
+      },
+    ],
+  },
+  {
+    label: "Editar",
+    submenu: [
+      {
+        label: "Deshacer",
+        role: "undo",
+      },
+      {
+        label: "Rehacer",
+        role: "redo",
+      },
+      { type: "separator" },
+      {
+        label: "Cortar",
+        role: "cut",
+      },
+      {
+        label: "Copiar",
+        role: "copy",
+      },
+      {
+        label: "Pegar",
+        role: "paste",
+      },
+      {
+        label: "Seleccionar todo",
+        role: "selectAll",
+      },
+    ],
+  },
+  {
+    label: "Desarrollador",
+    submenu: [
+      {
+        label: "Herramientas de Desarrollo",
+        accelerator: "CmdOrCtrl+Shift+I",
+        click: () => {
+          win.webContents.toggleDevTools(); // Alternar las herramientas de desarrollo
+        },
+      },
+      { type: "separator" },
+      {
+        label: "Recargar",
+        accelerator: "CmdOrCtrl+R", // Atajo de teclado para recargar la ventana
+        click: () => {
+          win.reload(); // Método para recargar la ventana principal
+        },
+      },
+    ],
+  },
+];
 
 function createWindow() {
   win = new BrowserWindow({
@@ -20,6 +173,8 @@ function createWindow() {
     },
   });
 
+  const menu = Menu.buildFromTemplate(template);
+  Menu.setApplicationMenu(menu);
   win.loadFile("index.html");
 }
 
@@ -47,7 +202,7 @@ function createPopupWindow() {
 
   popupWindow.loadFile("popup.html");
   popupWindow.show();
-  
+
   popupWindow.on("closed", function () {
     popupWindow = null;
   });
@@ -64,5 +219,5 @@ app.on("window-all-closed", function () {
 });
 
 app.on("activate", function () {
-  if (mainWindow === null) createWindow();
+  if (win === null) createWindow();
 });

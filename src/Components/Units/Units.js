@@ -57,7 +57,6 @@ export default function Units(props) {
             <div className={styles.units_dropdown}>
               <select
                 className={styles.select_test}
-                defaultValue={"--"}
                 value={selectedUnits[0]["unitLabel"]}
                 onChange={(e) => handleChangedUnits(e)}
               >

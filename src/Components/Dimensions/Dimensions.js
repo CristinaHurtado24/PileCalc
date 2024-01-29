@@ -13,6 +13,7 @@ export default function Dimensions(props) {
     props.list[0]["diamIter"]
   );
 
+  console.log(solicitation[0]["errorMsg"]);
   const [checkedStateWoDim, setCheckedStateWoDim] = useState(
     props.list[0]["withoutDim"]
   );

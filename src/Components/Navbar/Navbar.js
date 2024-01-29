@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import styles from "./Navbar.modules.css";
 import Units from "../Units/Units";
 import Profile from "../Profile/Profile";
@@ -17,6 +17,8 @@ export default function Navbar(props) {
     { name: "Run" },
   ];
 
+  const [data, setData] = useState("");
+
   const [checkedState, setCheckedState] = useState(
     new Array(buttons.length).fill(false)
   );
@@ -33,6 +35,8 @@ export default function Navbar(props) {
     },
   ]);
 
+  let auxArray = [];
+
   const [materials, setMaterials] = useState([
     { fc: "", fy: "", e1: false, e2: false },
   ]);
@@ -44,22 +48,25 @@ export default function Navbar(props) {
   const [Qsol, setQsol] = useState([
     { Qsol: false, QsolValue: "", errorMsg: false },
   ]);
+
   const [soilList, setSoilList] = useState([
-    {
-      typeValue: "",
-      typeDescription: "",
-      espesor: "",
-      ngp: "",
-      peso: "",
-      cohesion: "",
-      phi: "",
-      isRelleno: false,
-      e1: false,
-      e2: false,
-      e3: false,
-      e4: false,
-      e5: false,
-    },
+    [
+      {
+        typeValue: "",
+        typeDescription: "",
+        espesor: "",
+        ngp: "",
+        peso: "",
+        cohesion: "",
+        phi: "",
+        isRelleno: false,
+        e1: false,
+        e2: false,
+        e3: false,
+        e4: false,
+        e5: false,
+      },
+    ],
   ]);
 
   const [unitsSelected, setUnitsSelected] = useState([
@@ -144,6 +151,97 @@ export default function Navbar(props) {
       console.log(error);
     }
   };
+
+  let variable = "";
+  const serializarObjetos = (objeto) => {
+    let v = "";
+    v += "[";
+    for (let i = 0; i < objeto.length; i++) {
+      v += JSON.stringify(objeto[i]);
+      v += ",";
+    }
+    v = v.slice(0, -1);
+    v += "]";
+    v += ",";
+
+    return v;
+  };
+
+  const returnJsonString = (
+    variable,
+    units,
+    method,
+    soil,
+    Nf,
+    dimensions,
+    solici,
+    materials
+  ) => {
+    console.log("returnJsonString: " + soil);
+    variable += serializarObjetos(units);
+
+    variable += serializarObjetos(method);
+
+    variable += serializarObjetos(soil);
+
+    variable += serializarObjetos(Nf);
+
+    variable += serializarObjetos(dimensions);
+
+    variable += serializarObjetos(solici);
+
+    variable += serializarObjetos(materials);
+
+    console.log("variable: " + variable);
+    return variable;
+  };
+  const serialization = () => {
+    const data = returnJsonString(
+      variable,
+      unitsSelected,
+      methodSelected,
+      soilList,
+      NF,
+      dimensionsConditions,
+      Qsol,
+      materials
+    );
+    setData(data);
+  };
+
+  console.log("data: " + data);
+
+  electronApi.receiveBool((event, booleano) => {
+    if (booleano) {
+      const serial = JSON.stringify([
+        unitsSelected,
+        methodSelected,
+        soilList,
+        NF,
+        dimensionsConditions,
+        Qsol,
+        materials,
+      ]);
+
+      electronApi.saveFile(serial);
+    }
+  });
+
+  electronApi.receiveBoolOpen((event, booleano) => {
+    if (booleano) {
+      electronApi.openFile();
+      electronApi.receiveFileData((filePath, fileData) => {
+        console.log("fileData: " + fileData);
+        setUnitsSelected(JSON.parse(fileData)[0]);
+        setMethodSelected(JSON.parse(fileData)[1]);
+        setSoilList(JSON.parse(fileData)[2]);
+        setNF(JSON.parse(fileData)[3]);
+        setDimensionsConditions(JSON.parse(fileData)[4]);
+        setQsol(JSON.parse(fileData)[5]);
+        setMaterials(JSON.parse(fileData)[6]);
+      });
+    }
+  });
 
   console.log(methodSelected);
 

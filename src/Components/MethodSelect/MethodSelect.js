@@ -60,7 +60,6 @@ export default function MethodSelect(props) {
             <div className={styles.dropdown}>
               <select
                 className={styles.select_test}
-                defaultValue={"4"}
                 value={selectedMethod[0]["methodValue"]}
                 onChange={(e) => handleOnChangeMethod(e)}
               >

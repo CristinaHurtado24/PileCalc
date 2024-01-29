@@ -163,21 +163,23 @@ export default function Profile(props) {
   const handleLayerAdd = () => {
     setSoilList([
       ...soilList,
-      {
-        typeValue: "",
-        typeDescription: "",
-        espesor: "",
-        ngp: "",
-        peso: "",
-        cohesion: "",
-        phi: "",
-        isRelleno: false,
-        e1: false,
-        e2: false,
-        e3: false,
-        e4: false,
-        e5: false,
-      },
+      [
+        {
+          typeValue: "",
+          typeDescription: "",
+          espesor: "",
+          ngp: "",
+          peso: "",
+          cohesion: "",
+          phi: "",
+          isRelleno: false,
+          e1: false,
+          e2: false,
+          e3: false,
+          e4: false,
+          e5: false,
+        },
+      ],
     ]);
   };
 
@@ -190,13 +192,13 @@ export default function Profile(props) {
   const handleEspesorChange = (e, index) => {
     const { value } = e.target;
     const list = [...soilList];
-    list[index]["espesor"] = value;
+    list[index][0]["espesor"] = value;
     const onlyNumbers = regex.test(value);
-    if (list[index]["e1"] == false && !onlyNumbers) {
-      list[index]["e1"] = true;
+    if (list[index][0]["e1"] == false && !onlyNumbers) {
+      list[index][0]["e1"] = true;
     }
-    if (list[index]["e1"] == true && onlyNumbers) {
-      list[index]["e1"] = false;
+    if (list[index][0]["e1"] == true && onlyNumbers) {
+      list[index][0]["e1"] = false;
     }
     setSoilList(list);
   };
@@ -204,13 +206,13 @@ export default function Profile(props) {
   const handlePesoChange = (e, index) => {
     const { value } = e.target;
     const list = [...soilList];
-    list[index]["peso"] = value;
+    list[index][0]["peso"] = value;
     const onlyNumbers = regex.test(value);
-    if (list[index]["e3"] == false && !onlyNumbers) {
-      list[index]["e3"] = true;
+    if (list[index][0]["e3"] == false && !onlyNumbers) {
+      list[index][0]["e3"] = true;
     }
     if (list[index]["e3"] == true && onlyNumbers) {
-      list[index]["e3"] = false;
+      list[index][0][0]["e3"] = false;
     }
     setSoilList(list);
   };
@@ -218,13 +220,13 @@ export default function Profile(props) {
   const handleNgpChange = (e, index) => {
     const { value } = e.target;
     const list = [...soilList];
-    list[index]["ngp"] = value;
+    list[index][0]["ngp"] = value;
     const onlyNumbers = regex.test(value);
-    if (list[index]["e2"] == false && !onlyNumbers) {
-      list[index]["e2"] = true;
+    if (list[index][0]["e2"] == false && !onlyNumbers) {
+      list[index][0]["e2"] = true;
     }
     if (list[index]["e2"] == true && onlyNumbers) {
-      list[index]["e2"] = false;
+      list[index][0]["e2"] = false;
     }
 
     setSoilList(list);
@@ -233,13 +235,13 @@ export default function Profile(props) {
   const handleCohesionChange = (e, index) => {
     const { value } = e.target;
     const list = [...soilList];
-    list[index]["cohesion"] = value;
+    list[index][0]["cohesion"] = value;
     const onlyNumbers = regex.test(value);
-    if (list[index]["e4"] == false && !onlyNumbers) {
-      list[index]["e4"] = true;
+    if (list[index][0]["e4"] == false && !onlyNumbers) {
+      list[index][0]["e4"] = true;
     }
-    if (list[index]["e4"] == true && onlyNumbers) {
-      list[index]["e4"] = false;
+    if (list[index][0]["e4"] == true && onlyNumbers) {
+      list[index][0]["e4"] = false;
     }
     setSoilList(list);
   };
@@ -273,13 +275,13 @@ export default function Profile(props) {
   const handlePhiChange = (e, index) => {
     const { value } = e.target;
     const list = [...soilList];
-    list[index]["phi"] = value;
+    list[index][0]["phi"] = value;
     const onlyNumbers = regex.test(value);
-    if (list[index]["e5"] == false && !onlyNumbers) {
-      list[index]["e5"] = true;
+    if (list[index][0]["e5"] == false && !onlyNumbers) {
+      list[index][0]["e5"] = true;
     }
-    if (list[index]["e5"] == true && onlyNumbers) {
-      list[index]["e5"] = false;
+    if (list[index][0]["e5"] == true && onlyNumbers) {
+      list[index][0]["e5"] = false;
     }
     setSoilList(list);
   };
@@ -287,15 +289,15 @@ export default function Profile(props) {
   const handleOnChangeSoil = (e, index) => {
     const value = e.target.value;
     const list = [...soilList];
-    list[index]["typeValue"] = value;
+    list[index][0]["typeValue"] = value;
     soilTypes.map((soil) => {
       if (soil.value == value) {
-        list[index]["typeDescription"] = soil.label;
+        list[index][0]["typeDescription"] = soil.label;
       }
       if (value == 1 || value == 2) {
-        list[index]["isRelleno"] = true;
+        list[index][0]["isRelleno"] = true;
       } else {
-        list[index]["isRelleno"] = false;
+        list[index][0]["isRelleno"] = false;
       }
     }, []);
     setSoilList(list);
@@ -307,20 +309,26 @@ export default function Profile(props) {
     let countE = 0;
     list.map((soil) => {
       console.log(soil);
-      if (soil["typeValue"] == 1 || soil["typeValue"] == 2) {
-        if (soil["espesor"] == "") {
+      if (soil[0]["typeValue"] == 1 || soil[0]["typeValue"] == 2) {
+        if (soil[0]["espesor"] == "") {
           count += 1;
         }
       }
-      if (soil["e1"] || soil["e2"] || soil["e3"] || soil["e4"] || soil["e5"]) {
+      if (
+        soil[0]["e1"] ||
+        soil[0]["e2"] ||
+        soil[0]["e3"] ||
+        soil[0]["e4"] ||
+        soil[0]["e5"]
+      ) {
         countE += 1;
       } else {
         if (
-          soil["espesor"] == "" ||
-          soil["ngp"] == "" ||
-          soil["peso"] == "" ||
-          soil["cohesion"] == "" ||
-          soil["phi"] == ""
+          soil[0]["espesor"] == "" ||
+          soil[0]["ngp"] == "" ||
+          soil[0]["peso"] == "" ||
+          soil[0]["cohesion"] == "" ||
+          soil[0]["phi"] == ""
         ) {
           count += 1;
         }
@@ -402,7 +410,6 @@ export default function Profile(props) {
                 <li>
                   <select
                     className={styles.select_test}
-                    defaultValue={"33"}
                     value={singleSoil.typeValue}
                     onChange={(e) => handleOnChangeSoil(e, index)}
                   >
