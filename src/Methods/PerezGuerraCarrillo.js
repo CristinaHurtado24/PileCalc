@@ -1,4 +1,4 @@
-import { sqrt, tan, pow, sin, unit } from "mathjs";
+import { sqrt, tan, pow, sin, unit, pi } from "mathjs";
 import { roundToCero } from "./CaquotKerisel";
 //Valores de Nq' para pilotes excavados
 const Nqp = [
@@ -414,7 +414,9 @@ export const MethodPGC = (
     Qp = (120 / (diameter * 100)) * Qp;
   }
 
-  Qadm = Qp / 3 + (Fs - Fsrelleno) / 2;
+  let ap = pi * pow(diameter / 2, 2);
+  let alat = 2 * pi * (diameter / 2) * Lefect;
+  Qadm = (Qp * ap) / 3 + ((Fs - Fsrelleno) * alat) / 2;
 
   return roundToCero(Qadm * factor4);
 };

@@ -18,19 +18,19 @@ export default function Profile(props) {
     },
     {
       value: "3",
-      label: "Grava Limpia (GP)",
+      label: "Grava mal gradada (GP)",
     },
     {
       value: "4",
-      label: "Grava Limpia (GW)",
+      label: "Grava bien gradada (GW)",
     },
     {
       value: "5",
-      label: "Arena Limpia (SP)",
+      label: "Arena mal gradada (SP)",
     },
     {
       value: "6",
-      label: "Arena Limpia (SW)",
+      label: "Arena bien gradada (SW)",
     },
     {
       value: "7",
@@ -50,90 +50,110 @@ export default function Profile(props) {
     },
     {
       value: "11",
-      label: "Materia orgánica",
+      label: "Materia orgánica (O)",
     },
     {
       value: "12",
-      label: "Grava Limosa (GP-GM)",
+      label: "Grava Limosa (GM)",
     },
     {
       value: "13",
-      label: "Grava Limosa (GW-GM)",
+      label: "Grava mal gradada limosa (GP-GM)",
     },
     {
       value: "14",
-      label: "Grava arcillosa (GP-GC)",
+      label: "Grava bien gradada limosa (GW-GM)",
     },
     {
       value: "15",
-      label: "Grava arcillosa (GW-GC)",
+      label: "Grava arcillosa (GC)",
     },
     {
       value: "16",
-      label: "Grava limo-arcillosa (GP-GM-GC)",
+      label: "Grava mal gradada arcillosa (GP-GC)",
     },
     {
       value: "17",
-      label: "Grava limo-arcillosa (GW-GM-GC)",
+      label: "Grava bien gradada arcillosa (GW-GC)",
     },
     {
       value: "18",
-      label: "Arena Limosa (SP-SM)",
+      label: "Grava limo-arcillosa (GM-GC)",
     },
     {
       value: "19",
-      label: "Arena Limosa (SW-SM)",
+      label: "Grava mal gradada limo-arcillosa (GP-GM-GC)",
     },
     {
       value: "20",
-      label: "Arena arcillosa (SP-SC)",
+      label: "Grava bien gradada limo-arcillosa (GW-GM-GC)",
     },
     {
       value: "21",
-      label: "Arena arcillosa (SW-SC)",
+      label: "Arena Limosa (SM)",
     },
     {
       value: "22",
-      label: "Arena limo-arcillosa (SP-SM-SC)",
+      label: "Arena mal gradada limosa (SP-SM)",
     },
     {
       value: "23",
-      label: "Arena limo-arcillosa (SW-SM-SC)",
+      label: "Arena bien gradada limosa (SW-SM)",
     },
     {
       value: "24",
-      label: "Limo arenoso (MS)",
+      label: "Arena arcillosa (SC)",
     },
     {
       value: "25",
-      label: "Limo arcilloso (MC)",
+      label: "Arena mal gradada arcillosa (SP-SC)",
     },
     {
       value: "26",
-      label: "Arcilla arenosa (CS)",
+      label: "Arena bien gradada arcillosa (SW-SC)",
     },
     {
       value: "27",
-      label: "Arcilla limosa (CM)",
+      label: "Arena limo-arcillosa (SM-SC)",
     },
     {
       value: "28",
-      label: "Esquisto (SR: Granular)",
+      label: "Arena mal gradada limo-arcillosa (SP-SM-SC)",
     },
     {
       value: "29",
-      label: "Esquisto (SR: Fino)",
+      label: "Arena bien gradada limo-arcillosa (SW-SM-SC)",
     },
     {
       value: "30",
-      label: "Gneiss",
+      label: "Limo arenoso (ML)",
     },
     {
       value: "31",
-      label: "Arenisca",
+      label: "Limo arcilloso (ML-CL)",
     },
     {
       value: "32",
+      label: "Arcilla arenosa (CL)",
+    },
+    {
+      value: "33",
+      label: "Esquisto (SR: Granular)",
+    },
+    {
+      value: "34",
+      label: "Esquisto (SR: Fino)",
+    },
+    {
+      value: "35",
+      label: "Gneiss",
+    },
+    {
+      value: "36",
+      label: "Arenisca",
+    },
+    {
+      value: "37",
       label: "Lutita",
     },
   ];
