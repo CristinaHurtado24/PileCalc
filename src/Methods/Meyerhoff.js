@@ -61,12 +61,11 @@ export const MeyerhoffKgfLen = (diam, length, soilList) => {
         soilList[i]["typeValue"] === "9" ||
         soilList[i]["typeValue"] === "10" ||
         soilList[i]["typeValue"] === "11" ||
-        soilList[i]["typeValue"] === "24" ||
-        soilList[i]["typeValue"] === "25" ||
-        soilList[i]["typeValue"] === "26" ||
-        soilList[i]["typeValue"] === "27" ||
-        soilList[i]["typeValue"] === "29" ||
-        soilList[i]["typeValue"] === "32")
+        soilList[i]["typeValue"] === "30" ||
+        soilList[i]["typeValue"] === "31" ||
+        soilList[i]["typeValue"] === "32" ||
+        soilList[i]["typeValue"] === "34" ||
+        soilList[i]["typeValue"] === "37")
     ) {
       return "No es recomendable utilizar el método de Meyerhof para un pilote que tenga suelo cohesivo en la punta. \n Por favor, seleccione otro método de cálculo.";
     }
