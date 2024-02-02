@@ -35,6 +35,7 @@ export default function Navbar(props) {
     },
   ]);
 
+  const [count, setCount] = useState(0);
   let auxArray = [];
 
   const [materials, setMaterials] = useState([
@@ -92,6 +93,7 @@ export default function Navbar(props) {
 
   const toMaterials = (list) => {
     try {
+      setCount(count + 1);
       setMaterials(list);
     } catch (error) {
       console.log("error in toMaterials");
@@ -101,6 +103,7 @@ export default function Navbar(props) {
 
   const toDimensions = (list, list2) => {
     try {
+      setCount(count + 1);
       setDimensionsConditions(list);
       setQsol(list2);
     } catch (error) {
@@ -122,6 +125,7 @@ export default function Navbar(props) {
 
   const toProfile = (list, list2) => {
     try {
+      setCount(count + 1);
       setSoilList(list);
       setNF(list2);
     } catch (error) {
@@ -134,6 +138,7 @@ export default function Navbar(props) {
 
   const toUnits = (list) => {
     try {
+      setCount(count + 1);
       setUnitsSelected(list);
     } catch (error) {
       console.log("error in toUnits");
@@ -143,8 +148,10 @@ export default function Navbar(props) {
 
   console.log(unitsSelected);
 
+  console.log("count: " + count);
   const toMethods = (list) => {
     try {
+      setCount(count + 1);
       setMethodSelected(list);
     } catch (error) {
       console.log("error in toUnits");
@@ -222,7 +229,7 @@ export default function Navbar(props) {
         Qsol,
         materials,
       ]);
-
+      console.log("serial: " + serial);
       electronApi.saveFile(serial);
     }
   });
@@ -274,6 +281,7 @@ export default function Navbar(props) {
         if (index === 1 && checkedState[index]) {
           return (
             <MethodSelect
+              count={count}
               list={methodSelected}
               units={unitsSelected}
               callback={toMethods}
@@ -288,6 +296,7 @@ export default function Navbar(props) {
         ) {
           return (
             <Profile
+              count={count}
               soil={soilList}
               NF={NF}
               units={unitsSelected}
@@ -313,6 +322,7 @@ export default function Navbar(props) {
         ) {
           return (
             <Dimensions
+              count={count}
               list={dimensionsConditions}
               units={unitsSelected}
               solicitation={Qsol}
@@ -351,6 +361,7 @@ export default function Navbar(props) {
         ) {
           return (
             <Run
+              count={count}
               soilList={soilList}
               units={unitsSelected}
               dimensions={dimensionsConditions}

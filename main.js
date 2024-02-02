@@ -16,6 +16,7 @@ let active = false;
 console.log("active: " + active);
 
 ipcMain.on("save-file", (event, data) => {
+  console.log("data1: " + data);
   dialog
     .showSaveDialog(win, {
       title: "Guardar archivo",
@@ -28,6 +29,7 @@ ipcMain.on("save-file", (event, data) => {
         if (!fs.existsSync(directory)) {
           fs.mkdirSync(directory, { recursive: true });
         }
+        console.log("data2: " + data);
         fs.writeFile(result.filePath, data, (err) => {
           if (err) {
             console.error("Error al guardar el archivo:", err);

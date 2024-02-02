@@ -40,7 +40,6 @@ export default function Materials(props) {
     }
   };
   const handleRequired = (userMaterials) => {
-   
     const list = [...userMaterials];
     let count = 0;
     let countE = 0;
