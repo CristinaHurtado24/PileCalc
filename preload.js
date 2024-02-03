@@ -16,7 +16,6 @@ contextBridge.exposeInMainWorld("electronApi", {
     ipcRenderer.on("boolean-from-main", (event, booleano) => {
       // Llama al callback proporcionado y pasa los datos recibidos
       callback(event, booleano);
-      event.preventDefault();
     });
   },
 
@@ -24,8 +23,6 @@ contextBridge.exposeInMainWorld("electronApi", {
     ipcRenderer.on("boolean-from-main2", (event, booleano) => {
       // Llama al callback proporcionado y pasa los datos recibidos
       callback(event, booleano);
-
-      event.preventDefault();
     });
   },
 

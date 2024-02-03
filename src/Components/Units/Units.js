@@ -1,7 +1,8 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
+import { ProjectContext } from "../../Context/ProjectContext";
 import styles from "./Units.modules.css";
 
-export default function Units(props) {
+export default function Units() {
   //AGREGAR CAMBIO DE UNIDADES
   const units = [
     {
@@ -17,35 +18,40 @@ export default function Units(props) {
       label: "Ton y m",
     },
   ];
-  const [selectedUnits, setSelectedUnits] = useState(props.list);
-
+  const { projectValues, updateProjectValues } = useContext(ProjectContext);
+  const [selectedValue, setSelectedValue] = useState(
+    projectValues.units.unitValue
+  );
+  const [selectedUnits, setSelectedUnits] = useState(projectValues.units);
+  const handleChanges = (newValues) => {
+    updateProjectValues({ ...projectValues, units: newValues });
+  };
   const handleChangedUnits = (e) => {
     let value = e.target.value;
-
-    const list = [...selectedUnits];
+    setSelectedValue(value);
     units.map((unit) => {
       if (unit.value === value) {
-        list[0]["unitValue"] = unit.value;
-        list[0]["unitLabel"] = unit.label;
+        selectedUnits["unitValue"] = unit.value;
+        selectedUnits["unitLabel"] = unit.label;
       }
     });
-    if (value === "Kgf y cm") {
-      list[0]["unitValue"] = "1";
-      list[0]["unitLabel"] = "Kgf y cm";
-      list[0]["unitForce"] = "kgf";
-      list[0]["unitLength"] = "cm";
-      list[0]["unitPeso"] = "kgf/cm3";
-      list[0]["unitCohesion"] = "kgf/cm2";
-    } else if (value === "Ton y m") {
-      list[0]["unitValue"] = "2";
-      list[0]["unitLabel"] = "Ton y m";
-      list[0]["unitForce"] = "ton";
-      list[0]["unitLength"] = "m";
-      list[0]["unitPeso"] = "ton/ m3";
-      list[0]["unitCohesion"] = "ton/ m2";
+    if (value === "1") {
+      selectedUnits["unitValue"] = "1";
+      selectedUnits["unitLabel"] = "Kgf y cm";
+      selectedUnits["unitForce"] = "kgf";
+      selectedUnits["unitLength"] = "cm";
+      selectedUnits["unitPeso"] = "kgf/cm3";
+      selectedUnits["unitCohesion"] = "kgf/cm2";
+    } else if (value === "2") {
+      selectedUnits["unitValue"] = "2";
+      selectedUnits["unitLabel"] = "Ton y m";
+      selectedUnits["unitForce"] = "ton";
+      selectedUnits["unitLength"] = "m";
+      selectedUnits["unitPeso"] = "ton/ m3";
+      selectedUnits["unitCohesion"] = "ton/ m2";
     }
 
-    setSelectedUnits(list);
+    setSelectedUnits(selectedUnits);
   };
 
   return (
@@ -57,11 +63,11 @@ export default function Units(props) {
             <div className={styles.units_dropdown}>
               <select
                 className={styles.select_test}
-                value={selectedUnits[0]["unitLabel"]}
+                value={selectedValue}
                 onChange={(e) => handleChangedUnits(e)}
               >
                 {units.map((unit) => (
-                  <option key={unit.value} value={unit.label}>
+                  <option key={unit.value} value={unit.value}>
                     {unit.label}
                   </option>
                 ))}
@@ -73,7 +79,8 @@ export default function Units(props) {
               <button
                 onClick={(e) => {
                   e.preventDefault();
-                  props.callback(selectedUnits);
+                  handleChanges(selectedUnits);
+                  debugger;
                 }}
               >
                 Aceptar

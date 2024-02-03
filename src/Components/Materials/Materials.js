@@ -1,35 +1,38 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
+import { ProjectContext } from "../../Context/ProjectContext";
 import styles from "./Materials.modules.css";
 
-export default function Materials(props) {
-  const [userMaterials, setUserMaterials] = useState(props.list);
+export default function Materials() {
+  const { projectValues, updateProjectValues } = useContext(ProjectContext);
+  const [userMaterials, setUserMaterials] = useState(projectValues.materials);
 
+  const handleChanges = (newValues) => {
+    updateProjectValues({ ...projectValues, materials: newValues });
+  };
   const handleFcChange = (e) => {
     const { value } = e.target;
-    const list = [...userMaterials];
-    list[0]["fc"] = value;
+    const updatedMaterials = { ...userMaterials, fc: value };
     const onlyNumbers = regex.test(value);
-    if (list[0]["e1"] == false && !onlyNumbers) {
-      list[0]["e1"] = true;
+    if (userMaterials["e1"] == false && !onlyNumbers) {
+      updatedMaterials["e1"] = true;
     }
-    if (list[0]["e1"] == true && onlyNumbers) {
-      list[0]["e1"] = false;
+    if (userMaterials["e1"] == true && onlyNumbers) {
+      updatedMaterials["e1"] = false;
     }
-    setUserMaterials(list);
+    setUserMaterials(updatedMaterials);
   };
 
   const handleFyChange = (e) => {
     const { value } = e.target;
-    const list = [...userMaterials];
     const onlyNumbers = regex.test(value);
-    list[0]["fy"] = value;
-    if (list[0]["e2"] == false && !onlyNumbers) {
-      list[0]["e2"] = true;
+    const updatedMaterials = { ...userMaterials, fy: value };
+    if (userMaterials["e2"] == false && !onlyNumbers) {
+      updatedMaterials["e2"] = true;
     }
-    if (list[0]["e2"] == true && onlyNumbers) {
-      list[0]["e2"] = false;
+    if (userMaterials["e2"] == true && onlyNumbers) {
+      updatedMaterials["e2"] = false;
     }
-    setUserMaterials(list);
+    setUserMaterials(updatedMaterials);
   };
 
   const showValue = (value) => {
@@ -40,14 +43,13 @@ export default function Materials(props) {
     }
   };
   const handleRequired = (userMaterials) => {
-    const list = [...userMaterials];
     let count = 0;
     let countE = 0;
 
-    if (list[0]["e1"] || list[0]["e2"]) {
+    if (userMaterials["e1"] || userMaterials["e2"]) {
       countE += 1;
     } else {
-      if (list[0]["fc"] == "" || list[0]["fy"] == "") {
+      if (userMaterials["fc"] == "" || userMaterials["fy"] == "") {
         count += 1;
       }
     }
@@ -89,7 +91,7 @@ export default function Materials(props) {
               <input
                 className={styles.input_fc}
                 onChange={(e) => handleFcChange(e)}
-                value={showValue(userMaterials[0]["fc"])}
+                value={showValue(userMaterials["fc"])}
               ></input>
             </div>
           </li>
@@ -99,7 +101,7 @@ export default function Materials(props) {
               <input
                 className={styles.input_fy}
                 onChange={(e) => handleFyChange(e)}
-                value={showValue(userMaterials[0]["fy"])}
+                value={showValue(userMaterials["fy"])}
               ></input>
             </div>
           </li>
@@ -107,14 +109,14 @@ export default function Materials(props) {
       </div>
       <div className={styles.errorDiv}>
         <label className={styles.error}>
-          {inputValidation(userMaterials[0]["e1"] || userMaterials[0]["e2"])}
+          {inputValidation(userMaterials["e1"] || userMaterials["e2"])}
         </label>
       </div>
       <div className={styles.btn}>
         <button
           onClick={() => {
             handleRequired(userMaterials);
-            props.callback(userMaterials);
+            handleChanges(userMaterials);
           }}
         >
           Aceptar

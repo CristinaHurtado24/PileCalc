@@ -1,8 +1,9 @@
-import React, { useState } from "react";
-import Select from "react-select";
+import React, { useState, useContext } from "react";
+import { ProjectContext } from "../../Context/ProjectContext";
 import styles from "./Profile.modules.css";
 
-export default function Profile(props) {
+export default function Profile() {
+  const { projectValues, updateProjectValues } = useContext(ProjectContext);
   const soilTypes = [
     {
       value: "0",
@@ -18,19 +19,19 @@ export default function Profile(props) {
     },
     {
       value: "3",
-      label: "Grava Limpia (GP)",
+      label: "Grava mal gradada (GP)",
     },
     {
       value: "4",
-      label: "Grava Limpia (GW)",
+      label: "Grava bien gradada (GW)",
     },
     {
       value: "5",
-      label: "Arena Limpia (SP)",
+      label: "Arena mal gradada (SP)",
     },
     {
       value: "6",
-      label: "Arena Limpia (SW)",
+      label: "Arena bien gradada (SW)",
     },
     {
       value: "7",
@@ -50,101 +51,117 @@ export default function Profile(props) {
     },
     {
       value: "11",
-      label: "Materia orgánica",
+      label: "Materia orgánica (O)",
     },
     {
       value: "12",
-      label: "Grava Limosa (GP-GM)",
+      label: "Grava Limosa (GM)",
     },
     {
       value: "13",
-      label: "Grava Limosa (GW-GM)",
+      label: "Grava mal gradada limosa (GP-GM)",
     },
     {
       value: "14",
-      label: "Grava arcillosa (GP-GC)",
+      label: "Grava bien gradada limosa (GW-GM)",
     },
     {
       value: "15",
-      label: "Grava arcillosa (GW-GC)",
+      label: "Grava arcillosa (GC)",
     },
     {
       value: "16",
-      label: "Grava limo-arcillosa (GP-GM-GC)",
+      label: "Grava mal gradada arcillosa (GP-GC)",
     },
     {
       value: "17",
-      label: "Grava limo-arcillosa (GW-GM-GC)",
+      label: "Grava bien gradada arcillosa (GW-GC)",
     },
     {
       value: "18",
-      label: "Arena Limosa (SP-SM)",
+      label: "Grava limo-arcillosa (GM-GC)",
     },
     {
       value: "19",
-      label: "Arena Limosa (SW-SM)",
+      label: "Grava mal gradada limo-arcillosa (GP-GM-GC)",
     },
     {
       value: "20",
-      label: "Arena arcillosa (SP-SC)",
+      label: "Grava bien gradada limo-arcillosa (GW-GM-GC)",
     },
     {
       value: "21",
-      label: "Arena arcillosa (SW-SC)",
+      label: "Arena Limosa (SM)",
     },
     {
       value: "22",
-      label: "Arena limo-arcillosa (SP-SM-SC)",
+      label: "Arena mal gradada limosa (SP-SM)",
     },
     {
       value: "23",
-      label: "Arena limo-arcillosa (SW-SM-SC)",
+      label: "Arena bien gradada limosa (SW-SM)",
     },
     {
       value: "24",
-      label: "Limo arenoso (MS)",
+      label: "Arena arcillosa (SC)",
     },
     {
       value: "25",
-      label: "Limo arcilloso (MC)",
+      label: "Arena mal gradada arcillosa (SP-SC)",
     },
     {
       value: "26",
-      label: "Arcilla arenosa (CS)",
+      label: "Arena bien gradada arcillosa (SW-SC)",
     },
     {
       value: "27",
-      label: "Arcilla limosa (CM)",
+      label: "Arena limo-arcillosa (SM-SC)",
     },
     {
       value: "28",
-      label: "Esquisto (SR: Granular)",
+      label: "Arena mal gradada limo-arcillosa (SP-SM-SC)",
     },
     {
       value: "29",
-      label: "Esquisto (SR: Fino)",
+      label: "Arena bien gradada limo-arcillosa (SW-SM-SC)",
     },
     {
       value: "30",
-      label: "Gneiss",
+      label: "Limo arenoso (ML)",
     },
     {
       value: "31",
-      label: "Arenisca",
+      label: "Limo arcilloso (ML-CL)",
     },
     {
       value: "32",
+      label: "Arcilla arenosa (CL)",
+    },
+    {
+      value: "33",
+      label: "Esquisto (SR: Granular)",
+    },
+    {
+      value: "34",
+      label: "Esquisto (SR: Fino)",
+    },
+    {
+      value: "35",
+      label: "Gneiss",
+    },
+    {
+      value: "36",
+      label: "Arenisca",
+    },
+    {
+      value: "37",
       label: "Lutita",
     },
   ];
-  const [soilList, setSoilList] = useState(props.soil);
-  const [NF, setNF] = useState(props.NF);
-  const [checkedNF, setCheckedNF] = useState(props.NF[0]["NF"]);
-  const [units, setUnits] = useState(props.units);
-  const [selectedValue, setSelectedValue] = useState(0); //Almacena valor del dropdown
-  const [changedIndex, setChangedIndex] = useState(0); //Almacena el indice del dropdown que se cambio
-
-  const [changedValue, setChangedValue] = useState(false);
+  const [soilList, setSoilList] = useState(projectValues.soilList);
+  const [NF, setNF] = useState(projectValues.freatico);
+  const [checkedNF, setCheckedNF] = useState(projectValues.freatico["NF"]);
+  const [units, setUnits] = useState(projectValues.units);
 
   //funcion regex para validar que solo se ingresen numeros positivos y con punto como separador decimal
   const regex = /^[0-9]*[.]?[0-9]*$/;
@@ -161,44 +178,45 @@ export default function Profile(props) {
   };
 
   const handleLayerAdd = () => {
-    setSoilList([
+    const updatedSoilList = [
       ...soilList,
-      [
-        {
-          typeValue: "",
-          typeDescription: "",
-          espesor: "",
-          ngp: "",
-          peso: "",
-          cohesion: "",
-          phi: "",
-          isRelleno: false,
-          e1: false,
-          e2: false,
-          e3: false,
-          e4: false,
-          e5: false,
-        },
-      ],
-    ]);
+      {
+        typeValue: "",
+        typeDescription: "",
+        espesor: "",
+        ngp: "",
+        peso: "",
+        cohesion: "",
+        phi: "",
+        isRelleno: false,
+        e1: false,
+        e2: false,
+        e3: false,
+        e4: false,
+        e5: false,
+      },
+    ];
+    setSoilList(updatedSoilList);
+    updateProjectValues({ ...projectValues, soilList: updatedSoilList });
   };
 
   const handleLayerRemove = (index) => {
-    const list = [...soilList];
-    list.splice(index, 1);
-    setSoilList(list);
+    const updatedSoilList = [...soilList];
+    updatedSoilList.splice(index, 1);
+    setSoilList(updatedSoilList);
+    updateProjectValues({ ...projectValues, soilList: updatedSoilList });
   };
 
   const handleEspesorChange = (e, index) => {
     const { value } = e.target;
     const list = [...soilList];
-    list[index][0]["espesor"] = value;
+    list[index]["espesor"] = value;
     const onlyNumbers = regex.test(value);
-    if (list[index][0]["e1"] == false && !onlyNumbers) {
-      list[index][0]["e1"] = true;
+    if (list[index]["e1"] == false && !onlyNumbers) {
+      list[index]["e1"] = true;
     }
-    if (list[index][0]["e1"] == true && onlyNumbers) {
-      list[index][0]["e1"] = false;
+    if (list[index]["e1"] == true && onlyNumbers) {
+      list[index]["e1"] = false;
     }
     setSoilList(list);
   };
@@ -206,13 +224,13 @@ export default function Profile(props) {
   const handlePesoChange = (e, index) => {
     const { value } = e.target;
     const list = [...soilList];
-    list[index][0]["peso"] = value;
+    list[index]["peso"] = value;
     const onlyNumbers = regex.test(value);
-    if (list[index][0]["e3"] == false && !onlyNumbers) {
-      list[index][0]["e3"] = true;
+    if (list[index]["e3"] == false && !onlyNumbers) {
+      list[index]["e3"] = true;
     }
     if (list[index]["e3"] == true && onlyNumbers) {
-      list[index][0][0]["e3"] = false;
+      list[index]["e3"] = false;
     }
     setSoilList(list);
   };
@@ -220,13 +238,13 @@ export default function Profile(props) {
   const handleNgpChange = (e, index) => {
     const { value } = e.target;
     const list = [...soilList];
-    list[index][0]["ngp"] = value;
+    list[index]["ngp"] = value;
     const onlyNumbers = regex.test(value);
-    if (list[index][0]["e2"] == false && !onlyNumbers) {
-      list[index][0]["e2"] = true;
+    if (list[index]["e2"] == false && !onlyNumbers) {
+      list[index]["e2"] = true;
     }
     if (list[index]["e2"] == true && onlyNumbers) {
-      list[index][0]["e2"] = false;
+      list[index]["e2"] = false;
     }
 
     setSoilList(list);
@@ -235,69 +253,74 @@ export default function Profile(props) {
   const handleCohesionChange = (e, index) => {
     const { value } = e.target;
     const list = [...soilList];
-    list[index][0]["cohesion"] = value;
+    list[index]["cohesion"] = value;
     const onlyNumbers = regex.test(value);
-    if (list[index][0]["e4"] == false && !onlyNumbers) {
-      list[index][0]["e4"] = true;
+    if (list[index]["e4"] == false && !onlyNumbers) {
+      list[index]["e4"] = true;
     }
-    if (list[index][0]["e4"] == true && onlyNumbers) {
-      list[index][0]["e4"] = false;
+    if (list[index]["e4"] == true && onlyNumbers) {
+      list[index]["e4"] = false;
     }
     setSoilList(list);
   };
 
   const handleNFValue = (e) => {
     const { value } = e.target;
-    const list = [...NF];
-    list[0]["NFStart"] = value;
+
+    const updatedNF = { ...NF, NFStart: value };
     const onlyNumbers = regex.test(value);
-    if (list[0]["errorMsg"] == false && !onlyNumbers) {
-      list[0]["errorMsg"] = true;
+    if (NF["errorMsg"] == false && !onlyNumbers) {
+      updatedNF["errorMsg"] = true;
     }
-    if (list[0]["errorMsg"] == true && onlyNumbers) {
-      list[0]["errorMsg"] = false;
+    if (NF["errorMsg"] == true && onlyNumbers) {
+      updatedNF["errorMsg"] = false;
     }
-    setSoilList(list);
+
+    setNF(updatedNF);
+    updateProjectValues({ ...projectValues, freatico: updatedNF });
   };
 
   const handleOnChangeNFCheck = (e) => {
-    const list = [...NF];
     if (!checkedNF) {
-      list[0]["NF"] = !checkedNF;
+      const updatedNF = { ...NF, NF: !checkedNF };
       setCheckedNF(!checkedNF);
+      setNF(updatedNF);
+      updateProjectValues({ ...projectValues, freatico: updatedNF });
     } else {
-      list[0]["NF"] = !checkedNF;
+      const updatedNF = { ...NF, NF: !checkedNF };
       setCheckedNF(!checkedNF);
+      setNF(updatedNF);
+      updateProjectValues({ ...projectValues, freatico: updatedNF });
     }
-    setNF(list);
   };
 
   const handlePhiChange = (e, index) => {
     const { value } = e.target;
     const list = [...soilList];
-    list[index][0]["phi"] = value;
+    list[index]["phi"] = value;
     const onlyNumbers = regex.test(value);
-    if (list[index][0]["e5"] == false && !onlyNumbers) {
-      list[index][0]["e5"] = true;
+    if (list[index]["e5"] == false && !onlyNumbers) {
+      list[index]["e5"] = true;
     }
-    if (list[index][0]["e5"] == true && onlyNumbers) {
-      list[index][0]["e5"] = false;
+    if (list[index]["e5"] == true && onlyNumbers) {
+      list[index]["e5"] = false;
     }
     setSoilList(list);
   };
 
   const handleOnChangeSoil = (e, index) => {
+    debugger;
     const value = e.target.value;
     const list = [...soilList];
-    list[index][0]["typeValue"] = value;
+    list[index]["typeValue"] = value;
     soilTypes.map((soil) => {
       if (soil.value == value) {
-        list[index][0]["typeDescription"] = soil.label;
+        list[index]["typeDescription"] = soil.label;
       }
       if (value == 1 || value == 2) {
-        list[index][0]["isRelleno"] = true;
+        list[index]["isRelleno"] = true;
       } else {
-        list[index][0]["isRelleno"] = false;
+        list[index]["isRelleno"] = false;
       }
     }, []);
     setSoilList(list);
@@ -309,32 +332,26 @@ export default function Profile(props) {
     let countE = 0;
     list.map((soil) => {
       console.log(soil);
-      if (soil[0]["typeValue"] == 1 || soil[0]["typeValue"] == 2) {
-        if (soil[0]["espesor"] == "") {
+      if (soil["typeValue"] == 1 || soil["typeValue"] == 2) {
+        if (soil["espesor"] == "") {
           count += 1;
         }
       }
-      if (
-        soil[0]["e1"] ||
-        soil[0]["e2"] ||
-        soil[0]["e3"] ||
-        soil[0]["e4"] ||
-        soil[0]["e5"]
-      ) {
+      if (soil["e1"] || soil["e2"] || soil["e3"] || soil["e4"] || soil["e5"]) {
         countE += 1;
       } else {
         if (
-          soil[0]["espesor"] == "" ||
-          soil[0]["ngp"] == "" ||
-          soil[0]["peso"] == "" ||
-          soil[0]["cohesion"] == "" ||
-          soil[0]["phi"] == ""
+          soil["espesor"] == "" ||
+          soil["ngp"] == "" ||
+          soil["peso"] == "" ||
+          soil["cohesion"] == "" ||
+          soil["phi"] == ""
         ) {
           count += 1;
         }
       }
     });
-    if (NF[0]["NF"] && NF[0]["NFStart"] == "") {
+    if (NF["NF"] && NF["NFStart"] == "") {
       count += 1;
     }
     if (count > 0) {
@@ -353,6 +370,10 @@ export default function Profile(props) {
     }
   };
 
+  const handleChanges = (newNf, newSoilList) => {
+    updateProjectValues({ ...projectValues, freatico: newNf });
+    updateProjectValues({ ...projectValues, soilList: newSoilList });
+  };
   return (
     <div className={styles.div_container}>
       <div className={styles.form}>
@@ -376,7 +397,7 @@ export default function Profile(props) {
             </li>
             <li>
               <label className={styles.phi}>Φ </label>
-              <label className={styles.uPhi}>({units[0]["unitGrade"]})</label>
+              <label className={styles.uPhi}>({units["unitGrade"]})</label>
             </li>
           </ul>
         </div>
@@ -386,19 +407,17 @@ export default function Profile(props) {
               <label className={styles.uType}></label>
             </li>
             <li>
-              <label className={styles.uEspesor}>
-                ({units[0]["unitLength"]})
-              </label>
+              <label className={styles.uEspesor}>({units["unitLength"]})</label>
             </li>
             <li>
               <label className={styles.uNgp}></label>
             </li>
             <li>
-              <label className={styles.uPeso}>({units[0]["unitPeso"]})</label>
+              <label className={styles.uPeso}>({units["unitPeso"]})</label>
             </li>
             <li>
               <label className={styles.uCohesion}>
-                ({units[0]["unitCohesion"]})
+                ({units["unitCohesion"]})
               </label>
             </li>
           </ul>
@@ -504,26 +523,26 @@ export default function Profile(props) {
             type="checkbox"
             name="NivelFreatico"
             value="NivelFreatico"
-            checked={NF[0]["NF"]}
+            checked={NF["NF"]}
             onChange={handleOnChangeNFCheck}
           />
           <label>Presencia de Nivel Freático</label>
         </div>
         <div className={styles.NFInput}>
           <label className={styles.NfUbic}>
-            Ubicación ({units[0]["unitLength"]}):{" "}
+            Ubicación ({units["unitLength"]}):{" "}
           </label>
           <input
             className={styles.inputs}
             disabled={!checkedNF}
-            value={NF[0]["NFStart"]}
+            value={NF["NFStart"]}
             onChange={(e) => handleNFValue(e)}
           ></input>
         </div>
       </div>
       <div className={styles.errorDiv}>
         <label className={styles.error}>
-          {inputValidation(NF[0]["errorMsg"])}
+          {inputValidation(NF["errorMsg"])}
         </label>
       </div>
 
@@ -542,7 +561,8 @@ export default function Profile(props) {
                 className={styles.addBtn}
                 onClick={() => {
                   handleRequired(soilList, NF);
-                  props.callback(soilList, NF);
+                  handleChanges(NF, soilList);
+                  debugger;
                 }}
               >
                 Aceptar

@@ -1,11 +1,15 @@
-import React, { useState } from "react";
-import Select from "react-select";
+import React, { useState, useContext } from "react";
+import { ProjectContext } from "../../Context/ProjectContext";
 import styles from "./MethodSelect.modules.css";
 
-export default function MethodSelect(props) {
-  const [selectedMethod, setSelectedMethod] = useState(props.list);
+export default function MethodSelect() {
+  const { projectValues, updateProjectValues } = useContext(ProjectContext);
+  const [selectedMethod, setSelectedMethod] = useState(projectValues.methods);
   const [checkedComparison, setCheckedComparison] = useState(
-    props.list[0]["comparison"]
+    projectValues.methods["comparison"]
+  );
+  const [selectedValue, setSelectedValue] = useState(
+    projectValues.methods.methodValue
   );
 
   const methods = [
@@ -28,29 +32,31 @@ export default function MethodSelect(props) {
   ];
 
   const handleOnChangeCompar = (e) => {
-    const list = [...selectedMethod];
     if (!checkedComparison) {
-      list[0]["comparison"] = !checkedComparison;
+      selectedMethod["comparison"] = !checkedComparison;
       setCheckedComparison(!checkedComparison);
     } else {
-      list[0]["comparison"] = !checkedComparison;
+      selectedMethod["comparison"] = !checkedComparison;
       setCheckedComparison(!checkedComparison);
     }
-    setSelectedMethod(list);
+    setSelectedMethod(selectedMethod);
   };
 
   const handleOnChangeMethod = (e) => {
     let value = e.target.value;
-    const list = [...selectedMethod];
+    setSelectedValue(value);
     methods.map((method) => {
       if (method.value === value) {
-        list[0]["methodValue"] = method.value;
-        list[0]["methodLabel"] = method.label;
+        selectedMethod["methodValue"] = method.value;
+        selectedMethod["methodLabel"] = method.label;
       }
     });
-    setSelectedMethod(list);
+    setSelectedMethod(selectedMethod);
   };
 
+  const handleChanges = (newValues) => {
+    updateProjectValues({ ...projectValues, methods: newValues });
+  };
   return (
     <div className={styles.container}>
       <h3>Seleccione un método de cálculo</h3>
@@ -60,7 +66,7 @@ export default function MethodSelect(props) {
             <div className={styles.dropdown}>
               <select
                 className={styles.select_test}
-                value={selectedMethod[0]["methodValue"]}
+                value={selectedValue}
                 onChange={(e) => handleOnChangeMethod(e)}
               >
                 {methods.map((method) => (
@@ -77,7 +83,7 @@ export default function MethodSelect(props) {
                 type="checkbox"
                 name="comparacion"
                 value="comparacion"
-                checked={selectedMethod[0]["comparison"]}
+                checked={selectedMethod["comparison"]}
                 onChange={handleOnChangeCompar}
               />
               <label>Mostrar comparación con otros métodos</label>
@@ -88,7 +94,8 @@ export default function MethodSelect(props) {
               <button
                 onClick={(e) => {
                   e.preventDefault();
-                  props.callback(selectedMethod);
+                  handleChanges(selectedMethod);
+                  debugger;
                 }}
               >
                 Aceptar

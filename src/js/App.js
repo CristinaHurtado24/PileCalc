@@ -1,14 +1,15 @@
-import React, { useState } from "react";
+import React from "react";
 import Navbar from "../Components/Navbar/Navbar";
-import Scene from "../Components/3dModel/Scene";
-import graphicStyles from "../Components/3dModel/3dModel.modules.css";
+import FHNavbar from "../Components/FileHandling/FHNavbar";
+import ProjectContextProvider from "../Context/ProjectContext";
 
 export default function App() {
-  const [data, setData] = useState([]);
-
   return (
     <>
-      <Navbar />
+      <ProjectContextProvider>
+        <FHNavbar />
+        <Navbar />
+      </ProjectContextProvider>
     </>
   );
 }

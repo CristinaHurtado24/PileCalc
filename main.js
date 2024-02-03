@@ -11,9 +11,6 @@ const path = require("path");
 
 const isDev = !app.isPackaged;
 let win;
-let active = false;
-
-console.log("active: " + active);
 
 ipcMain.on("save-file", (event, data) => {
   console.log("data1: " + data);
@@ -81,30 +78,8 @@ const template = [
     label: "Archivo",
     submenu: [
       {
-        label: "Guardar como",
+        label: "Nuevo Proyecto",
         accelerator: "CmdOrCtrl+N",
-        click: () => {
-          win.webContents.send("boolean-from-main", !active);
-        },
-      },
-      {
-        label: "Guardar",
-        accelerator: "CmdOrCtrl+N",
-        click: () => {
-          win.webContents.send("boolean-from-main", !active);
-        },
-      },
-      {
-        label: "Abrir",
-        accelerator: "CmdOrCtrl+O",
-        click: () => {
-          win.webContents.send("boolean-from-main2", !active);
-        },
-      },
-      { type: "separator" },
-      {
-        label: "Salir",
-        role: "quit",
       },
     ],
   },

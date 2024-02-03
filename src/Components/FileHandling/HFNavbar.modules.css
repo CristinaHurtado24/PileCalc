@@ -1,0 +1,26 @@
+.container{
+    background-color: #dbdbdb;
+    height: 2em;
+    margin-top: -1em;
+}
+.buttons{
+    margin-bottom: .5em;
+
+}
+.list {
+    display: flex;
+    align-content: center;
+    align-items: center;
+    list-style: none;
+
+}
+.marg {
+    margin-top: .55em;
+    margin-right: 5em;
+}
+
+.marg button {
+    background-color: transparent;
+        border: none;
+    cursor: pointer;
+}
