@@ -127,12 +127,12 @@ export default function Dimensions() {
 
   const handleOnChangeQsol = (e) => {
     const updatedSoli = { ...solicitation, Qsol: !checkedSoli };
+    setSolicitation(updatedSoli);
     if (!checkedSoli) {
       setCheckedSoli(!checkedSoli);
     } else {
       setCheckedSoli(!checkedSoli);
     }
-    setSolicitation(updatedSoli);
   };
 
   const handleOnChangeQsolValue = (e) => {
@@ -140,10 +140,9 @@ export default function Dimensions() {
     const onlyNumbers = regex.test(value);
     const updatedSoli = {
       ...solicitation,
-      QsoValue: value,
+      QsolValue: value,
       errorMsg: !onlyNumbers,
     };
-
     setSolicitation(updatedSoli);
   };
   console.log(selectedDimensions);

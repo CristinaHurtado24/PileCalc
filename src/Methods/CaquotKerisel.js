@@ -1,11 +1,7 @@
-import { pi, pow, tan, round } from "mathjs";
+import { pi, pow, tan, round, unit } from "mathjs";
 
 export function roundToCero(num) {
   return +(round(num + "e+0") + "e-0");
-}
-
-function roundToFour(num) {
-  return +(round(num + "e+4") + "e-4");
 }
 
 const values = [
@@ -72,161 +68,163 @@ export const CaquotKeriselBothDim = (
   fcD,
   fcEspesor
 ) => {
-  let fricc = 0; //Coeficiente de fricción kgf/cm2
-  let Fs = 4; //Factor de seguridad
+  try {
+    let fricc = 0; //Coeficiente de fricción kgf/cm2
+    let Fs = 4; //Factor de seguridad
 
-  let espesorFin = 0;
-  let estratosTot = 0;
-  let estratosF = 0;
-  let LacumF = 0;
-  let Laux = 0;
-  let Lestratos = 0;
-  //Variable correspondiente al relleno presente
-  let Lrelleno = 0;
+    let espesorFin = 0;
+    let estratosTot = 0;
+    let estratosF = 0;
+    let LacumF = 0;
+    let Laux = 0;
+    let Lestratos = 0;
+    //Variable correspondiente al relleno presente
+    let Lrelleno = 0;
 
-  //Variables correspondientes al fuste del pilote
-  let densidadF = 0;
-  let phiF = 0;
-  let cF = 0;
+    //Variables correspondientes al fuste del pilote
+    let densidadF = 0;
+    let phiF = 0;
+    let cF = 0;
 
-  let phiFuste = 0;
-  let cFuste = 0;
-  let densidadFuste = 0;
-  //Variables correspondientes a la punta del pilote
-  let densidadP = 0;
-  let phiP = 0;
-  let cP = 0;
-  let Q = 0;
-  let H = 0;
-  let Lefect = 0;
-  let s1 = 0;
-  let s2 = 0;
-  let s2p = 0;
-  let s3p = 0;
-  let s5p = 0;
+    let phiFuste = 0;
+    let cFuste = 0;
+    let densidadFuste = 0;
+    //Variables correspondientes a la punta del pilote
+    let densidadP = 0;
+    let phiP = 0;
+    let cP = 0;
+    let Q = 0;
+    let H = 0;
+    let Lefect = 0;
+    let s1 = 0;
+    let s2 = 0;
+    let s2p = 0;
+    let s3p = 0;
+    let s5p = 0;
 
-  let r1 = 0;
-  let r2 = 0;
-  let r3 = 0;
-  let r4 = 0;
-  let r5 = 0;
+    let r1 = 0;
+    let r2 = 0;
+    let r3 = 0;
+    let r4 = 0;
+    let r5 = 0;
 
-  let resistence = 0;
-  let ap = 0;
-  let Fn = 0;
-  let Qadm = 0;
+    let resistence = 0;
+    let ap = 0;
+    let Fn = 0;
+    let Qadm = 0;
 
-  for (let i = 0; i < soilList.length; i++) {
-    if (soilList[i]["typeValue"] === "1") {
-      Lrelleno += parseFloat(soilList[i]["espesor"]) / fcEspesor;
-      fricc = 0.2;
-    }
-    if (soilList[i]["typeValue"] === "2") {
-      Lrelleno += parseFloat(soilList[i]["espesor"]) / fcEspesor;
-      fricc = 0.6;
-    }
-    if (
-      !(soilList[i]["typeValue"] === "1") &&
-      !(soilList[i]["typeValue"] === "2")
-    ) {
-      LacumF += parseFloat(soilList[i]["espesor"]) / fcEspesor;
-      if (LacumF <= length - Lrelleno) {
-        console.log("entra");
-        densidadF +=
-          parseFloat(soilList[i]["peso"]) *
-          fcD *
-          (parseFloat(soilList[i]["espesor"]) / fcEspesor);
-        phiF +=
-          parseFloat(soilList[i]["phi"]) *
-          (parseFloat(soilList[i]["espesor"]) / fcEspesor);
-        cF +=
-          parseFloat(soilList[i]["cohesion"]) *
-          fcC *
-          (parseFloat(soilList[i]["espesor"]) / fcEspesor);
+    for (let i = 0; i < soilList.length; i++) {
+      if (soilList[i]["typeValue"] === "1") {
+        Lrelleno += parseFloat(soilList[i]["espesor"]) / fcEspesor;
+        fricc = 0.2;
       }
-      if (LacumF > length - Lrelleno && Laux < length - Lrelleno) {
-        //Se agrega parte del estrato al fuste
-        espesorFin = LacumF + Lrelleno - length;
-        densidadF +=
-          parseFloat(soilList[i]["peso"]) *
-          fcD *
-          (parseFloat(soilList[i]["espesor"]) / fcEspesor - espesorFin);
-        phiF += parseFloat(
-          soilList[i]["phi"] *
-            (parseFloat(soilList[i]["espesor"]) / fcEspesor - espesorFin)
-        );
-        cF +=
-          parseFloat(soilList[i]["cohesion"]) *
-          fcC *
-          (parseFloat(soilList[i]["espesor"]) / fcEspesor - espesorFin);
+      if (soilList[i]["typeValue"] === "2") {
+        Lrelleno += parseFloat(soilList[i]["espesor"]) / fcEspesor;
+        fricc = 0.6;
+      }
+      if (
+        !(soilList[i]["typeValue"] === "1") &&
+        !(soilList[i]["typeValue"] === "2")
+      ) {
+        LacumF += parseFloat(soilList[i]["espesor"]) / fcEspesor;
+        if (LacumF <= length - Lrelleno) {
+          densidadF +=
+            parseFloat(soilList[i]["peso"]) *
+            fcD *
+            (parseFloat(soilList[i]["espesor"]) / fcEspesor);
+          phiF +=
+            parseFloat(soilList[i]["phi"]) *
+            (parseFloat(soilList[i]["espesor"]) / fcEspesor);
+          cF +=
+            parseFloat(soilList[i]["cohesion"]) *
+            fcC *
+            (parseFloat(soilList[i]["espesor"]) / fcEspesor);
+        }
+        if (LacumF > length - Lrelleno && Laux < length - Lrelleno) {
+          //Se agrega parte del estrato al fuste
+          espesorFin = LacumF + Lrelleno - length;
+          densidadF +=
+            parseFloat(soilList[i]["peso"]) *
+            fcD *
+            (parseFloat(soilList[i]["espesor"]) / fcEspesor - espesorFin);
+          phiF += parseFloat(
+            soilList[i]["phi"] *
+              (parseFloat(soilList[i]["espesor"]) / fcEspesor - espesorFin)
+          );
+          cF +=
+            parseFloat(soilList[i]["cohesion"]) *
+            fcC *
+            (parseFloat(soilList[i]["espesor"]) / fcEspesor - espesorFin);
 
-        if (densidadP == 0 && phiP == 0 && cP == 0) {
-          console.log("entra 1");
-          //Se agregan los datos del estrato a la punta del pilote
+          if (densidadP == 0 && phiP == 0 && cP == 0) {
+            //Se agregan los datos del estrato a la punta del pilote
+            densidadP += parseFloat(soilList[i]["peso"]) * fcD;
+            phiP += parseFloat(soilList[i]["phi"]);
+            cP += parseFloat(soilList[i]["cohesion"]) * fcC;
+          }
+        }
+        if (
+          LacumF == length - Lrelleno &&
+          densidadP == 0 &&
+          phiP == 0 &&
+          cP == 0
+        ) {
           densidadP += parseFloat(soilList[i]["peso"]) * fcD;
           phiP += parseFloat(soilList[i]["phi"]);
           cP += parseFloat(soilList[i]["cohesion"]) * fcC;
         }
+        Laux = LacumF;
+        estratosF += 1;
       }
-      if (
-        LacumF == length - Lrelleno &&
-        densidadP == 0 &&
-        phiP == 0 &&
-        cP == 0
-      ) {
-        console.log("entra 2");
-        densidadP += parseFloat(soilList[i]["peso"]) * fcD;
-        phiP += parseFloat(soilList[i]["phi"]);
-        cP += parseFloat(soilList[i]["cohesion"]) * fcC;
+      Lestratos += parseFloat(soilList[i]["espesor"]) / fcEspesor;
+      estratosTot += 1;
+    }
+
+    Lefect = length - Lrelleno;
+
+    phiFuste = roundToCero(phiF / Lefect);
+
+    cFuste = cF / Lefect;
+
+    densidadFuste = densidadF / Lefect;
+
+    H = cP / tan(unit(phiP, "deg"));
+    for (let i = 0; i < values.length; i++) {
+      if (values[i]["phi"] === phiFuste) {
+        s2p = values[i]["S2p"];
+        s3p = values[i]["S3p"];
+        s5p = values[i]["S5p"];
       }
-      Laux = LacumF;
-      estratosF += 1;
+      if (values[i]["phi"] === phiP) {
+        s1 = values[i]["S1"];
+        s2 = values[i]["S2"];
+      }
     }
-    Lestratos += parseFloat(soilList[i]["espesor"]) / fcEspesor;
-    estratosTot += 1;
-  }
-
-  Lefect = length - Lrelleno;
-
-  phiFuste = roundToCero(phiF / Lefect);
-  cFuste = cF / Lefect;
-  densidadFuste = densidadF / Lefect;
-
-  H = cP / tan(phiP);
-  for (let i = 0; i < values.length; i++) {
-    if (values[i]["phi"] === phiFuste) {
-      console.log("entra phi fuste");
-      s2p = values[i]["S2p"];
-      s3p = values[i]["S3p"];
-      s5p = values[i]["S5p"];
+    if (Lestratos < length) {
+      return "La longitud del pilote es mayor que la longitud total de los estratos. \n Por favor, modifique las dimensiones ingresadas.";
     }
-    if (values[i]["phi"] === phiP) {
-      console.log("entra phi punta");
-      s1 = values[i]["S1"];
-      s2 = values[i]["S2"];
+
+    if (Lefect < 6 * diam) {
+      return "No se cumple la condición de que la longitud efectiva del pilote debe ser mayor o igual a 6 veces el diámetro del pilote. \n Por favor, modifique las dimensiones ingresadas.";
     }
+    r1 = (densidadP * diam * s1) / 4;
+    r2 = densidadFuste * Lefect * s2 * s2p;
+    r3 = (densidadFuste * 2 * pow(Lefect, 2) * s3p) / diam;
+    r4 = H * (s2 - 1);
+    r5 = (cFuste * Lefect * 4 * s5p) / diam;
+
+    resistence = r1 + r2 + r3 + r4 + r5;
+
+    ap = pi * pow(diam / 2, 2);
+    Fn = 2 * pi * ((diam * 100) / 2) * fricc * Lrelleno * 100;
+
+    Q = (resistence * ap) / Fs - Fn / 1000;
+
+    Qadm = (resistence * ap) / Fs - Fn / 1000;
+
+    return Qadm;
+  } catch (e) {
+    console.log(e);
+    return "Error en el cálculo";
   }
-  if (Lestratos < length) {
-    return "La longitud del pilote es mayor que la longitud total de los estratos. \n Por favor, modifique las dimensiones ingresadas.";
-  }
-
-  if (Lefect < 6 * diam) {
-    return "No se cumple la condición de que la longitud efectiva del pilote debe ser mayor o igual a 6 veces el diámetro del pilote. \n Por favor, modifique las dimensiones ingresadas.";
-  }
-  r1 = (densidadP * diam * s1) / 4;
-  r2 = densidadFuste * Lefect * s2 * s2p;
-  r3 = (densidadFuste * 2 * pow(Lefect, 2) * s3p) / diam;
-  r4 = H * (s2 - 1);
-  r5 = (cFuste * Lefect * 4 * s5p) / diam;
-
-  resistence = r1 + r2 + r3 + r4 + r5;
-
-  ap = pi * pow(diam / 2, 2);
-  Fn = 2 * pi * ((diam * 100) / 2) * fricc * Lrelleno * 100;
-
-  Q = (resistence * ap) / Fs - Fn / 1000;
-
-  Qadm = roundToCero((resistence * ap) / Fs - Fn / 1000);
-
-  return Qadm;
 };

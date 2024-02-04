@@ -1,13 +1,23 @@
-import React from "react";
+import React, { useContext } from "react";
+import { ProjectContext } from "../../Context/ProjectContext";
 import styles from "./Run.modules.css";
 
 export default function ResultQsol(props) {
+  const { projectValues, updateProjectValues } = useContext(ProjectContext);
   const checkError = (props) => {
-    console.log(props.result);
-    if (typeof props.result[0]["Qadm"] === "string") {
+    try {
+      if (typeof props.result[0]["Qadm"] === "string") {
+        return true;
+      } else if (props.result[0]["Qadm"] == 0) {
+        props.result[0]["Qadm"] =
+          "No se encontraron soluciones. Intente con otro material o dimensiones.";
+        return true;
+      } else {
+        return false;
+      }
+    } catch (error) {
+      console.log(error);
       return true;
-    } else {
-      return false;
     }
   };
   return (
@@ -17,24 +27,26 @@ export default function ResultQsol(props) {
       ) : (
         <div className={styles.cont}>
           <p>
-            Qsol ({props.units[0]["unitForce"]}): {props.result[0]["Qsol"]}
+            Qsol ({projectValues.units["unitForce"]}): {props.result[0]["Qsol"]}
           </p>
           <p>
-            Qadm ({props.units[0]["unitForce"]}): {props.result[0]["Qadm"]}
+            Qadm ({projectValues.units["unitForce"]}): {props.result[0]["Qadm"]}
           </p>
           <p>
-            Qestructural ({props.units[0]["unitForce"]}):{" "}
+            Qestructural ({projectValues.units["unitForce"]}):{" "}
             {props.result[0]["Qest"]}
           </p>
           <p>
-            Diámetro ({props.units[0]["unitLength"]}): {props.result[0]["diam"]}
+            Diámetro ({projectValues.units["unitLength"]}):{" "}
+            {props.result[0]["diam"]}
           </p>
           <p>
-            Longitud ({props.units[0]["unitLength"]}):{" "}
+            Longitud ({projectValues.units["unitLength"]}):{" "}
             {props.result[0]["length"]}
           </p>
           <p>
-            Volumen ({props.units[0]["unitLength"]}3): {props.result[0]["vol"]}
+            Volumen ({projectValues.units["unitLength"]}3):{" "}
+            {props.result[0]["vol"]}
           </p>
         </div>
       )}

@@ -13,7 +13,6 @@ const isDev = !app.isPackaged;
 let win;
 
 ipcMain.on("save-file", (event, data) => {
-  console.log("data1: " + data);
   dialog
     .showSaveDialog(win, {
       title: "Guardar archivo",
@@ -26,7 +25,7 @@ ipcMain.on("save-file", (event, data) => {
         if (!fs.existsSync(directory)) {
           fs.mkdirSync(directory, { recursive: true });
         }
-        console.log("data2: " + data);
+
         fs.writeFile(result.filePath, data, (err) => {
           if (err) {
             console.error("Error al guardar el archivo:", err);
@@ -165,6 +164,33 @@ ipcMain.on("open-popup", () => {
   createPopupWindow();
 });
 
+function createNewProjectWindow() {
+  console.log("Creando nueva ventana...");
+  const newWin = new BrowserWindow({
+    width: 1200,
+    height: 800,
+    minWidth: 1000,
+    minHeight: 600,
+    backgroundColor: "white",
+    webPreferences: {
+      nodeIntegration: false,
+      worldSafeExecuteJavaScript: true,
+      contextIsolation: true,
+      preload: path.join(__dirname, "preload.js"),
+    },
+  });
+
+  const newMenu = Menu.buildFromTemplate(template); // Usa el mismo template de menú que para la ventana principal
+  Menu.setApplicationMenu(newMenu);
+
+  newWin.loadFile("index.html"); // Cambia "new_project.html" por el nombre del archivo HTML de tu nueva ventana
+
+  newWin.show();
+  newWin.on("closed", function () {
+    // Maneja el cierre de la ventana correctamente
+    newWin = null;
+  });
+}
 function createPopupWindow() {
   const popupWindow = new BrowserWindow({
     width: 400,

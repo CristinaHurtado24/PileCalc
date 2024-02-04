@@ -9,7 +9,7 @@ export default function Cylinder(props) {
         position={[0, 0, 0]}
       />
       <meshLambertMaterial attach="material" color={0x808080} />
-      <axesHelper />
+
     </mesh>
   );
 }

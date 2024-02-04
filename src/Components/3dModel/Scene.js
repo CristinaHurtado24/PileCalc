@@ -1,4 +1,5 @@
-import React, { Suspense, useMemo } from "react";
+import React, { Suspense, useMemo, useContext } from "react";
+import { ProjectContext } from "../../Context/ProjectContext";
 import { Canvas } from "@react-three/fiber";
 import Cylinder from "./Cylinder";
 import Box from "./Box";
@@ -7,6 +8,7 @@ import * as THREE from "three";
 import { OrbitControls } from "@react-three/drei";
 
 export default function Scene(props) {
+  const { projectValues, updateProjectValues } = useContext(ProjectContext);
   // Cargar las texturas de manera síncrona antes de renderizar la escena
   const loadedTextures = useMemo(() => {
     const loader = new THREE.CubeTextureLoader();
@@ -257,20 +259,19 @@ export default function Scene(props) {
   }, []);
 
   const returnPileHeihght = (props) => {
-    if (props.units[0]["unitValue"] == 2) {
+    if (projectValues.units["unitValue"] == 2) {
       return props.result[0]["length"];
     }
-    if (props.units[0]["unitValue"] == 1) {
+    if (projectValues.units["unitValue"] == 1) {
       return props.result[0]["length"] / 100;
     }
   };
 
   const returnPileDiam = (props) => {
-    if (props.units[0]["unitValue"] == 2) {
+    if (projectValues.units["unitValue"] == 2) {
       return props.result[0]["diam"];
     }
-    if (props.units[0]["unitValue"] == 1) {
-      console.log("dentro de funcion: " + props.result[0]["diam"]);
+    if (projectValues.units["unitValue"] == 1) {
       return props.result[0]["diam"] / 100;
     }
   };
@@ -279,8 +280,6 @@ export default function Scene(props) {
   let globalDif = 0;
   let diameter = returnPileDiam(props);
 
-  console.log("pileHeight: " + pileHeight);
-  console.log("diameter: " + diameter);
   let dist = 0;
   let dif = 0;
 
@@ -290,7 +289,7 @@ export default function Scene(props) {
       <ambientLight />
       <directionalLight position={[-2, 5, 2]} intensity={1} />
       <Suspense fallback={null}>
-        {props.soil.map((estrato, key) => {
+        {projectValues.soilList.map((estrato, key) => {
           const {
             typeValue,
             typeDescription,
@@ -302,14 +301,14 @@ export default function Scene(props) {
             isRelleno,
             errorMsg,
           } = estrato;
-          if (props.units[0]["unitValue"] == 2) {
+          if (projectValues.units["unitValue"] == 2) {
             dif = parseFloat(espesor);
-            console.log("dif: " + dif);
+
             globalDif += dif;
             dist = globalDif - dif;
-          } else if (props.units[0]["unitValue"] == 1) {
+          } else if (projectValues.units["unitValue"] == 1) {
             dif = parseFloat(espesor) / 100;
-            console.log("dif: " + dif);
+
             globalDif += dif;
             dist = globalDif - dif;
           }
@@ -394,7 +393,7 @@ export default function Scene(props) {
                 key={key}
               />
             );
-          } else if (typeValue == 12 || typeValue == 13) {
+          } else if (typeValue == 12 || typeValue == 13 || typeValue == 14) {
             return (
               <Box
                 pile={pileHeight}
@@ -404,7 +403,7 @@ export default function Scene(props) {
                 key={key}
               />
             );
-          } else if (typeValue == 14 || typeValue == 15) {
+          } else if (typeValue == 15 || typeValue == 16 || typeValue == 17) {
             return (
               <Box
                 pile={pileHeight}
@@ -414,7 +413,7 @@ export default function Scene(props) {
                 key={key}
               />
             );
-          } else if (typeValue == 16 || typeValue == 17) {
+          } else if (typeValue == 18 || typeValue == 19 || typeValue == 20) {
             return (
               <Box
                 pile={pileHeight}
@@ -424,7 +423,7 @@ export default function Scene(props) {
                 key={key}
               />
             );
-          } else if (typeValue == 18 || typeValue == 19) {
+          } else if (typeValue == 21 || typeValue == 22 || typeValue == 23) {
             return (
               <Box
                 pile={pileHeight}
@@ -434,7 +433,7 @@ export default function Scene(props) {
                 key={key}
               />
             );
-          } else if (typeValue == 20 || typeValue == 21) {
+          } else if (typeValue == 24 || typeValue == 25 || typeValue == 26) {
             return (
               <Box
                 pile={pileHeight}
@@ -444,7 +443,7 @@ export default function Scene(props) {
                 key={key}
               />
             );
-          } else if (typeValue == 22 || typeValue == 23) {
+          } else if (typeValue == 27 || typeValue == 28 || typeValue == 29) {
             return (
               <Box
                 pile={pileHeight}
@@ -454,7 +453,7 @@ export default function Scene(props) {
                 key={key}
               />
             );
-          } else if (typeValue == 24) {
+          } else if (typeValue == 30) {
             return (
               <Box
                 pile={pileHeight}
@@ -464,7 +463,7 @@ export default function Scene(props) {
                 key={key}
               />
             );
-          } else if (typeValue == 25) {
+          } else if (typeValue == 31) {
             return (
               <Box
                 pile={pileHeight}
@@ -474,7 +473,7 @@ export default function Scene(props) {
                 key={key}
               />
             );
-          } else if (typeValue == 26) {
+          } else if (typeValue == 32) {
             return (
               <Box
                 pile={pileHeight}
@@ -484,17 +483,7 @@ export default function Scene(props) {
                 key={key}
               />
             );
-          } else if (typeValue == 27) {
-            return (
-              <Box
-                pile={pileHeight}
-                dif={dif}
-                dist={dist}
-                texture={loadedTextures.arcLimo}
-                key={key}
-              />
-            );
-          } else if (typeValue == 28 || typeValue == 29) {
+          } else if (typeValue == 33 || typeValue == 34) {
             return (
               <Box
                 pile={pileHeight}
@@ -504,7 +493,7 @@ export default function Scene(props) {
                 key={key}
               />
             );
-          } else if (typeValue == 30) {
+          } else if (typeValue == 35) {
             return (
               <Box
                 pile={pileHeight}
@@ -514,7 +503,7 @@ export default function Scene(props) {
                 key={key}
               />
             );
-          } else if (typeValue == 31) {
+          } else if (typeValue == 36) {
             return (
               <Box
                 pile={pileHeight}
@@ -524,7 +513,7 @@ export default function Scene(props) {
                 key={key}
               />
             );
-          } else if (typeValue == 32) {
+          } else if (typeValue == 37) {
             return (
               <Box
                 pile={pileHeight}

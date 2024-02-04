@@ -34,1283 +34,1059 @@ import {
 } from "../../Methods/Methods";
 
 export default function Run() {
-  const props = useContext(ProjectContext);
-  const bothDimMeyer = MeyerhoffBothDim(props[2], props[0], props[4], props[6]);
-
-  const diamIterMeyer = MeyerhofDiamIter(
-    props[2],
-    props[0],
-    props[4],
-    props[6]
+  const { projectValues, updateProjectValues } = useContext(ProjectContext);
+  const bothDimMeyer = MeyerhoffBothDim(
+    projectValues.soilList,
+    projectValues.units,
+    projectValues.dimensions,
+    projectValues.materials
   );
 
-  const lenIterMeyer = MeyerhofLenIter(props[2], props[0], props[4], props[6]);
+  const diamIterMeyer = MeyerhofDiamIter(
+    projectValues.soilList,
+    projectValues.units,
+    projectValues.dimensions,
+    projectValues.materials
+  );
+
+  const lenIterMeyer = MeyerhofLenIter(
+    projectValues.soilList,
+    projectValues.units,
+    projectValues.dimensions,
+    projectValues.materials
+  );
 
   const bothDimKerisel = CaquotKeriselBD(
-    props[2],
-    props[0],
-    props[4],
-    props[6]
+    projectValues.soilList,
+    projectValues.units,
+    projectValues.dimensions,
+    projectValues.materials
   );
 
   const diamIterKerisel = CaquotKeriselDiamIter(
-    props[2],
-    props[0],
-    props[4],
-    props[6]
+    projectValues.soilList,
+    projectValues.units,
+    projectValues.dimensions,
+    projectValues.materials
   );
 
   const lenIterKerisel = CaquotKeriselLenIter(
-    props[2],
-    props[0],
-    props[4],
-    props[6]
+    projectValues.soilList,
+    projectValues.units,
+    projectValues.dimensions,
+    projectValues.materials
   );
 
   const QsolWTDimKerisel = CaquotKeriselQsolWth(
-    props[2],
-    props[0],
-    props[4],
-    props[6],
-    props[5]
+    projectValues.soilList,
+    projectValues.units,
+    projectValues.dimensions,
+    projectValues.materials,
+    projectValues.solicitation
   );
 
   const QsolWTDimMeyerhof = MeyerhofQsolWth(
-    props[2],
-    props[0],
-    props[4],
-    props[6],
-    props[5]
+    projectValues.soilList,
+    projectValues.units,
+    projectValues.dimensions,
+    projectValues.materials,
+    projectValues.solicitation
   );
 
   const bothDimPGC = PGCBothDim(
-    props[2],
-    props[0],
-    props[4],
-    props[6],
-    props[3]
+    projectValues.soilList,
+    projectValues.units,
+    projectValues.dimensions,
+    projectValues.materials,
+    projectValues.freatico
   );
 
   const diamIterPGC = PGCDiamIter(
-    props[2],
-    props[0],
-    props[4],
-    props[6],
-    props[3]
+    projectValues.soilList,
+    projectValues.units,
+    projectValues.dimensions,
+    projectValues.materials,
+    projectValues.freatico
   );
 
   const lenIterPGC = PGCLenIter(
-    props[2],
-    props[0],
-    props[4],
-    props[6],
-    props[3]
+    projectValues.soilList,
+    projectValues.units,
+    projectValues.dimensions,
+    projectValues.materials,
+    projectValues.freatico
   );
 
   const QsolWTDimPGC = PGCQsolWth(
-    props[2],
-    props[0],
-    props[4],
-    props[6],
-    props[5],
-    props[3]
+    projectValues.soilList,
+    projectValues.units,
+    projectValues.dimensions,
+    projectValues.materials,
+    projectValues.solicitation,
+    projectValues.freatico
   );
 
   const PGCLenIterQsol = PGCLenInterQsol(
-    props[2],
-    props[0],
-    props[4],
-    props[6],
-    props[5],
-    props[3]
+    projectValues.soilList,
+    projectValues.units,
+    projectValues.dimensions,
+    projectValues.materials,
+    projectValues.solicitation,
+    projectValues.freatico
   );
 
   const PGCDiameIterQsol = PGCDiamIterQsol(
-    props[2],
-    props[0],
-    props[4],
-    props[6],
-    props[5],
-    props[3]
+    projectValues.soilList,
+    projectValues.units,
+    projectValues.dimensions,
+    projectValues.materials,
+    projectValues.solicitation,
+    projectValues.freatico
   );
 
   const MeyerhofDiamIterQsol1 = MeyerhofDiamIterQsol(
-    props[2],
-    props[0],
-    props[4],
-    props[6],
-    props[5]
+    projectValues.soilList,
+    projectValues.units,
+    projectValues.dimensions,
+    projectValues.materials,
+    projectValues.solicitation
   );
 
   const MeyerhofLenIterQsol1 = MeyerhofLenIterQsol(
-    props[2],
-    props[0],
-    props[4],
-    props[6],
-    props[5]
+    projectValues.soilList,
+    projectValues.units,
+    projectValues.dimensions,
+    projectValues.materials,
+    projectValues.solicitation
   );
 
   const CKDiamIterQsol = CaquotKeriselDiamIterQsol(
-    props[2],
-    props[0],
-    props[4],
-    props[6],
-    props[5]
+    projectValues.soilList,
+    projectValues.units,
+    projectValues.dimensions,
+    projectValues.materials,
+    projectValues.solicitation
   );
 
   const CKLenIterQsol = CaquotKeriselLenIterQsol(
-    props[2],
-    props[0],
-    props[4],
-    props[6],
-    props[5]
+    projectValues.soilList,
+    projectValues.units,
+    projectValues.dimensions,
+    projectValues.materials,
+    projectValues.solicitation
   );
 
   return (
     <div>
-      {props[1][0]["methodValue"] === "1" && !props[1][0]["comparison"] && (
-        <div>
-          {!props[4][0]["diamIter"] &&
-            !props[4][0]["lengthIter"] &&
-            !props[4][0]["withoutDim"] &&
-            !props[5][0]["Qsol"] && (
-              <div>
-                <div className={styles.container}>
-                  <h3 className={styles.titulo}>Resultados</h3>
-                  <hr></hr>
-                  <h3 className={styles.method}>
-                    Meyerhof (1976) (Solución Gráfica)
-                  </h3>
-                  <div className={styles.cont}>
-                    <Result units={props[0]} result={bothDimMeyer}></Result>
+      {projectValues.methods["methodValue"] === "1" &&
+        !projectValues.methods["comparison"] && (
+          <div>
+            {!projectValues.dimensions["diamIter"] &&
+              !projectValues.dimensions["lengthIter"] &&
+              !projectValues.dimensions["withoutDim"] &&
+              !projectValues.solicitation["Qsol"] && (
+                <div>
+                  <div className={styles.container}>
+                    <h3 className={styles.titulo}>Resultados</h3>
+                    <hr></hr>
+                    <h3 className={styles.method}>
+                      Meyerhof (1976) (Solución Gráfica)
+                    </h3>
+                    <div className={styles.cont}>
+                      <Result result={bothDimMeyer}></Result>
+                    </div>
+                  </div>
+
+                  <div className={graphicStyles.container}>
+                    <Scene result={bothDimMeyer}></Scene>
                   </div>
                 </div>
+              )}
+            {projectValues.dimensions["diamIter"] &&
+              !projectValues.dimensions["lengthIter"] &&
+              !projectValues.dimensions["withoutDim"] &&
+              !projectValues.solicitation["Qsol"] && (
+                <div>
+                  <div className={styles.container}>
+                    <h3 className={styles.titulo}>Resultados</h3>
+                    <hr></hr>
+                    <h3 className={styles.method}>
+                      Meyerhof (1976) (Solución Gráfica)
+                    </h3>
+                    <div className={styles.cont}>
+                      <Result result={diamIterMeyer}></Result>
+                    </div>
+                  </div>
 
-                <div className={graphicStyles.container}>
-                  <Scene
-                    units={props[0]}
-                    soil={props[2]}
-                    result={bothDimMeyer}
-                  ></Scene>
-                </div>
-              </div>
-            )}
-          {props[4][0]["diamIter"] &&
-            !props[4][0]["lengthIter"] &&
-            !props[4][0]["withoutDim"] &&
-            !props[5][0]["Qsol"] && (
-              <div>
-                <div className={styles.container}>
-                  <h3 className={styles.titulo}>Resultados</h3>
-                  <hr></hr>
-                  <h3 className={styles.method}>
-                    Meyerhof (1976) (Solución Gráfica)
-                  </h3>
-                  <div className={styles.cont}>
-                    <Result units={props[0]} result={diamIterMeyer}></Result>
+                  <div className={graphicStyles.container}>
+                    <Scene result={diamIterMeyer}></Scene>
                   </div>
                 </div>
+              )}
+            {!projectValues.dimensions["diamIter"] &&
+              projectValues.dimensions["lengthIter"] &&
+              !projectValues.dimensions["withoutDim"] &&
+              !projectValues.solicitation["Qsol"] && (
+                <div>
+                  <div className={styles.container}>
+                    <h3 className={styles.titulo}>Resultados</h3>
+                    <hr></hr>
+                    <h3 className={styles.method}>
+                      Meyerhof (1976) (Solución Gráfica)
+                    </h3>
+                    <div className={styles.cont}>
+                      <Result result={lenIterMeyer}></Result>
+                    </div>
+                  </div>
 
-                <div className={graphicStyles.container}>
-                  <Scene
-                    units={props[0]}
-                    soil={props[2]}
-                    result={diamIterMeyer}
-                  ></Scene>
-                </div>
-              </div>
-            )}
-          {!props[4][0]["diamIter"] &&
-            props[4][0]["lengthIter"] &&
-            !props[4][0]["withoutDim"] &&
-            !props[5][0]["Qsol"] && (
-              <div>
-                <div className={styles.container}>
-                  <h3 className={styles.titulo}>Resultados</h3>
-                  <hr></hr>
-                  <h3 className={styles.method}>
-                    Meyerhof (1976) (Solución Gráfica)
-                  </h3>
-                  <div className={styles.cont}>
-                    <Result units={props[0]} result={lenIterMeyer}></Result>
+                  <div className={graphicStyles.container}>
+                    <Scene result={lenIterMeyer}></Scene>
                   </div>
                 </div>
+              )}
+            {!projectValues.dimensions["diamIter"] &&
+              !projectValues.dimensions["lengthIter"] &&
+              projectValues.dimensions["withoutDim"] &&
+              projectValues.solicitation["Qsol"] && (
+                <div>
+                  <div className={styles.container}>
+                    <h3 className={styles.titulo}>Resultados</h3>
+                    <hr></hr>
+                    <h3 className={styles.method}>
+                      Meyerhof (1976) (Solución Gráfica)
+                    </h3>
+                    <div className={styles.cont}>
+                      <ResultQsol result={QsolWTDimMeyerhof}></ResultQsol>
+                    </div>
+                  </div>
 
-                <div className={graphicStyles.container}>
-                  <Scene
-                    units={props[0]}
-                    soil={props[2]}
-                    result={lenIterMeyer}
-                  ></Scene>
-                </div>
-              </div>
-            )}
-          {!props[4][0]["diamIter"] &&
-            !props[4][0]["lengthIter"] &&
-            props[4][0]["withoutDim"] &&
-            props[5][0]["Qsol"] && (
-              <div>
-                <div className={styles.container}>
-                  <h3 className={styles.titulo}>Resultados</h3>
-                  <hr></hr>
-                  <h3 className={styles.method}>
-                    Meyerhof (1976) (Solución Gráfica)
-                  </h3>
-                  <div className={styles.cont}>
-                    <ResultQsol
-                      units={props[0]}
-                      result={QsolWTDimMeyerhof}
-                    ></ResultQsol>
+                  <div className={graphicStyles.container}>
+                    <Scene result={QsolWTDimMeyerhof}></Scene>
                   </div>
                 </div>
+              )}
+            {!projectValues.dimensions["diamIter"] &&
+              projectValues.dimensions["lengthIter"] &&
+              !projectValues.dimensions["withoutDim"] &&
+              projectValues.solicitation["Qsol"] && (
+                <div>
+                  <div className={styles.container}>
+                    <h3 className={styles.titulo}>Resultados</h3>
+                    <hr></hr>
+                    <h3 className={styles.method}>
+                      Meyerhof (1976) (Solución Gráfica)
+                    </h3>
+                    <div className={styles.cont}>
+                      <ResultQsol result={MeyerhofLenIterQsol1}></ResultQsol>
+                    </div>
+                  </div>
 
-                <div className={graphicStyles.container}>
-                  <Scene
-                    units={props[0]}
-                    soil={props[2]}
-                    result={QsolWTDimMeyerhof}
-                  ></Scene>
-                </div>
-              </div>
-            )}
-          {!props[4][0]["diamIter"] &&
-            props[4][0]["lengthIter"] &&
-            !props[4][0]["withoutDim"] &&
-            props[5][0]["Qsol"] && (
-              <div>
-                <div className={styles.container}>
-                  <h3 className={styles.titulo}>Resultados</h3>
-                  <hr></hr>
-                  <h3 className={styles.method}>
-                    Meyerhof (1976) (Solución Gráfica)
-                  </h3>
-                  <div className={styles.cont}>
-                    <ResultQsol
-                      units={props[0]}
-                      result={MeyerhofLenIterQsol1}
-                    ></ResultQsol>
+                  <div className={graphicStyles.container}>
+                    <Scene result={MeyerhofLenIterQsol1}></Scene>
                   </div>
                 </div>
+              )}
+            {projectValues.dimensions["diamIter"] &&
+              !projectValues.dimensions["lengthIter"] &&
+              !projectValues.dimensions["withoutDim"] &&
+              projectValues.solicitation["Qsol"] && (
+                <div>
+                  <div className={styles.container}>
+                    <h3 className={styles.titulo}>Resultados</h3>
+                    <hr></hr>
+                    <h3 className={styles.method}>
+                      Meyerhof (1976) (Solución Gráfica)
+                    </h3>
+                    <div className={styles.cont}>
+                      <ResultQsol result={MeyerhofDiamIterQsol1}></ResultQsol>
+                    </div>
+                  </div>
 
-                <div className={graphicStyles.container}>
-                  <Scene
-                    units={props[0]}
-                    soil={props[2]}
-                    result={MeyerhofLenIterQsol1}
-                  ></Scene>
-                </div>
-              </div>
-            )}
-          {props[4][0]["diamIter"] &&
-            !props[4][0]["lengthIter"] &&
-            !props[4][0]["withoutDim"] &&
-            props[5][0]["Qsol"] && (
-              <div>
-                <div className={styles.container}>
-                  <h3 className={styles.titulo}>Resultados</h3>
-                  <hr></hr>
-                  <h3 className={styles.method}>
-                    Meyerhof (1976) (Solución Gráfica)
-                  </h3>
-                  <div className={styles.cont}>
-                    <ResultQsol
-                      units={props[0]}
-                      result={MeyerhofDiamIterQsol1}
-                    ></ResultQsol>
+                  <div className={graphicStyles.container}>
+                    <Scene result={MeyerhofDiamIterQsol1}></Scene>
                   </div>
                 </div>
+              )}
+          </div>
+        )}
+      {projectValues.methods["methodValue"] === "1" &&
+        projectValues.methods["comparison"] && (
+          <div>
+            {!projectValues.dimensions["diamIter"] &&
+              !projectValues.dimensions["lengthIter"] &&
+              !projectValues.dimensions["withoutDim"] &&
+              !projectValues.solicitation["Qsol"] && (
+                <div>
+                  <div className={styles.container}>
+                    <h3 className={styles.titulo}>Resultados</h3>
+                    <hr></hr>
+                    <h3 className={styles.method}>
+                      Meyerhof (1976) (Solución Gráfica)
+                    </h3>
+                    <div className={styles.cont}>
+                      <Result result={bothDimMeyer}></Result>
+                      <hr></hr>
+                      <h3>Caquot y Kerisel (1961)</h3>
+                      <Result result={bothDimKerisel}></Result>
+                      <hr></hr>
+                      <h3>Compilación Pérez Guerra-Carrillo (1981)</h3>
+                      <Result result={bothDimPGC}></Result>
+                    </div>
+                  </div>
 
-                <div className={graphicStyles.container}>
-                  <Scene
-                    units={props[0]}
-                    soil={props[2]}
-                    result={MeyerhofDiamIterQsol1}
-                  ></Scene>
-                </div>
-              </div>
-            )}
-        </div>
-      )}
-      {props[1][0]["methodValue"] === "1" && props[1][0]["comparison"] && (
-        <div>
-          {!props[4][0]["diamIter"] &&
-            !props[4][0]["lengthIter"] &&
-            !props[4][0]["withoutDim"] &&
-            !props[5][0]["Qsol"] && (
-              <div>
-                <div className={styles.container}>
-                  <h3 className={styles.titulo}>Resultados</h3>
-                  <hr></hr>
-                  <h3 className={styles.method}>
-                    Meyerhof (1976) (Solución Gráfica)
-                  </h3>
-                  <div className={styles.cont}>
-                    <Result units={props[0]} result={bothDimMeyer}></Result>
-                    <hr></hr>
-                    <h3>Caquot y Kerisel (1961)</h3>
-                    <Result units={props[0]} result={bothDimKerisel}></Result>
-                    <hr></hr>
-                    <h3>Compilación Pérez Guerra-Carrillo (1981)</h3>
-                    <Result units={props[0]} result={bothDimPGC}></Result>
+                  <div className={graphicStyles.container}>
+                    <Scene result={bothDimMeyer}></Scene>
                   </div>
                 </div>
+              )}
+            {projectValues.dimensions["diamIter"] &&
+              !projectValues.dimensions["lengthIter"] &&
+              !projectValues.dimensions["withoutDim"] &&
+              !projectValues.solicitation["Qsol"] && (
+                <div>
+                  <div className={styles.container}>
+                    <h3 className={styles.titulo}>Resultados</h3>
+                    <hr></hr>
+                    <h3 className={styles.method}>
+                      Meyerhof (1976) (Solución Gráfica)
+                    </h3>
+                    <div className={styles.cont}>
+                      <Result result={diamIterMeyer}></Result>
+                      <hr></hr>
+                      <h3>Caquot y Kerisel (1961)</h3>
+                      <Result result={diamIterKerisel}></Result>
+                      <hr></hr>
+                      <h3>Compilación Pérez Guerra-Carrillo (1981)</h3>
+                      <Result result={diamIterPGC}></Result>
+                    </div>
+                  </div>
 
-                <div className={graphicStyles.container}>
-                  <Scene
-                    units={props[0]}
-                    soil={props[2]}
-                    result={bothDimMeyer}
-                  ></Scene>
-                </div>
-              </div>
-            )}
-          {props[4][0]["diamIter"] &&
-            !props[4][0]["lengthIter"] &&
-            !props[4][0]["withoutDim"] &&
-            !props[5][0]["Qsol"] && (
-              <div>
-                <div className={styles.container}>
-                  <h3 className={styles.titulo}>Resultados</h3>
-                  <hr></hr>
-                  <h3 className={styles.method}>
-                    Meyerhof (1976) (Solución Gráfica)
-                  </h3>
-                  <div className={styles.cont}>
-                    <Result units={props[0]} result={diamIterMeyer}></Result>
-                    <hr></hr>
-                    <h3>Caquot y Kerisel (1961)</h3>
-                    <Result units={props[0]} result={diamIterKerisel}></Result>
-                    <hr></hr>
-                    <h3>Compilación Pérez Guerra-Carrillo (1981)</h3>
-                    <Result units={props[0]} result={diamIterPGC}></Result>
+                  <div className={graphicStyles.container}>
+                    <Scene result={diamIterMeyer}></Scene>
                   </div>
                 </div>
+              )}
+            {!projectValues.dimensions["diamIter"] &&
+              projectValues.dimensions["lengthIter"] &&
+              !projectValues.dimensions["withoutDim"] &&
+              !projectValues.solicitation["Qsol"] && (
+                <div>
+                  <div className={styles.container}>
+                    <h3 className={styles.titulo}>Resultados</h3>
+                    <hr></hr>
+                    <h3 className={styles.method}>
+                      Meyerhof (1976) (Solución Gráfica)
+                    </h3>
+                    <div className={styles.cont}>
+                      <Result result={lenIterMeyer}></Result>
+                      <hr></hr>
+                      <h3>Caquot y Kerisel (1961)</h3>
+                      <Result result={lenIterKerisel}></Result>
+                      <hr></hr>
+                      <h3>Compilación Pérez Guerra-Carrillo (1981)</h3>
+                      <Result result={lenIterPGC}></Result>
+                    </div>
+                  </div>
 
-                <div className={graphicStyles.container}>
-                  <Scene
-                    units={props[0]}
-                    soil={props[2]}
-                    result={diamIterMeyer}
-                  ></Scene>
-                </div>
-              </div>
-            )}
-          {!props[4][0]["diamIter"] &&
-            props[4][0]["lengthIter"] &&
-            !props[4][0]["withoutDim"] &&
-            !props[5][0]["Qsol"] && (
-              <div>
-                <div className={styles.container}>
-                  <h3 className={styles.titulo}>Resultados</h3>
-                  <hr></hr>
-                  <h3 className={styles.method}>
-                    Meyerhof (1976) (Solución Gráfica)
-                  </h3>
-                  <div className={styles.cont}>
-                    <Result units={props[0]} result={lenIterMeyer}></Result>
-                    <hr></hr>
-                    <h3>Caquot y Kerisel (1961)</h3>
-                    <Result units={props[0]} result={lenIterKerisel}></Result>
-                    <hr></hr>
-                    <h3>Compilación Pérez Guerra-Carrillo (1981)</h3>
-                    <Result units={props[0]} result={lenIterPGC}></Result>
+                  <div className={graphicStyles.container}>
+                    <Scene result={lenIterMeyer}></Scene>
                   </div>
                 </div>
+              )}
+            {!projectValues.dimensions["diamIter"] &&
+              !projectValues.dimensions["lengthIter"] &&
+              projectValues.dimensions["withoutDim"] &&
+              projectValues.solicitation["Qsol"] && (
+                <div>
+                  <div className={styles.container}>
+                    <h3 className={styles.titulo}>Resultados</h3>
+                    <hr></hr>
+                    <h3 className={styles.method}>
+                      Meyerhof (1976) (Solución Gráfica)
+                    </h3>
+                    <div className={styles.cont}>
+                      <ResultQsol result={QsolWTDimMeyerhof}></ResultQsol>
+                      <hr></hr>
+                      <h3>Caquot y Kerisel (1961)</h3>
+                      <ResultQsol result={QsolWTDimKerisel}></ResultQsol>
+                      <hr></hr>
+                      <h3>Compilación Pérez Guerra-Carrillo (1981)</h3>
+                      <ResultQsol result={QsolWTDimPGC}></ResultQsol>
+                    </div>
+                  </div>
 
-                <div className={graphicStyles.container}>
-                  <Scene
-                    units={props[0]}
-                    soil={props[2]}
-                    result={lenIterMeyer}
-                  ></Scene>
-                </div>
-              </div>
-            )}
-          {!props[4][0]["diamIter"] &&
-            !props[4][0]["lengthIter"] &&
-            props[4][0]["withoutDim"] &&
-            props[5][0]["Qsol"] && (
-              <div>
-                <div className={styles.container}>
-                  <h3 className={styles.titulo}>Resultados</h3>
-                  <hr></hr>
-                  <h3 className={styles.method}>
-                    Meyerhof (1976) (Solución Gráfica)
-                  </h3>
-                  <div className={styles.cont}>
-                    <ResultQsol
-                      units={props[0]}
-                      result={QsolWTDimMeyerhof}
-                    ></ResultQsol>
-                    <hr></hr>
-                    <h3>Caquot y Kerisel (1961)</h3>
-                    <ResultQsol
-                      units={props[0]}
-                      result={QsolWTDimKerisel}
-                    ></ResultQsol>
-                    <hr></hr>
-                    <h3>Compilación Pérez Guerra-Carrillo (1981)</h3>
-                    <ResultQsol
-                      units={props[0]}
-                      result={QsolWTDimPGC}
-                    ></ResultQsol>
+                  <div className={graphicStyles.container}>
+                    <Scene result={QsolWTDimMeyerhof}></Scene>
                   </div>
                 </div>
+              )}
+            {!projectValues.dimensions["diamIter"] &&
+              projectValues.dimensions["lengthIter"] &&
+              !projectValues.dimensions["withoutDim"] &&
+              projectValues.solicitation["Qsol"] && (
+                <div>
+                  <div className={styles.container}>
+                    <h3 className={styles.titulo}>Resultados</h3>
+                    <hr></hr>
+                    <h3 className={styles.method}>
+                      Meyerhof (1976) (Solución Gráfica)
+                    </h3>
+                    <div className={styles.cont}>
+                      <ResultQsol result={MeyerhofLenIterQsol1}></ResultQsol>
+                      <hr></hr>
+                      <h3>Caquot y Kerisel (1961)</h3>
+                      <ResultQsol result={CKLenIterQsol}></ResultQsol>
+                      <hr></hr>
+                      <h3>Compilación Pérez Guerra-Carrillo (1981)</h3>
+                      <ResultQsol result={PGCLenIterQsol}></ResultQsol>
+                    </div>
+                  </div>
 
-                <div className={graphicStyles.container}>
-                  <Scene
-                    units={props[0]}
-                    soil={props[2]}
-                    result={QsolWTDimMeyerhof}
-                  ></Scene>
-                </div>
-              </div>
-            )}
-          {!props[4][0]["diamIter"] &&
-            props[4][0]["lengthIter"] &&
-            !props[4][0]["withoutDim"] &&
-            props[5][0]["Qsol"] && (
-              <div>
-                <div className={styles.container}>
-                  <h3 className={styles.titulo}>Resultados</h3>
-                  <hr></hr>
-                  <h3 className={styles.method}>
-                    Meyerhof (1976) (Solución Gráfica)
-                  </h3>
-                  <div className={styles.cont}>
-                    <ResultQsol
-                      units={props[0]}
-                      result={MeyerhofLenIterQsol1}
-                    ></ResultQsol>
-                    <hr></hr>
-                    <h3>Caquot y Kerisel (1961)</h3>
-                    <ResultQsol
-                      units={props[0]}
-                      result={CKLenIterQsol}
-                    ></ResultQsol>
-                    <hr></hr>
-                    <h3>Compilación Pérez Guerra-Carrillo (1981)</h3>
-                    <ResultQsol
-                      units={props[0]}
-                      result={PGCLenIterQsol}
-                    ></ResultQsol>
+                  <div className={graphicStyles.container}>
+                    <Scene result={MeyerhofLenIterQsol1}></Scene>
                   </div>
                 </div>
+              )}
+            {projectValues.dimensions["diamIter"] &&
+              !projectValues.dimensions["lengthIter"] &&
+              !projectValues.dimensions["withoutDim"] &&
+              projectValues.solicitation["Qsol"] && (
+                <div>
+                  <div className={styles.container}>
+                    <h3 className={styles.titulo}>Resultados</h3>
+                    <hr></hr>
+                    <h3 className={styles.method}>
+                      Meyerhof (1976) (Solución Gráfica)
+                    </h3>
+                    <div className={styles.cont}>
+                      <ResultQsol result={MeyerhofDiamIterQsol1}></ResultQsol>
+                      <hr></hr>
+                      <h3>Caquot y Kerisel (1961)</h3>
+                      <ResultQsol result={CKDiamIterQsol}></ResultQsol>
+                      <hr></hr>
+                      <h3>Compilación Pérez Guerra-Carrillo (1981)</h3>
+                      <ResultQsol result={PGCDiameIterQsol}></ResultQsol>
+                    </div>
+                  </div>
 
-                <div className={graphicStyles.container}>
-                  <Scene
-                    units={props[0]}
-                    soil={props[2]}
-                    result={MeyerhofLenIterQsol1}
-                  ></Scene>
-                </div>
-              </div>
-            )}
-          {props[4][0]["diamIter"] &&
-            !props[4][0]["lengthIter"] &&
-            !props[4][0]["withoutDim"] &&
-            props[5][0]["Qsol"] && (
-              <div>
-                <div className={styles.container}>
-                  <h3 className={styles.titulo}>Resultados</h3>
-                  <hr></hr>
-                  <h3 className={styles.method}>
-                    Meyerhof (1976) (Solución Gráfica)
-                  </h3>
-                  <div className={styles.cont}>
-                    <ResultQsol
-                      units={props[0]}
-                      result={MeyerhofDiamIterQsol1}
-                    ></ResultQsol>
-                    <hr></hr>
-                    <h3>Caquot y Kerisel (1961)</h3>
-                    <ResultQsol
-                      units={props[0]}
-                      result={CKDiamIterQsol}
-                    ></ResultQsol>
-                    <hr></hr>
-                    <h3>Compilación Pérez Guerra-Carrillo (1981)</h3>
-                    <ResultQsol
-                      units={props[0]}
-                      result={PGCDiameIterQsol}
-                    ></ResultQsol>
+                  <div className={graphicStyles.container}>
+                    <Scene result={MeyerhofDiamIterQsol1}></Scene>
                   </div>
                 </div>
+              )}
+          </div>
+        )}
+      {projectValues.methods["methodValue"] === "2" &&
+        !projectValues.methods["comparison"] && (
+          <div>
+            {!projectValues.dimensions["diamIter"] &&
+              !projectValues.dimensions["lengthIter"] &&
+              !projectValues.dimensions["withoutDim"] &&
+              !projectValues.solicitation["Qsol"] && (
+                <div>
+                  <div className={styles.container}>
+                    <h3 className={styles.titulo}>Resultados</h3>
+                    <hr></hr>
+                    <h3 className={styles.method}>
+                      Caquot y Kerisel (1961) (Solución Gráfica)
+                    </h3>
+                    <div className={styles.cont}>
+                      <Result result={bothDimKerisel}></Result>
+                    </div>
+                  </div>
 
-                <div className={graphicStyles.container}>
-                  <Scene
-                    units={props[0]}
-                    soil={props[2]}
-                    result={MeyerhofDiamIterQsol1}
-                  ></Scene>
-                </div>
-              </div>
-            )}
-        </div>
-      )}
-      {props[1][0]["methodValue"] === "2" && !props[1][0]["comparison"] && (
-        <div>
-          {!props[4][0]["diamIter"] &&
-            !props[4][0]["lengthIter"] &&
-            !props[4][0]["withoutDim"] &&
-            !props[5][0]["Qsol"] && (
-              <div>
-                <div className={styles.container}>
-                  <h3 className={styles.titulo}>Resultados</h3>
-                  <hr></hr>
-                  <h3 className={styles.method}>
-                    Caquot y Kerisel (1961) (Solución Gráfica)
-                  </h3>
-                  <div className={styles.cont}>
-                    <Result units={props[0]} result={bothDimKerisel}></Result>
+                  <div className={graphicStyles.container}>
+                    <Scene result={bothDimKerisel}></Scene>
                   </div>
                 </div>
+              )}
+            {projectValues.dimensions["diamIter"] &&
+              !projectValues.dimensions["lengthIter"] &&
+              !projectValues.dimensions["withoutDim"] &&
+              !projectValues.solicitation["Qsol"] && (
+                <div>
+                  <div className={styles.container}>
+                    <h3 className={styles.titulo}>Resultados</h3>
+                    <hr></hr>
+                    <h3 className={styles.method}>
+                      Caquot y Kerisel (1961) (Solución Gráfica)
+                    </h3>
+                    <div className={styles.cont}>
+                      <Result result={diamIterKerisel}></Result>
+                    </div>
+                  </div>
 
-                <div className={graphicStyles.container}>
-                  <Scene
-                    units={props[0]}
-                    soil={props[2]}
-                    result={bothDimKerisel}
-                  ></Scene>
-                </div>
-              </div>
-            )}
-          {props[4][0]["diamIter"] &&
-            !props[4][0]["lengthIter"] &&
-            !props[4][0]["withoutDim"] &&
-            !props[5][0]["Qsol"] && (
-              <div>
-                <div className={styles.container}>
-                  <h3 className={styles.titulo}>Resultados</h3>
-                  <hr></hr>
-                  <h3 className={styles.method}>
-                    Caquot y Kerisel (1961) (Solución Gráfica)
-                  </h3>
-                  <div className={styles.cont}>
-                    <Result units={props[0]} result={diamIterKerisel}></Result>
+                  <div className={graphicStyles.container}>
+                    <Scene result={diamIterKerisel}></Scene>
                   </div>
                 </div>
+              )}
+            {!projectValues.dimensions["diamIter"] &&
+              projectValues.dimensions["lengthIter"] &&
+              !projectValues.dimensions["withoutDim"] &&
+              !projectValues.solicitation["Qsol"] && (
+                <div>
+                  <div className={styles.container}>
+                    <h3 className={styles.titulo}>Resultados</h3>
+                    <hr></hr>
+                    <h3 className={styles.method}>
+                      Caquot y Kerisel (1961) (Solución Gráfica)
+                    </h3>
+                    <div className={styles.cont}>
+                      <Result result={lenIterKerisel}></Result>
+                    </div>
+                  </div>
 
-                <div className={graphicStyles.container}>
-                  <Scene
-                    units={props[0]}
-                    soil={props[2]}
-                    result={diamIterKerisel}
-                  ></Scene>
-                </div>
-              </div>
-            )}
-          {!props[4][0]["diamIter"] &&
-            props[4][0]["lengthIter"] &&
-            !props[4][0]["withoutDim"] &&
-            !props[5][0]["Qsol"] && (
-              <div>
-                <div className={styles.container}>
-                  <h3 className={styles.titulo}>Resultados</h3>
-                  <hr></hr>
-                  <h3 className={styles.method}>
-                    Caquot y Kerisel (1961) (Solución Gráfica)
-                  </h3>
-                  <div className={styles.cont}>
-                    <Result units={props[0]} result={lenIterKerisel}></Result>
+                  <div className={graphicStyles.container}>
+                    <Scene result={lenIterKerisel}></Scene>
                   </div>
                 </div>
+              )}
+            {!projectValues.dimensions["diamIter"] &&
+              !projectValues.dimensions["lengthIter"] &&
+              projectValues.dimensions["withoutDim"] &&
+              projectValues.solicitation["Qsol"] && (
+                <div>
+                  <div className={styles.container}>
+                    <h3 className={styles.titulo}>Resultados</h3>
+                    <hr></hr>
+                    <h3 className={styles.method}>
+                      Caquot y Kerisel (1961) (Solución Gráfica)
+                    </h3>
+                    <div className={styles.cont}>
+                      <ResultQsol result={QsolWTDimKerisel}></ResultQsol>
+                    </div>
+                  </div>
 
-                <div className={graphicStyles.container}>
-                  <Scene
-                    units={props[0]}
-                    soil={props[2]}
-                    result={lenIterKerisel}
-                  ></Scene>
-                </div>
-              </div>
-            )}
-          {!props[4][0]["diamIter"] &&
-            !props[4][0]["lengthIter"] &&
-            props[4][0]["withoutDim"] &&
-            props[5][0]["Qsol"] && (
-              <div>
-                <div className={styles.container}>
-                  <h3 className={styles.titulo}>Resultados</h3>
-                  <hr></hr>
-                  <h3 className={styles.method}>
-                    Caquot y Kerisel (1961) (Solución Gráfica)
-                  </h3>
-                  <div className={styles.cont}>
-                    <ResultQsol
-                      units={props[0]}
-                      result={QsolWTDimKerisel}
-                    ></ResultQsol>
+                  <div className={graphicStyles.container}>
+                    <Scene result={QsolWTDimKerisel}></Scene>
                   </div>
                 </div>
+              )}
+            {!projectValues.dimensions["diamIter"] &&
+              projectValues.dimensions["lengthIter"] &&
+              !projectValues.dimensions["withoutDim"] &&
+              projectValues.solicitation["Qsol"] && (
+                <div>
+                  <div className={styles.container}>
+                    <h3 className={styles.titulo}>Resultados</h3>
+                    <hr></hr>
+                    <h3 className={styles.method}>
+                      Caquot y Kerisel (1961) (Solución Gráfica)
+                    </h3>
+                    <div className={styles.cont}>
+                      <ResultQsol result={CKLenIterQsol}></ResultQsol>
+                    </div>
+                  </div>
 
-                <div className={graphicStyles.container}>
-                  <Scene
-                    units={props[0]}
-                    soil={props[2]}
-                    result={QsolWTDimKerisel}
-                  ></Scene>
-                </div>
-              </div>
-            )}
-          {!props[4][0]["diamIter"] &&
-            props[4][0]["lengthIter"] &&
-            !props[4][0]["withoutDim"] &&
-            props[5][0]["Qsol"] && (
-              <div>
-                <div className={styles.container}>
-                  <h3 className={styles.titulo}>Resultados</h3>
-                  <hr></hr>
-                  <h3 className={styles.method}>
-                    Caquot y Kerisel (1961) (Solución Gráfica)
-                  </h3>
-                  <div className={styles.cont}>
-                    <ResultQsol
-                      units={props[0]}
-                      result={CKLenIterQsol}
-                    ></ResultQsol>
+                  <div className={graphicStyles.container}>
+                    <Scene result={CKLenIterQsol}></Scene>
                   </div>
                 </div>
+              )}
+            {projectValues.dimensions["diamIter"] &&
+              !projectValues.dimensions["lengthIter"] &&
+              !projectValues.dimensions["withoutDim"] &&
+              projectValues.solicitation["Qsol"] && (
+                <div>
+                  <div className={styles.container}>
+                    <h3 className={styles.titulo}>Resultados</h3>
+                    <hr></hr>
+                    <h3 className={styles.method}>
+                      Caquot y Kerisel (1961) (Solución Gráfica)
+                    </h3>
+                    <div className={styles.cont}>
+                      <ResultQsol result={CKDiamIterQsol}></ResultQsol>
+                    </div>
+                  </div>
 
-                <div className={graphicStyles.container}>
-                  <Scene
-                    units={props[0]}
-                    soil={props[2]}
-                    result={CKLenIterQsol}
-                  ></Scene>
-                </div>
-              </div>
-            )}
-          {props[4][0]["diamIter"] &&
-            !props[4][0]["lengthIter"] &&
-            !props[4][0]["withoutDim"] &&
-            props[5][0]["Qsol"] && (
-              <div>
-                <div className={styles.container}>
-                  <h3 className={styles.titulo}>Resultados</h3>
-                  <hr></hr>
-                  <h3 className={styles.method}>
-                    Caquot y Kerisel (1961) (Solución Gráfica)
-                  </h3>
-                  <div className={styles.cont}>
-                    <ResultQsol
-                      units={props[0]}
-                      result={CKDiamIterQsol}
-                    ></ResultQsol>
+                  <div className={graphicStyles.container}>
+                    <Scene result={CKDiamIterQsol}></Scene>
                   </div>
                 </div>
-
-                <div className={graphicStyles.container}>
-                  <Scene
-                    units={props[0]}
-                    soil={props[2]}
-                    result={CKDiamIterQsol}
-                  ></Scene>
-                </div>
-              </div>
-            )}
-        </div>
-      )}
-      {props[1][0]["methodValue"] === "2" && props[1][0]["comparison"] && (
-        <div>
-          {!props[4][0]["diamIter"] &&
-            !props[4][0]["lengthIter"] &&
-            !props[4][0]["withoutDim"] &&
-            !props[5][0]["Qsol"] && (
-              <div>
-                <div className={styles.container}>
-                  <h3 className={styles.titulo}>Resultados</h3>
-                  <hr></hr>
-                  <h3 className={styles.method}>
-                    Caquot y Kerisel (1961) (Solución Gráfica)
-                  </h3>
-                  <div className={styles.cont}>
-                    <Result units={props[0]} result={bothDimKerisel}></Result>
+              )}
+          </div>
+        )}
+      {projectValues.methods["methodValue"] === "2" &&
+        projectValues.methods["comparison"] && (
+          <div>
+            {!projectValues.dimensions["diamIter"] &&
+              !projectValues.dimensions["lengthIter"] &&
+              !projectValues.dimensions["withoutDim"] &&
+              !projectValues.solicitation["Qsol"] && (
+                <div>
+                  <div className={styles.container}>
+                    <h3 className={styles.titulo}>Resultados</h3>
                     <hr></hr>
-                    <h3>Meyerhof (1976)</h3>
-                    <Result units={props[0]} result={bothDimMeyer}></Result>
+                    <h3 className={styles.method}>
+                      Caquot y Kerisel (1961) (Solución Gráfica)
+                    </h3>
+                    <div className={styles.cont}>
+                      <Result result={bothDimKerisel}></Result>
+                      <hr></hr>
+                      <h3>Meyerhof (1976)</h3>
+                      <Result result={bothDimMeyer}></Result>
 
-                    <hr></hr>
-                    <h3>Compilación Pérez Guerra-Carrillo (1981)</h3>
-                    <Result units={props[0]} result={bothDimPGC}></Result>
+                      <hr></hr>
+                      <h3>Compilación Pérez Guerra-Carrillo (1981)</h3>
+                      <Result result={bothDimPGC}></Result>
+                    </div>
+                  </div>
+
+                  <div className={graphicStyles.container}>
+                    <Scene result={bothDimKerisel}></Scene>
                   </div>
                 </div>
+              )}
+            {projectValues.dimensions["diamIter"] &&
+              !projectValues.dimensions["lengthIter"] &&
+              !projectValues.dimensions["withoutDim"] &&
+              !projectValues.solicitation["Qsol"] && (
+                <div>
+                  <div className={styles.container}>
+                    <h3 className={styles.titulo}>Resultados</h3>
+                    <hr></hr>
+                    <h3 className={styles.method}>
+                      Caquot y Kerisel (1961) (Solución Gráfica)
+                    </h3>
+                    <div className={styles.cont}>
+                      <Result result={diamIterKerisel}></Result>
+                      <hr></hr>
+                      <h3>Meyerhof (1976)</h3>
+                      <Result result={diamIterMeyer}></Result>
+                      <hr></hr>
+                      <h3>Compilación Pérez Guerra-Carrillo (1981)</h3>
+                      <Result result={diamIterPGC}></Result>
+                    </div>
+                  </div>
 
-                <div className={graphicStyles.container}>
-                  <Scene
-                    units={props[0]}
-                    soil={props[2]}
-                    result={bothDimKerisel}
-                  ></Scene>
-                </div>
-              </div>
-            )}
-          {props[4][0]["diamIter"] &&
-            !props[4][0]["lengthIter"] &&
-            !props[4][0]["withoutDim"] &&
-            !props[5][0]["Qsol"] && (
-              <div>
-                <div className={styles.container}>
-                  <h3 className={styles.titulo}>Resultados</h3>
-                  <hr></hr>
-                  <h3 className={styles.method}>
-                    Caquot y Kerisel (1961) (Solución Gráfica)
-                  </h3>
-                  <div className={styles.cont}>
-                    <Result units={props[0]} result={diamIterKerisel}></Result>
-                    <hr></hr>
-                    <h3>Meyerhof (1976)</h3>
-                    <Result units={props[0]} result={diamIterMeyer}></Result>
-                    <hr></hr>
-                    <h3>Compilación Pérez Guerra-Carrillo (1981)</h3>
-                    <Result units={props[0]} result={diamIterPGC}></Result>
+                  <div className={graphicStyles.container}>
+                    <Scene result={diamIterKerisel}></Scene>
                   </div>
                 </div>
+              )}
+            {!projectValues.dimensions["diamIter"] &&
+              projectValues.dimensions["lengthIter"] &&
+              !projectValues.dimensions["withoutDim"] &&
+              !projectValues.solicitation["Qsol"] && (
+                <div>
+                  <div className={styles.container}>
+                    <h3 className={styles.titulo}>Resultados</h3>
+                    <hr></hr>
+                    <h3 className={styles.method}>
+                      Caquot y Kerisel (1961) (Solución Gráfica)
+                    </h3>
+                    <div className={styles.cont}>
+                      <Result result={lenIterKerisel}></Result>
+                      <hr></hr>
+                      <h3>Meyerhof (1976)</h3>
+                      <Result result={lenIterMeyer}></Result>
+                      <hr></hr>
+                      <h3>Compilación Pérez Guerra-Carrillo (1981)</h3>
+                      <Result result={lenIterPGC}></Result>
+                    </div>
+                  </div>
 
-                <div className={graphicStyles.container}>
-                  <Scene
-                    units={props[0]}
-                    soil={props[2]}
-                    result={diamIterKerisel}
-                  ></Scene>
-                </div>
-              </div>
-            )}
-          {!props[4][0]["diamIter"] &&
-            props[4][0]["lengthIter"] &&
-            !props[4][0]["withoutDim"] &&
-            !props[5][0]["Qsol"] && (
-              <div>
-                <div className={styles.container}>
-                  <h3 className={styles.titulo}>Resultados</h3>
-                  <hr></hr>
-                  <h3 className={styles.method}>
-                    Caquot y Kerisel (1961) (Solución Gráfica)
-                  </h3>
-                  <div className={styles.cont}>
-                    <Result units={props[0]} result={lenIterKerisel}></Result>
-                    <hr></hr>
-                    <h3>Meyerhof (1976)</h3>
-                    <Result units={props[0]} result={lenIterMeyer}></Result>
-                    <hr></hr>
-                    <h3>Compilación Pérez Guerra-Carrillo (1981)</h3>
-                    <Result units={props[0]} result={lenIterPGC}></Result>
+                  <div className={graphicStyles.container}>
+                    <Scene result={lenIterKerisel}></Scene>
                   </div>
                 </div>
+              )}
+            {!projectValues.dimensions["diamIter"] &&
+              !projectValues.dimensions["lengthIter"] &&
+              projectValues.dimensions["withoutDim"] &&
+              projectValues.solicitation["Qsol"] && (
+                <div>
+                  <div className={styles.container}>
+                    <h3 className={styles.titulo}>Resultados</h3>
+                    <hr></hr>
+                    <h3 className={styles.method}>
+                      Caquot y Kerisel (1961) (Solución Gráfica)
+                    </h3>
+                    <div className={styles.cont}>
+                      <ResultQsol result={QsolWTDimKerisel}></ResultQsol>
+                      <hr></hr>
+                      <h3>Meyerhof (1976)</h3>
+                      <ResultQsol result={QsolWTDimMeyerhof}></ResultQsol>
+                      <hr></hr>
+                      <h3>Compilación Pérez Guerra-Carrillo (1981)</h3>
+                      <ResultQsol result={QsolWTDimPGC}></ResultQsol>
+                    </div>
+                  </div>
 
-                <div className={graphicStyles.container}>
-                  <Scene
-                    units={props[0]}
-                    soil={props[2]}
-                    result={lenIterKerisel}
-                  ></Scene>
-                </div>
-              </div>
-            )}
-          {!props[4][0]["diamIter"] &&
-            !props[4][0]["lengthIter"] &&
-            props[4][0]["withoutDim"] &&
-            props[5][0]["Qsol"] && (
-              <div>
-                <div className={styles.container}>
-                  <h3 className={styles.titulo}>Resultados</h3>
-                  <hr></hr>
-                  <h3 className={styles.method}>
-                    Caquot y Kerisel (1961) (Solución Gráfica)
-                  </h3>
-                  <div className={styles.cont}>
-                    <ResultQsol
-                      units={props[0]}
-                      result={QsolWTDimKerisel}
-                    ></ResultQsol>
-                    <hr></hr>
-                    <h3>Meyerhof (1976)</h3>
-                    <ResultQsol
-                      units={props[0]}
-                      result={QsolWTDimMeyerhof}
-                    ></ResultQsol>
-                    <hr></hr>
-                    <h3>Compilación Pérez Guerra-Carrillo (1981)</h3>
-                    <ResultQsol
-                      units={props[0]}
-                      result={QsolWTDimPGC}
-                    ></ResultQsol>
+                  <div className={graphicStyles.container}>
+                    <Scene result={QsolWTDimKerisel}></Scene>
                   </div>
                 </div>
+              )}
+            {!projectValues.dimensions["diamIter"] &&
+              projectValues.dimensions["lengthIter"] &&
+              !projectValues.dimensions["withoutDim"] &&
+              projectValues.solicitation["Qsol"] && (
+                <div>
+                  <div className={styles.container}>
+                    <h3 className={styles.titulo}>Resultados</h3>
+                    <hr></hr>
+                    <h3 className={styles.method}>
+                      Caquot y Kerisel (1961) (Solución Gráfica)
+                    </h3>
+                    <div className={styles.cont}>
+                      <ResultQsol result={CKLenIterQsol}></ResultQsol>
+                      <hr></hr>
+                      <h3>Meyerhof (1976)</h3>
+                      <ResultQsol result={MeyerhofLenIterQsol1}></ResultQsol>
+                      <hr></hr>
+                      <h3>Compilación Pérez Guerra-Carrillo (1981)</h3>
+                      <ResultQsol result={PGCLenIterQsol}></ResultQsol>
+                    </div>
+                  </div>
 
-                <div className={graphicStyles.container}>
-                  <Scene
-                    units={props[0]}
-                    soil={props[2]}
-                    result={QsolWTDimKerisel}
-                  ></Scene>
-                </div>
-              </div>
-            )}
-          {!props[4][0]["diamIter"] &&
-            props[4][0]["lengthIter"] &&
-            !props[4][0]["withoutDim"] &&
-            props[5][0]["Qsol"] && (
-              <div>
-                <div className={styles.container}>
-                  <h3 className={styles.titulo}>Resultados</h3>
-                  <hr></hr>
-                  <h3 className={styles.method}>
-                    Caquot y Kerisel (1961) (Solución Gráfica)
-                  </h3>
-                  <div className={styles.cont}>
-                    <ResultQsol
-                      units={props[0]}
-                      result={CKLenIterQsol}
-                    ></ResultQsol>
-                    <hr></hr>
-                    <h3>Meyerhof (1976)</h3>
-                    <ResultQsol
-                      units={props[0]}
-                      result={MeyerhofLenIterQsol1}
-                    ></ResultQsol>
-                    <hr></hr>
-                    <h3>Compilación Pérez Guerra-Carrillo (1981)</h3>
-                    <ResultQsol
-                      units={props[0]}
-                      result={PGCLenIterQsol}
-                    ></ResultQsol>
+                  <div className={graphicStyles.container}>
+                    <Scene result={CKLenIterQsol}></Scene>
                   </div>
                 </div>
+              )}
+            {projectValues.dimensions["diamIter"] &&
+              !projectValues.dimensions["lengthIter"] &&
+              !projectValues.dimensions["withoutDim"] &&
+              projectValues.solicitation["Qsol"] && (
+                <div>
+                  <div className={styles.container}>
+                    <h3 className={styles.titulo}>Resultados</h3>
+                    <hr></hr>
+                    <h3 className={styles.method}>
+                      Caquot y Kerisel (1961) (Solución Gráfica)
+                    </h3>
+                    <div className={styles.cont}>
+                      <ResultQsol result={CKDiamIterQsol}></ResultQsol>
+                      <hr></hr>
+                      <h3>Meyerhof (1976)</h3>
+                      <ResultQsol result={MeyerhofDiamIterQsol1}></ResultQsol>
+                      <hr></hr>
+                      <h3>Compilación Pérez Guerra-Carrillo (1981)</h3>
+                      <ResultQsol result={PGCDiameIterQsol}></ResultQsol>
+                    </div>
+                  </div>
 
-                <div className={graphicStyles.container}>
-                  <Scene
-                    units={props[0]}
-                    soil={props[2]}
-                    result={CKLenIterQsol}
-                  ></Scene>
-                </div>
-              </div>
-            )}
-          {props[4][0]["diamIter"] &&
-            !props[4][0]["lengthIter"] &&
-            !props[4][0]["withoutDim"] &&
-            props[5][0]["Qsol"] && (
-              <div>
-                <div className={styles.container}>
-                  <h3 className={styles.titulo}>Resultados</h3>
-                  <hr></hr>
-                  <h3 className={styles.method}>
-                    Caquot y Kerisel (1961) (Solución Gráfica)
-                  </h3>
-                  <div className={styles.cont}>
-                    <ResultQsol
-                      units={props[0]}
-                      result={CKDiamIterQsol}
-                    ></ResultQsol>
-                    <hr></hr>
-                    <h3>Meyerhof (1976)</h3>
-                    <ResultQsol
-                      units={props[0]}
-                      result={MeyerhofDiamIterQsol1}
-                    ></ResultQsol>
-                    <hr></hr>
-                    <h3>Compilación Pérez Guerra-Carrillo (1981)</h3>
-                    <ResultQsol
-                      units={props[0]}
-                      result={PGCDiameIterQsol}
-                    ></ResultQsol>
+                  <div className={graphicStyles.container}>
+                    <Scene result={CKDiamIterQsol}></Scene>
                   </div>
                 </div>
+              )}
+          </div>
+        )}
+      {projectValues.methods["methodValue"] === "3" &&
+        !projectValues.methods["comparison"] && (
+          <div>
+            {!projectValues.dimensions["diamIter"] &&
+              !projectValues.dimensions["lengthIter"] &&
+              !projectValues.dimensions["withoutDim"] &&
+              !projectValues.solicitation["Qsol"] && (
+                <div>
+                  <div className={styles.container}>
+                    <h3 className={styles.titulo}>Resultados</h3>
+                    <hr></hr>
+                    <h3 className={styles.method}>
+                      Compilación Pérez Guerra-Carrillo (1981) (Solución
+                      Gráfica)
+                    </h3>
+                    <div className={styles.cont}>
+                      <Result result={bothDimPGC}></Result>
+                    </div>
+                  </div>
 
-                <div className={graphicStyles.container}>
-                  <Scene
-                    units={props[0]}
-                    soil={props[2]}
-                    result={CKDiamIterQsol}
-                  ></Scene>
-                </div>
-              </div>
-            )}
-        </div>
-      )}
-      {props[1][0]["methodValue"] === "3" && !props[1][0]["comparison"] && (
-        <div>
-          {!props[4][0]["diamIter"] &&
-            !props[4][0]["lengthIter"] &&
-            !props[4][0]["withoutDim"] &&
-            !props[5][0]["Qsol"] && (
-              <div>
-                <div className={styles.container}>
-                  <h3 className={styles.titulo}>Resultados</h3>
-                  <hr></hr>
-                  <h3 className={styles.method}>
-                    Compilación Pérez Guerra-Carrillo (1981) (Solución Gráfica)
-                  </h3>
-                  <div className={styles.cont}>
-                    <Result units={props[0]} result={bothDimPGC}></Result>
+                  <div className={graphicStyles.container}>
+                    <Scene result={bothDimPGC}></Scene>
                   </div>
                 </div>
+              )}
+            {projectValues.dimensions["diamIter"] &&
+              !projectValues.dimensions["lengthIter"] &&
+              !projectValues.dimensions["withoutDim"] &&
+              !projectValues.solicitation["Qsol"] && (
+                <div>
+                  <div className={styles.container}>
+                    <h3 className={styles.titulo}>Resultados</h3>
+                    <hr></hr>
+                    <h3 className={styles.method}>
+                      Compilación Pérez Guerra-Carrillo (1981) (Solución
+                      Gráfica)
+                    </h3>
+                    <div className={styles.cont}>
+                      <Result result={diamIterPGC}></Result>
+                    </div>
+                  </div>
 
-                <div className={graphicStyles.container}>
-                  <Scene
-                    units={props[0]}
-                    soil={props[2]}
-                    result={bothDimPGC}
-                  ></Scene>
-                </div>
-              </div>
-            )}
-          {props[4][0]["diamIter"] &&
-            !props[4][0]["lengthIter"] &&
-            !props[4][0]["withoutDim"] &&
-            !props[5][0]["Qsol"] && (
-              <div>
-                <div className={styles.container}>
-                  <h3 className={styles.titulo}>Resultados</h3>
-                  <hr></hr>
-                  <h3 className={styles.method}>
-                    Compilación Pérez Guerra-Carrillo (1981) (Solución Gráfica)
-                  </h3>
-                  <div className={styles.cont}>
-                    <Result units={props[0]} result={diamIterPGC}></Result>
+                  <div className={graphicStyles.container}>
+                    <Scene result={diamIterPGC}></Scene>
                   </div>
                 </div>
+              )}
+            {!projectValues.dimensions["diamIter"] &&
+              projectValues.dimensions["lengthIter"] &&
+              !projectValues.dimensions["withoutDim"] &&
+              !projectValues.solicitation["Qsol"] && (
+                <div>
+                  <div className={styles.container}>
+                    <h3 className={styles.titulo}>Resultados</h3>
+                    <hr></hr>
+                    <h3 className={styles.method}>
+                      Compilación Pérez Guerra-Carrillo (1981) (Solución
+                      Gráfica)
+                    </h3>
+                    <div className={styles.cont}>
+                      <Result result={lenIterPGC}></Result>
+                    </div>
+                  </div>
 
-                <div className={graphicStyles.container}>
-                  <Scene
-                    units={props[0]}
-                    soil={props[2]}
-                    result={diamIterPGC}
-                  ></Scene>
-                </div>
-              </div>
-            )}
-          {!props[4][0]["diamIter"] &&
-            props[4][0]["lengthIter"] &&
-            !props[4][0]["withoutDim"] &&
-            !props[5][0]["Qsol"] && (
-              <div>
-                <div className={styles.container}>
-                  <h3 className={styles.titulo}>Resultados</h3>
-                  <hr></hr>
-                  <h3 className={styles.method}>
-                    Compilación Pérez Guerra-Carrillo (1981) (Solución Gráfica)
-                  </h3>
-                  <div className={styles.cont}>
-                    <Result units={props[0]} result={lenIterPGC}></Result>
+                  <div className={graphicStyles.container}>
+                    <Scene result={lenIterPGC}></Scene>
                   </div>
                 </div>
+              )}
+            {!projectValues.dimensions["diamIter"] &&
+              !projectValues.dimensions["lengthIter"] &&
+              projectValues.dimensions["withoutDim"] &&
+              projectValues.solicitation["Qsol"] && (
+                <div>
+                  <div className={styles.container}>
+                    <h3 className={styles.titulo}>Resultados</h3>
+                    <hr></hr>
+                    <h3 className={styles.method}>
+                      Compilación Pérez Guerra-Carrillo (1981) (Solución
+                      Gráfica)
+                    </h3>
+                    <div className={styles.cont}>
+                      <ResultQsol result={QsolWTDimPGC}></ResultQsol>
+                    </div>
+                  </div>
 
-                <div className={graphicStyles.container}>
-                  <Scene
-                    units={props[0]}
-                    soil={props[2]}
-                    result={lenIterPGC}
-                  ></Scene>
-                </div>
-              </div>
-            )}
-          {!props[4][0]["diamIter"] &&
-            !props[4][0]["lengthIter"] &&
-            props[4][0]["withoutDim"] &&
-            props[5][0]["Qsol"] && (
-              <div>
-                <div className={styles.container}>
-                  <h3 className={styles.titulo}>Resultados</h3>
-                  <hr></hr>
-                  <h3 className={styles.method}>
-                    Compilación Pérez Guerra-Carrillo (1981) (Solución Gráfica)
-                  </h3>
-                  <div className={styles.cont}>
-                    <ResultQsol
-                      units={props[0]}
-                      result={QsolWTDimPGC}
-                    ></ResultQsol>
+                  <div className={graphicStyles.container}>
+                    <Scene result={QsolWTDimPGC}></Scene>
                   </div>
                 </div>
+              )}
+            {!projectValues.dimensions["diamIter"] &&
+              projectValues.dimensions["lengthIter"] &&
+              !projectValues.dimensions["withoutDim"] &&
+              projectValues.solicitation["Qsol"] && (
+                <div>
+                  <div className={styles.container}>
+                    <h3 className={styles.titulo}>Resultados</h3>
+                    <hr></hr>
+                    <h3 className={styles.method}>
+                      Compilación Pérez Guerra-Carrillo (1981) (Solución
+                      Gráfica)
+                    </h3>
+                    <div className={styles.cont}>
+                      <ResultQsol result={PGCLenIterQsol}></ResultQsol>
+                    </div>
+                  </div>
 
-                <div className={graphicStyles.container}>
-                  <Scene
-                    units={props[0]}
-                    soil={props[2]}
-                    result={QsolWTDimPGC}
-                  ></Scene>
-                </div>
-              </div>
-            )}
-          {!props[4][0]["diamIter"] &&
-            props[4][0]["lengthIter"] &&
-            !props[4][0]["withoutDim"] &&
-            props[5][0]["Qsol"] && (
-              <div>
-                <div className={styles.container}>
-                  <h3 className={styles.titulo}>Resultados</h3>
-                  <hr></hr>
-                  <h3 className={styles.method}>
-                    Compilación Pérez Guerra-Carrillo (1981) (Solución Gráfica)
-                  </h3>
-                  <div className={styles.cont}>
-                    <ResultQsol
-                      units={props[0]}
-                      result={PGCLenIterQsol}
-                    ></ResultQsol>
+                  <div className={graphicStyles.container}>
+                    <Scene result={PGCLenIterQsol}></Scene>
                   </div>
                 </div>
+              )}
+            {projectValues.dimensions["diamIter"] &&
+              !projectValues.dimensions["lengthIter"] &&
+              !projectValues.dimensions["withoutDim"] &&
+              projectValues.solicitation["Qsol"] && (
+                <div>
+                  <div className={styles.container}>
+                    <h3 className={styles.titulo}>Resultados</h3>
+                    <hr></hr>
+                    <h3 className={styles.method}>
+                      Compilación Pérez Guerra-Carrillo (1981) (Solución
+                      Gráfica)
+                    </h3>
+                    <div className={styles.cont}>
+                      <ResultQsol result={PGCDiameIterQsol}></ResultQsol>
+                    </div>
+                  </div>
 
-                <div className={graphicStyles.container}>
-                  <Scene
-                    units={props[0]}
-                    soil={props[2]}
-                    result={PGCLenIterQsol}
-                  ></Scene>
-                </div>
-              </div>
-            )}
-          {props[4][0]["diamIter"] &&
-            !props[4][0]["lengthIter"] &&
-            !props[4][0]["withoutDim"] &&
-            props[5][0]["Qsol"] && (
-              <div>
-                <div className={styles.container}>
-                  <h3 className={styles.titulo}>Resultados</h3>
-                  <hr></hr>
-                  <h3 className={styles.method}>
-                    Compilación Pérez Guerra-Carrillo (1981) (Solución Gráfica)
-                  </h3>
-                  <div className={styles.cont}>
-                    <ResultQsol
-                      units={props[0]}
-                      result={PGCDiameIterQsol}
-                    ></ResultQsol>
+                  <div className={graphicStyles.container}>
+                    <Scene result={PGCDiameIterQsol}></Scene>
                   </div>
                 </div>
-
-                <div className={graphicStyles.container}>
-                  <Scene
-                    units={props[0]}
-                    soil={props[2]}
-                    result={PGCDiameIterQsol}
-                  ></Scene>
-                </div>
-              </div>
-            )}
-        </div>
-      )}
-      {props[1][0]["methodValue"] === "3" && props[1][0]["comparison"] && (
-        <div>
-          {!props[4][0]["diamIter"] &&
-            !props[4][0]["lengthIter"] &&
-            !props[4][0]["withoutDim"] &&
-            !props[5][0]["Qsol"] && (
-              <div>
-                <div className={styles.container}>
-                  <h3 className={styles.titulo}>Resultados</h3>
-                  <hr></hr>
-                  <h3 className={styles.method}>
-                    Compilación Pérez Guerra-Carrillo (1981) (Solución Gráfica)
-                  </h3>
-                  <div className={styles.cont}>
-                    <Result units={props[0]} result={bothDimPGC}></Result>
+              )}
+          </div>
+        )}
+      {projectValues.methods["methodValue"] === "3" &&
+        projectValues.methods["comparison"] && (
+          <div>
+            {!projectValues.dimensions["diamIter"] &&
+              !projectValues.dimensions["lengthIter"] &&
+              !projectValues.dimensions["withoutDim"] &&
+              !projectValues.solicitation["Qsol"] && (
+                <div>
+                  <div className={styles.container}>
+                    <h3 className={styles.titulo}>Resultados</h3>
                     <hr></hr>
-                    <h3>Meyerhof (1976)</h3>
-                    <Result units={props[0]} result={bothDimMeyer}></Result>
+                    <h3 className={styles.method}>
+                      Compilación Pérez Guerra-Carrillo (1981) (Solución
+                      Gráfica)
+                    </h3>
+                    <div className={styles.cont}>
+                      <Result result={bothDimPGC}></Result>
+                      <hr></hr>
+                      <h3>Meyerhof (1976)</h3>
+                      <Result result={bothDimMeyer}></Result>
 
-                    <hr></hr>
-                    <h3>Caquot y Kerisel (1961)</h3>
-                    <Result units={props[0]} result={bothDimKerisel}></Result>
+                      <hr></hr>
+                      <h3>Caquot y Kerisel (1961)</h3>
+                      <Result result={bothDimKerisel}></Result>
+                    </div>
+                  </div>
+
+                  <div className={graphicStyles.container}>
+                    <Scene result={bothDimPGC}></Scene>
                   </div>
                 </div>
-
-                <div className={graphicStyles.container}>
-                  <Scene
-                    units={props[0]}
-                    soil={props[2]}
-                    result={bothDimPGC}
-                  ></Scene>
-                </div>
-              </div>
-            )}
-          {props[4][0]["diamIter"] &&
-            !props[4][0]["lengthIter"] &&
-            !props[4][0]["withoutDim"] &&
-            !props[5][0]["Qsol"] && (
-              <div>
-                <div className={styles.container}>
-                  <h3 className={styles.titulo}>Resultados</h3>
-                  <hr></hr>
-                  <h3 className={styles.method}>
-                    Compilación Pérez Guerra-Carrillo (1981) (Solución Gráfica)
-                  </h3>
-                  <div className={styles.cont}>
-                    <Result units={props[0]} result={diamIterPGC}></Result>
+              )}
+            {projectValues.dimensions["diamIter"] &&
+              !projectValues.dimensions["lengthIter"] &&
+              !projectValues.dimensions["withoutDim"] &&
+              !projectValues.solicitation["Qsol"] && (
+                <div>
+                  <div className={styles.container}>
+                    <h3 className={styles.titulo}>Resultados</h3>
                     <hr></hr>
-                    <h3>Meyerhof (1976)</h3>
-                    <Result units={props[0]} result={diamIterMeyer}></Result>
-                    <hr></hr>
-                    <h3>Caquot y Kerisel (1961)</h3>
+                    <h3 className={styles.method}>
+                      Compilación Pérez Guerra-Carrillo (1981) (Solución
+                      Gráfica)
+                    </h3>
+                    <div className={styles.cont}>
+                      <Result result={diamIterPGC}></Result>
+                      <hr></hr>
+                      <h3>Meyerhof (1976)</h3>
+                      <Result result={diamIterMeyer}></Result>
+                      <hr></hr>
+                      <h3>Caquot y Kerisel (1961)</h3>
 
-                    <Result units={props[0]} result={diamIterKerisel}></Result>
+                      <Result result={diamIterKerisel}></Result>
+                    </div>
+                  </div>
+
+                  <div className={graphicStyles.container}>
+                    <Scene result={diamIterPGC}></Scene>
                   </div>
                 </div>
+              )}
+            {!projectValues.dimensions["diamIter"] &&
+              projectValues.dimensions["lengthIter"] &&
+              !projectValues.dimensions["withoutDim"] &&
+              !projectValues.solicitation["Qsol"] && (
+                <div>
+                  <div className={styles.container}>
+                    <h3 className={styles.titulo}>Resultados</h3>
+                    <hr></hr>
+                    <h3 className={styles.method}>
+                      Compilación Pérez Guerra-Carrillo (1981) (Solución
+                      Gráfica)
+                    </h3>
+                    <div className={styles.cont}>
+                      <Result result={lenIterPGC}></Result>
+                      <hr></hr>
+                      <h3>Meyerhof (1976)</h3>
+                      <Result result={lenIterMeyer}></Result>
+                      <hr></hr>
+                      <h3>Caquot y Kerisel (1961)</h3>
+                      <Result result={lenIterKerisel}></Result>
+                    </div>
+                  </div>
 
-                <div className={graphicStyles.container}>
-                  <Scene
-                    units={props[0]}
-                    soil={props[2]}
-                    result={diamIterPGC}
-                  ></Scene>
-                </div>
-              </div>
-            )}
-          {!props[4][0]["diamIter"] &&
-            props[4][0]["lengthIter"] &&
-            !props[4][0]["withoutDim"] &&
-            !props[5][0]["Qsol"] && (
-              <div>
-                <div className={styles.container}>
-                  <h3 className={styles.titulo}>Resultados</h3>
-                  <hr></hr>
-                  <h3 className={styles.method}>
-                    Compilación Pérez Guerra-Carrillo (1981) (Solución Gráfica)
-                  </h3>
-                  <div className={styles.cont}>
-                    <Result units={props[0]} result={lenIterPGC}></Result>
-                    <hr></hr>
-                    <h3>Meyerhof (1976)</h3>
-                    <Result units={props[0]} result={lenIterMeyer}></Result>
-                    <hr></hr>
-                    <h3>Caquot y Kerisel (1961)</h3>
-                    <Result units={props[0]} result={lenIterKerisel}></Result>
+                  <div className={graphicStyles.container}>
+                    <Scene result={lenIterPGC}></Scene>
                   </div>
                 </div>
+              )}
+            {!projectValues.dimensions["diamIter"] &&
+              !projectValues.dimensions["lengthIter"] &&
+              projectValues.dimensions["withoutDim"] &&
+              projectValues.solicitation["Qsol"] && (
+                <div>
+                  <div className={styles.container}>
+                    <h3 className={styles.titulo}>Resultados</h3>
+                    <hr></hr>
+                    <h3 className={styles.method}>
+                      Compilación Pérez Guerra-Carrillo (1981) (Solución
+                      Gráfica)
+                    </h3>
+                    <div className={styles.cont}>
+                      <ResultQsol result={QsolWTDimPGC}></ResultQsol>
+                      <hr></hr>
+                      <h3>Meyerhof (1976)</h3>
+                      <ResultQsol result={QsolWTDimMeyerhof}></ResultQsol>
+                      <hr></hr>
+                      <h3>Caquot y Kerisel (1961)</h3>
+                      <ResultQsol result={QsolWTDimKerisel}></ResultQsol>
+                    </div>
+                  </div>
 
-                <div className={graphicStyles.container}>
-                  <Scene
-                    units={props[0]}
-                    soil={props[2]}
-                    result={lenIterPGC}
-                  ></Scene>
-                </div>
-              </div>
-            )}
-          {!props[4][0]["diamIter"] &&
-            !props[4][0]["lengthIter"] &&
-            props[4][0]["withoutDim"] &&
-            props[5][0]["Qsol"] && (
-              <div>
-                <div className={styles.container}>
-                  <h3 className={styles.titulo}>Resultados</h3>
-                  <hr></hr>
-                  <h3 className={styles.method}>
-                    Compilación Pérez Guerra-Carrillo (1981) (Solución Gráfica)
-                  </h3>
-                  <div className={styles.cont}>
-                    <ResultQsol
-                      units={props[0]}
-                      result={QsolWTDimPGC}
-                    ></ResultQsol>
-                    <hr></hr>
-                    <h3>Meyerhof (1976)</h3>
-                    <ResultQsol
-                      units={props[0]}
-                      result={QsolWTDimMeyerhof}
-                    ></ResultQsol>
-                    <hr></hr>
-                    <h3>Caquot y Kerisel (1961)</h3>
-                    <ResultQsol
-                      units={props[0]}
-                      result={QsolWTDimKerisel}
-                    ></ResultQsol>
+                  <div className={graphicStyles.container}>
+                    <Scene result={QsolWTDimPGC}></Scene>
                   </div>
                 </div>
+              )}
+            {!projectValues.dimensions["diamIter"] &&
+              projectValues.dimensions["lengthIter"] &&
+              !projectValues.dimensions["withoutDim"] &&
+              projectValues.solicitation["Qsol"] && (
+                <div>
+                  <div className={styles.container}>
+                    <h3 className={styles.titulo}>Resultados</h3>
+                    <hr></hr>
+                    <h3 className={styles.method}>
+                      Compilación Pérez Guerra-Carrillo (1981) (Solución
+                      Gráfica)
+                    </h3>
+                    <div className={styles.cont}>
+                      <ResultQsol result={PGCLenIterQsol}></ResultQsol>
+                      <hr></hr>
+                      <h3>Meyerhof (1976)</h3>
+                      <ResultQsol result={MeyerhofLenIterQsol1}></ResultQsol>
+                      <hr></hr>
+                      <h3>Caquot y Kerisel (1961)</h3>
+                      <ResultQsol result={CKLenIterQsol}></ResultQsol>
+                    </div>
+                  </div>
 
-                <div className={graphicStyles.container}>
-                  <Scene
-                    units={props[0]}
-                    soil={props[2]}
-                    result={QsolWTDimPGC}
-                  ></Scene>
-                </div>
-              </div>
-            )}
-          {!props[4][0]["diamIter"] &&
-            props[4][0]["lengthIter"] &&
-            !props[4][0]["withoutDim"] &&
-            props[5][0]["Qsol"] && (
-              <div>
-                <div className={styles.container}>
-                  <h3 className={styles.titulo}>Resultados</h3>
-                  <hr></hr>
-                  <h3 className={styles.method}>
-                    Compilación Pérez Guerra-Carrillo (1981) (Solución Gráfica)
-                  </h3>
-                  <div className={styles.cont}>
-                    <ResultQsol
-                      units={props[0]}
-                      result={PGCLenIterQsol}
-                    ></ResultQsol>
-                    <hr></hr>
-                    <h3>Meyerhof (1976)</h3>
-                    <ResultQsol
-                      units={props[0]}
-                      result={MeyerhofLenIterQsol1}
-                    ></ResultQsol>
-                    <hr></hr>
-                    <h3>Caquot y Kerisel (1961)</h3>
-                    <ResultQsol
-                      units={props[0]}
-                      result={CKLenIterQsol}
-                    ></ResultQsol>
+                  <div className={graphicStyles.container}>
+                    <Scene result={PGCLenIterQsol}></Scene>
                   </div>
                 </div>
+              )}
+            {projectValues.dimensions["diamIter"] &&
+              !projectValues.dimensions["lengthIter"] &&
+              !projectValues.dimensions["withoutDim"] &&
+              projectValues.solicitation["Qsol"] && (
+                <div>
+                  <div className={styles.container}>
+                    <h3 className={styles.titulo}>Resultados</h3>
+                    <hr></hr>
+                    <h3 className={styles.method}>
+                      Compilación Pérez Guerra-Carrillo (1981) (Solución
+                      Gráfica)
+                    </h3>
+                    <div className={styles.cont}>
+                      <ResultQsol result={PGCDiameIterQsol}></ResultQsol>
+                      <hr></hr>
+                      <h3>Meyerhof (1976)</h3>
+                      <ResultQsol result={MeyerhofDiamIterQsol1}></ResultQsol>
+                      <hr></hr>
+                      <h3>Caquot y Kerisel (1961)</h3>
+                      <ResultQsol result={CKDiamIterQsol}></ResultQsol>
+                    </div>
+                  </div>
 
-                <div className={graphicStyles.container}>
-                  <Scene
-                    units={props[0]}
-                    soil={props[2]}
-                    result={PGCLenIterQsol}
-                  ></Scene>
-                </div>
-              </div>
-            )}
-          {props[4][0]["diamIter"] &&
-            !props[4][0]["lengthIter"] &&
-            !props[4][0]["withoutDim"] &&
-            props[5][0]["Qsol"] && (
-              <div>
-                <div className={styles.container}>
-                  <h3 className={styles.titulo}>Resultados</h3>
-                  <hr></hr>
-                  <h3 className={styles.method}>
-                    Compilación Pérez Guerra-Carrillo (1981) (Solución Gráfica)
-                  </h3>
-                  <div className={styles.cont}>
-                    <ResultQsol
-                      units={props[0]}
-                      result={PGCDiameIterQsol}
-                    ></ResultQsol>
-                    <hr></hr>
-                    <h3>Meyerhof (1976)</h3>
-                    <ResultQsol
-                      units={props[0]}
-                      result={MeyerhofDiamIterQsol1}
-                    ></ResultQsol>
-                    <hr></hr>
-                    <h3>Caquot y Kerisel (1961)</h3>
-                    <ResultQsol
-                      units={props[0]}
-                      result={CKDiamIterQsol}
-                    ></ResultQsol>
+                  <div className={graphicStyles.container}>
+                    <Scene result={PGCDiameIterQsol}></Scene>
                   </div>
                 </div>
-
-                <div className={graphicStyles.container}>
-                  <Scene
-                    units={props[0]}
-                    soil={props[2]}
-                    result={PGCDiameIterQsol}
-                  ></Scene>
-                </div>
-              </div>
-            )}
-        </div>
-      )}
+              )}
+          </div>
+        )}
     </div>
   );
 }

@@ -7,63 +7,53 @@ import { Open } from "../../NBIcons/Open";
 
 export default function FHNavbar() {
   const { projectValues, updateProjectValues } = useContext(ProjectContext);
-  const buttons = [
-    { name: <Save /> },
-    { name: <SaveAs /> },
-    { name: <Open /> },
-  ];
-  const [checkedStates, setCheckedStates] = useState(
-    new Array(buttons.length).fill(false)
-  );
-
-  const handleOnChange = (position) => {
-    const updatedCheckedState = checkedStates.map((item, index) =>
-      index === position ? !item : false
-    );
-    setCheckedStates(updatedCheckedState);
-  };
 
   let variable2 = JSON.stringify(projectValues);
-  console.log("variable2: " + variable2);
+
   return (
     <div className={styles.container}>
       <div className={styles.buttons}>
         <ul className={styles.list}>
-          {buttons.map(({ name }, index) => {
-            return (
-              <li>
-                <div className={styles.marg}>
-                  <button
-                    onClick={() => {
-                      handleOnChange(index);
-                    }}
-                  >
-                    {name}
-                  </button>
-                </div>
-              </li>
-            );
-          })}
+          <li>
+            <div className={styles.marg}>
+              <button
+                onClick={() => {
+                  electronApi.saveFile(variable2);
+                }}
+              >
+                <SaveAs></SaveAs>
+              </button>
+            </div>
+          </li>
+          <li>
+            <div className={styles.marg}>
+              <button
+                onClick={() => {
+                  electronApi.saveFile(variable2);
+                }}
+              >
+                <Save></Save>
+              </button>
+            </div>
+          </li>
+          <li>
+            <div className={styles.marg}>
+              <button
+                onClick={() => {
+                  electronApi.openFile();
+                  electronApi.receiveFileData((filePath, fileData) => {
+                    let variable = JSON.parse(fileData);
+
+                    updateProjectValues(variable);
+                  });
+                }}
+              >
+                <Open></Open>
+              </button>
+            </div>
+          </li>
         </ul>
       </div>
-      {checkedStates.map(({ value }, index) => {
-        console.log(checkedStates[index]);
-        if (index === 0 && checkedStates[index]) {
-          electronApi.saveFile(variable2);
-        }
-        if (index === 1 && checkedStates[index]) {
-          electronApi.saveFile(variable2);
-        }
-        if (index === 2 && checkedStates[index]) {
-          electronApi.openFile();
-          electronApi.receiveFileData((filePath, fileData) => {
-            console.log("fileData: " + fileData);
-            let variable = JSON.parse(fileData);
-            console.log("variable: " + variable);
-            updateProjectValues(variable);
-          });
-        }
-      })}
     </div>
   );
 }
