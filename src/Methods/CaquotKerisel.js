@@ -200,7 +200,7 @@ export const CaquotKeriselBothDim = (
         s2 = values[i]["S2"];
       }
     }
-    if (Lestratos < length) {
+    if (Lestratos <= length) {
       return "La longitud del pilote es mayor que la longitud total de los estratos. \n Por favor, modifique las dimensiones ingresadas.";
     }
 

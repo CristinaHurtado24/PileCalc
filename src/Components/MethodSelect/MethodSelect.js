@@ -19,15 +19,15 @@ export default function MethodSelect() {
     },
     {
       value: "1",
-      label: "Meyerhof (1976)",
+      label: "Meyerhof (1945)",
     },
     {
       value: "2",
-      label: "Caquot y Kérisel (1961)",
+      label: "Caquot y Kérisel (1954)",
     },
     {
       value: "3",
-      label: "Compilación Pérez Guerra-Carrillo (1981)",
+      label: "Compilación Pedro Carrillo basada en Meyerhof (2008)",
     },
   ];
 

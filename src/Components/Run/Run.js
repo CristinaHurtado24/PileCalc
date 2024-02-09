@@ -190,7 +190,7 @@ export default function Run() {
                     <h3 className={styles.titulo}>Resultados</h3>
                     <hr></hr>
                     <h3 className={styles.method}>
-                      Meyerhof (1976) (Solución Gráfica)
+                      Meyerhof (1945) (Solución Gráfica)
                     </h3>
                     <div className={styles.cont}>
                       <Result result={bothDimMeyer}></Result>
@@ -211,7 +211,7 @@ export default function Run() {
                     <h3 className={styles.titulo}>Resultados</h3>
                     <hr></hr>
                     <h3 className={styles.method}>
-                      Meyerhof (1976) (Solución Gráfica)
+                      Meyerhof (1945) (Solución Gráfica)
                     </h3>
                     <div className={styles.cont}>
                       <Result result={diamIterMeyer}></Result>
@@ -232,7 +232,7 @@ export default function Run() {
                     <h3 className={styles.titulo}>Resultados</h3>
                     <hr></hr>
                     <h3 className={styles.method}>
-                      Meyerhof (1976) (Solución Gráfica)
+                      Meyerhof (1945) (Solución Gráfica)
                     </h3>
                     <div className={styles.cont}>
                       <Result result={lenIterMeyer}></Result>
@@ -253,7 +253,7 @@ export default function Run() {
                     <h3 className={styles.titulo}>Resultados</h3>
                     <hr></hr>
                     <h3 className={styles.method}>
-                      Meyerhof (1976) (Solución Gráfica)
+                      Meyerhof (1945) (Solución Gráfica)
                     </h3>
                     <div className={styles.cont}>
                       <ResultQsol result={QsolWTDimMeyerhof}></ResultQsol>
@@ -274,7 +274,7 @@ export default function Run() {
                     <h3 className={styles.titulo}>Resultados</h3>
                     <hr></hr>
                     <h3 className={styles.method}>
-                      Meyerhof (1976) (Solución Gráfica)
+                      Meyerhof (1945) (Solución Gráfica)
                     </h3>
                     <div className={styles.cont}>
                       <ResultQsol result={MeyerhofLenIterQsol1}></ResultQsol>
@@ -295,7 +295,7 @@ export default function Run() {
                     <h3 className={styles.titulo}>Resultados</h3>
                     <hr></hr>
                     <h3 className={styles.method}>
-                      Meyerhof (1976) (Solución Gráfica)
+                      Meyerhof (1945) (Solución Gráfica)
                     </h3>
                     <div className={styles.cont}>
                       <ResultQsol result={MeyerhofDiamIterQsol1}></ResultQsol>
@@ -321,15 +321,15 @@ export default function Run() {
                     <h3 className={styles.titulo}>Resultados</h3>
                     <hr></hr>
                     <h3 className={styles.method}>
-                      Meyerhof (1976) (Solución Gráfica)
+                      Meyerhof (1945) (Solución Gráfica)
                     </h3>
                     <div className={styles.cont}>
                       <Result result={bothDimMeyer}></Result>
                       <hr></hr>
-                      <h3>Caquot y Kerisel (1961)</h3>
+                      <h3>Caquot y Kerisel (1954)</h3>
                       <Result result={bothDimKerisel}></Result>
                       <hr></hr>
-                      <h3>Compilación Pérez Guerra-Carrillo (1981)</h3>
+                      <h3>Compilación de Pedro Carrillo (2008)</h3>
                       <Result result={bothDimPGC}></Result>
                     </div>
                   </div>
@@ -348,15 +348,15 @@ export default function Run() {
                     <h3 className={styles.titulo}>Resultados</h3>
                     <hr></hr>
                     <h3 className={styles.method}>
-                      Meyerhof (1976) (Solución Gráfica)
+                      Meyerhof (1945) (Solución Gráfica)
                     </h3>
                     <div className={styles.cont}>
                       <Result result={diamIterMeyer}></Result>
                       <hr></hr>
-                      <h3>Caquot y Kerisel (1961)</h3>
+                      <h3>Caquot y Kerisel (1954)</h3>
                       <Result result={diamIterKerisel}></Result>
                       <hr></hr>
-                      <h3>Compilación Pérez Guerra-Carrillo (1981)</h3>
+                      <h3>Compilación de Pedro Carrillo (2008)</h3>
                       <Result result={diamIterPGC}></Result>
                     </div>
                   </div>
@@ -375,15 +375,15 @@ export default function Run() {
                     <h3 className={styles.titulo}>Resultados</h3>
                     <hr></hr>
                     <h3 className={styles.method}>
-                      Meyerhof (1976) (Solución Gráfica)
+                      Meyerhof (1945) (Solución Gráfica)
                     </h3>
                     <div className={styles.cont}>
                       <Result result={lenIterMeyer}></Result>
                       <hr></hr>
-                      <h3>Caquot y Kerisel (1961)</h3>
+                      <h3>Caquot y Kerisel (1954)</h3>
                       <Result result={lenIterKerisel}></Result>
                       <hr></hr>
-                      <h3>Compilación Pérez Guerra-Carrillo (1981)</h3>
+                      <h3>Compilación de Pedro Carrillo (2008)</h3>
                       <Result result={lenIterPGC}></Result>
                     </div>
                   </div>
@@ -402,15 +402,15 @@ export default function Run() {
                     <h3 className={styles.titulo}>Resultados</h3>
                     <hr></hr>
                     <h3 className={styles.method}>
-                      Meyerhof (1976) (Solución Gráfica)
+                      Meyerhof (1945) (Solución Gráfica)
                     </h3>
                     <div className={styles.cont}>
                       <ResultQsol result={QsolWTDimMeyerhof}></ResultQsol>
                       <hr></hr>
-                      <h3>Caquot y Kerisel (1961)</h3>
+                      <h3>Caquot y Kerisel (1954)</h3>
                       <ResultQsol result={QsolWTDimKerisel}></ResultQsol>
                       <hr></hr>
-                      <h3>Compilación Pérez Guerra-Carrillo (1981)</h3>
+                      <h3>Compilación de Pedro Carrillo (2008)</h3>
                       <ResultQsol result={QsolWTDimPGC}></ResultQsol>
                     </div>
                   </div>
@@ -429,15 +429,15 @@ export default function Run() {
                     <h3 className={styles.titulo}>Resultados</h3>
                     <hr></hr>
                     <h3 className={styles.method}>
-                      Meyerhof (1976) (Solución Gráfica)
+                      Meyerhof (1945) (Solución Gráfica)
                     </h3>
                     <div className={styles.cont}>
                       <ResultQsol result={MeyerhofLenIterQsol1}></ResultQsol>
                       <hr></hr>
-                      <h3>Caquot y Kerisel (1961)</h3>
+                      <h3>Caquot y Kerisel (1954)</h3>
                       <ResultQsol result={CKLenIterQsol}></ResultQsol>
                       <hr></hr>
-                      <h3>Compilación Pérez Guerra-Carrillo (1981)</h3>
+                      <h3>Compilación de Pedro Carrillo (2008)</h3>
                       <ResultQsol result={PGCLenIterQsol}></ResultQsol>
                     </div>
                   </div>
@@ -456,15 +456,15 @@ export default function Run() {
                     <h3 className={styles.titulo}>Resultados</h3>
                     <hr></hr>
                     <h3 className={styles.method}>
-                      Meyerhof (1976) (Solución Gráfica)
+                      Meyerhof (1945) (Solución Gráfica)
                     </h3>
                     <div className={styles.cont}>
                       <ResultQsol result={MeyerhofDiamIterQsol1}></ResultQsol>
                       <hr></hr>
-                      <h3>Caquot y Kerisel (1961)</h3>
+                      <h3>Caquot y Kerisel (1954)</h3>
                       <ResultQsol result={CKDiamIterQsol}></ResultQsol>
                       <hr></hr>
-                      <h3>Compilación Pérez Guerra-Carrillo (1981)</h3>
+                      <h3>Compilación de Pedro Carrillo (2008)</h3>
                       <ResultQsol result={PGCDiameIterQsol}></ResultQsol>
                     </div>
                   </div>
@@ -488,7 +488,7 @@ export default function Run() {
                     <h3 className={styles.titulo}>Resultados</h3>
                     <hr></hr>
                     <h3 className={styles.method}>
-                      Caquot y Kerisel (1961) (Solución Gráfica)
+                      Caquot y Kerisel (1954) (Solución Gráfica)
                     </h3>
                     <div className={styles.cont}>
                       <Result result={bothDimKerisel}></Result>
@@ -509,7 +509,7 @@ export default function Run() {
                     <h3 className={styles.titulo}>Resultados</h3>
                     <hr></hr>
                     <h3 className={styles.method}>
-                      Caquot y Kerisel (1961) (Solución Gráfica)
+                      Caquot y Kerisel (1954) (Solución Gráfica)
                     </h3>
                     <div className={styles.cont}>
                       <Result result={diamIterKerisel}></Result>
@@ -530,7 +530,7 @@ export default function Run() {
                     <h3 className={styles.titulo}>Resultados</h3>
                     <hr></hr>
                     <h3 className={styles.method}>
-                      Caquot y Kerisel (1961) (Solución Gráfica)
+                      Caquot y Kerisel (1954) (Solución Gráfica)
                     </h3>
                     <div className={styles.cont}>
                       <Result result={lenIterKerisel}></Result>
@@ -551,7 +551,7 @@ export default function Run() {
                     <h3 className={styles.titulo}>Resultados</h3>
                     <hr></hr>
                     <h3 className={styles.method}>
-                      Caquot y Kerisel (1961) (Solución Gráfica)
+                      Caquot y Kerisel (1954) (Solución Gráfica)
                     </h3>
                     <div className={styles.cont}>
                       <ResultQsol result={QsolWTDimKerisel}></ResultQsol>
@@ -572,7 +572,7 @@ export default function Run() {
                     <h3 className={styles.titulo}>Resultados</h3>
                     <hr></hr>
                     <h3 className={styles.method}>
-                      Caquot y Kerisel (1961) (Solución Gráfica)
+                      Caquot y Kerisel (1954) (Solución Gráfica)
                     </h3>
                     <div className={styles.cont}>
                       <ResultQsol result={CKLenIterQsol}></ResultQsol>
@@ -593,7 +593,7 @@ export default function Run() {
                     <h3 className={styles.titulo}>Resultados</h3>
                     <hr></hr>
                     <h3 className={styles.method}>
-                      Caquot y Kerisel (1961) (Solución Gráfica)
+                      Caquot y Kerisel (1954) (Solución Gráfica)
                     </h3>
                     <div className={styles.cont}>
                       <ResultQsol result={CKDiamIterQsol}></ResultQsol>
@@ -619,16 +619,16 @@ export default function Run() {
                     <h3 className={styles.titulo}>Resultados</h3>
                     <hr></hr>
                     <h3 className={styles.method}>
-                      Caquot y Kerisel (1961) (Solución Gráfica)
+                      Caquot y Kerisel (1954) (Solución Gráfica)
                     </h3>
                     <div className={styles.cont}>
                       <Result result={bothDimKerisel}></Result>
                       <hr></hr>
-                      <h3>Meyerhof (1976)</h3>
+                      <h3>Meyerhof (1945)</h3>
                       <Result result={bothDimMeyer}></Result>
 
                       <hr></hr>
-                      <h3>Compilación Pérez Guerra-Carrillo (1981)</h3>
+                      <h3>Compilación de Pedro Carrillo (2008)</h3>
                       <Result result={bothDimPGC}></Result>
                     </div>
                   </div>
@@ -647,15 +647,15 @@ export default function Run() {
                     <h3 className={styles.titulo}>Resultados</h3>
                     <hr></hr>
                     <h3 className={styles.method}>
-                      Caquot y Kerisel (1961) (Solución Gráfica)
+                      Caquot y Kerisel (1954) (Solución Gráfica)
                     </h3>
                     <div className={styles.cont}>
                       <Result result={diamIterKerisel}></Result>
                       <hr></hr>
-                      <h3>Meyerhof (1976)</h3>
+                      <h3>Meyerhof (1945)</h3>
                       <Result result={diamIterMeyer}></Result>
                       <hr></hr>
-                      <h3>Compilación Pérez Guerra-Carrillo (1981)</h3>
+                      <h3>Compilación de Pedro Carrillo (2008)</h3>
                       <Result result={diamIterPGC}></Result>
                     </div>
                   </div>
@@ -674,15 +674,15 @@ export default function Run() {
                     <h3 className={styles.titulo}>Resultados</h3>
                     <hr></hr>
                     <h3 className={styles.method}>
-                      Caquot y Kerisel (1961) (Solución Gráfica)
+                      Caquot y Kerisel (1954) (Solución Gráfica)
                     </h3>
                     <div className={styles.cont}>
                       <Result result={lenIterKerisel}></Result>
                       <hr></hr>
-                      <h3>Meyerhof (1976)</h3>
+                      <h3>Meyerhof (1945)</h3>
                       <Result result={lenIterMeyer}></Result>
                       <hr></hr>
-                      <h3>Compilación Pérez Guerra-Carrillo (1981)</h3>
+                      <h3>Compilación de Pedro Carrillo (2008)</h3>
                       <Result result={lenIterPGC}></Result>
                     </div>
                   </div>
@@ -701,15 +701,15 @@ export default function Run() {
                     <h3 className={styles.titulo}>Resultados</h3>
                     <hr></hr>
                     <h3 className={styles.method}>
-                      Caquot y Kerisel (1961) (Solución Gráfica)
+                      Caquot y Kerisel (1954) (Solución Gráfica)
                     </h3>
                     <div className={styles.cont}>
                       <ResultQsol result={QsolWTDimKerisel}></ResultQsol>
                       <hr></hr>
-                      <h3>Meyerhof (1976)</h3>
+                      <h3>Meyerhof (1945)</h3>
                       <ResultQsol result={QsolWTDimMeyerhof}></ResultQsol>
                       <hr></hr>
-                      <h3>Compilación Pérez Guerra-Carrillo (1981)</h3>
+                      <h3>Compilación de Pedro Carrillo (2008)</h3>
                       <ResultQsol result={QsolWTDimPGC}></ResultQsol>
                     </div>
                   </div>
@@ -728,15 +728,15 @@ export default function Run() {
                     <h3 className={styles.titulo}>Resultados</h3>
                     <hr></hr>
                     <h3 className={styles.method}>
-                      Caquot y Kerisel (1961) (Solución Gráfica)
+                      Caquot y Kerisel (1954) (Solución Gráfica)
                     </h3>
                     <div className={styles.cont}>
                       <ResultQsol result={CKLenIterQsol}></ResultQsol>
                       <hr></hr>
-                      <h3>Meyerhof (1976)</h3>
+                      <h3>Meyerhof (1945)</h3>
                       <ResultQsol result={MeyerhofLenIterQsol1}></ResultQsol>
                       <hr></hr>
-                      <h3>Compilación Pérez Guerra-Carrillo (1981)</h3>
+                      <h3>Compilación de Pedro Carrillo (2008)</h3>
                       <ResultQsol result={PGCLenIterQsol}></ResultQsol>
                     </div>
                   </div>
@@ -755,15 +755,15 @@ export default function Run() {
                     <h3 className={styles.titulo}>Resultados</h3>
                     <hr></hr>
                     <h3 className={styles.method}>
-                      Caquot y Kerisel (1961) (Solución Gráfica)
+                      Caquot y Kerisel (1954) (Solución Gráfica)
                     </h3>
                     <div className={styles.cont}>
                       <ResultQsol result={CKDiamIterQsol}></ResultQsol>
                       <hr></hr>
-                      <h3>Meyerhof (1976)</h3>
+                      <h3>Meyerhof (1945)</h3>
                       <ResultQsol result={MeyerhofDiamIterQsol1}></ResultQsol>
                       <hr></hr>
-                      <h3>Compilación Pérez Guerra-Carrillo (1981)</h3>
+                      <h3>Compilación de Pedro Carrillo (2008)</h3>
                       <ResultQsol result={PGCDiameIterQsol}></ResultQsol>
                     </div>
                   </div>
@@ -787,7 +787,7 @@ export default function Run() {
                     <h3 className={styles.titulo}>Resultados</h3>
                     <hr></hr>
                     <h3 className={styles.method}>
-                      Compilación Pérez Guerra-Carrillo (1981) (Solución
+                      Compilación de Pedro Carrillo (2008) (Solución
                       Gráfica)
                     </h3>
                     <div className={styles.cont}>
@@ -809,7 +809,7 @@ export default function Run() {
                     <h3 className={styles.titulo}>Resultados</h3>
                     <hr></hr>
                     <h3 className={styles.method}>
-                      Compilación Pérez Guerra-Carrillo (1981) (Solución
+                      Compilación de Pedro Carrillo (2008) (Solución
                       Gráfica)
                     </h3>
                     <div className={styles.cont}>
@@ -831,7 +831,7 @@ export default function Run() {
                     <h3 className={styles.titulo}>Resultados</h3>
                     <hr></hr>
                     <h3 className={styles.method}>
-                      Compilación Pérez Guerra-Carrillo (1981) (Solución
+                      Compilación de Pedro Carrillo (2008) (Solución
                       Gráfica)
                     </h3>
                     <div className={styles.cont}>
@@ -853,7 +853,7 @@ export default function Run() {
                     <h3 className={styles.titulo}>Resultados</h3>
                     <hr></hr>
                     <h3 className={styles.method}>
-                      Compilación Pérez Guerra-Carrillo (1981) (Solución
+                      Compilación de Pedro Carrillo (2008) (Solución
                       Gráfica)
                     </h3>
                     <div className={styles.cont}>
@@ -875,7 +875,7 @@ export default function Run() {
                     <h3 className={styles.titulo}>Resultados</h3>
                     <hr></hr>
                     <h3 className={styles.method}>
-                      Compilación Pérez Guerra-Carrillo (1981) (Solución
+                      Compilación de Pedro Carrillo (2008) (Solución
                       Gráfica)
                     </h3>
                     <div className={styles.cont}>
@@ -897,7 +897,7 @@ export default function Run() {
                     <h3 className={styles.titulo}>Resultados</h3>
                     <hr></hr>
                     <h3 className={styles.method}>
-                      Compilación Pérez Guerra-Carrillo (1981) (Solución
+                      Compilación de Pedro Carrillo (2008) (Solución
                       Gráfica)
                     </h3>
                     <div className={styles.cont}>
@@ -924,17 +924,17 @@ export default function Run() {
                     <h3 className={styles.titulo}>Resultados</h3>
                     <hr></hr>
                     <h3 className={styles.method}>
-                      Compilación Pérez Guerra-Carrillo (1981) (Solución
+                      Compilación de Pedro Carrillo (2008) (Solución
                       Gráfica)
                     </h3>
                     <div className={styles.cont}>
                       <Result result={bothDimPGC}></Result>
                       <hr></hr>
-                      <h3>Meyerhof (1976)</h3>
+                      <h3>Meyerhof (1945)</h3>
                       <Result result={bothDimMeyer}></Result>
 
                       <hr></hr>
-                      <h3>Caquot y Kerisel (1961)</h3>
+                      <h3>Caquot y Kerisel (1954)</h3>
                       <Result result={bothDimKerisel}></Result>
                     </div>
                   </div>
@@ -953,16 +953,16 @@ export default function Run() {
                     <h3 className={styles.titulo}>Resultados</h3>
                     <hr></hr>
                     <h3 className={styles.method}>
-                      Compilación Pérez Guerra-Carrillo (1981) (Solución
+                      Compilación de Pedro Carrillo (2008) (Solución
                       Gráfica)
                     </h3>
                     <div className={styles.cont}>
                       <Result result={diamIterPGC}></Result>
                       <hr></hr>
-                      <h3>Meyerhof (1976)</h3>
+                      <h3>Meyerhof (1945)</h3>
                       <Result result={diamIterMeyer}></Result>
                       <hr></hr>
-                      <h3>Caquot y Kerisel (1961)</h3>
+                      <h3>Caquot y Kerisel (1954)</h3>
 
                       <Result result={diamIterKerisel}></Result>
                     </div>
@@ -982,16 +982,16 @@ export default function Run() {
                     <h3 className={styles.titulo}>Resultados</h3>
                     <hr></hr>
                     <h3 className={styles.method}>
-                      Compilación Pérez Guerra-Carrillo (1981) (Solución
+                      Compilación de Pedro Carrillo (2008) (Solución
                       Gráfica)
                     </h3>
                     <div className={styles.cont}>
                       <Result result={lenIterPGC}></Result>
                       <hr></hr>
-                      <h3>Meyerhof (1976)</h3>
+                      <h3>Meyerhof (1945)</h3>
                       <Result result={lenIterMeyer}></Result>
                       <hr></hr>
-                      <h3>Caquot y Kerisel (1961)</h3>
+                      <h3>Caquot y Kerisel (1954)</h3>
                       <Result result={lenIterKerisel}></Result>
                     </div>
                   </div>
@@ -1010,16 +1010,16 @@ export default function Run() {
                     <h3 className={styles.titulo}>Resultados</h3>
                     <hr></hr>
                     <h3 className={styles.method}>
-                      Compilación Pérez Guerra-Carrillo (1981) (Solución
+                      Compilación de Pedro Carrillo (2008) (Solución
                       Gráfica)
                     </h3>
                     <div className={styles.cont}>
                       <ResultQsol result={QsolWTDimPGC}></ResultQsol>
                       <hr></hr>
-                      <h3>Meyerhof (1976)</h3>
+                      <h3>Meyerhof (1945)</h3>
                       <ResultQsol result={QsolWTDimMeyerhof}></ResultQsol>
                       <hr></hr>
-                      <h3>Caquot y Kerisel (1961)</h3>
+                      <h3>Caquot y Kerisel (1954)</h3>
                       <ResultQsol result={QsolWTDimKerisel}></ResultQsol>
                     </div>
                   </div>
@@ -1038,16 +1038,16 @@ export default function Run() {
                     <h3 className={styles.titulo}>Resultados</h3>
                     <hr></hr>
                     <h3 className={styles.method}>
-                      Compilación Pérez Guerra-Carrillo (1981) (Solución
+                      Compilación de Pedro Carrillo (2008) (Solución
                       Gráfica)
                     </h3>
                     <div className={styles.cont}>
                       <ResultQsol result={PGCLenIterQsol}></ResultQsol>
                       <hr></hr>
-                      <h3>Meyerhof (1976)</h3>
+                      <h3>Meyerhof (1945)</h3>
                       <ResultQsol result={MeyerhofLenIterQsol1}></ResultQsol>
                       <hr></hr>
-                      <h3>Caquot y Kerisel (1961)</h3>
+                      <h3>Caquot y Kerisel (1954)</h3>
                       <ResultQsol result={CKLenIterQsol}></ResultQsol>
                     </div>
                   </div>
@@ -1066,16 +1066,16 @@ export default function Run() {
                     <h3 className={styles.titulo}>Resultados</h3>
                     <hr></hr>
                     <h3 className={styles.method}>
-                      Compilación Pérez Guerra-Carrillo (1981) (Solución
+                      Compilación de Pedro Carrillo (2008) (Solución
                       Gráfica)
                     </h3>
                     <div className={styles.cont}>
                       <ResultQsol result={PGCDiameIterQsol}></ResultQsol>
                       <hr></hr>
-                      <h3>Meyerhof (1976)</h3>
+                      <h3>Meyerhof (1945)</h3>
                       <ResultQsol result={MeyerhofDiamIterQsol1}></ResultQsol>
                       <hr></hr>
-                      <h3>Caquot y Kerisel (1961)</h3>
+                      <h3>Caquot y Kerisel (1954)</h3>
                       <ResultQsol result={CKDiamIterQsol}></ResultQsol>
                     </div>
                   </div>

@@ -387,7 +387,7 @@ export default function Profile() {
               <label className={styles.espesor}>Espesor</label>
             </li>
             <li>
-              <label className={styles.ngp}>Ngp</label>
+              <label className={styles.ngp}>Nspt</label>
             </li>
             <li>
               <label className={styles.peso}>γ</label>

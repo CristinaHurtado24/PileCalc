@@ -10,7 +10,6 @@ import {
 import { CaquotKeriselBothDim, roundToCero } from "./CaquotKerisel";
 
 import { MethodPGC } from "./PerezGuerraCarrillo";
-import { ResultSetDependencies, re, round } from "mathjs";
 
 const minVolume = (list) => {
   try {
@@ -256,6 +255,7 @@ export const MeyerhofQsolWth = (
 ) => {
   let results = [];
   try {
+    const result = [{ Qadm: 0, Qest: 0, Qsol: 0, diam: 0, length: 0, vol: 0 }];
     const Fc = parseFloat(materials["fc"]);
     const Fy = parseFloat(materials["fy"]);
     const Qsol = parseFloat(solicitation["QsolValue"]);
@@ -290,6 +290,12 @@ export const MeyerhofQsolWth = (
           diam += 10;
         }
       }
+      if (results.length == 0) {
+        result[0]["Qadm"] =
+          "No se pudo encontrar un pilote que cumpla con la solicitación";
+        result.push(result);
+        return result;
+      }
 
       let min = minVolume(results);
       return min;
@@ -322,6 +328,12 @@ export const MeyerhofQsolWth = (
         } else {
           diam += 10;
         }
+      }
+      if (results.length == 0) {
+        result[0]["Qadm"] =
+          "No se pudo encontrar un pilote que cumpla con la solicitación";
+        result.push(result);
+        return result;
       }
 
       let min = minVolume(results);
@@ -371,6 +383,11 @@ export const MeyerhofLenIterAux = (
         }
         length += 100;
       }
+      if (Qadm < Qsol) {
+        result[0]["Qadm"] =
+          "No se pudo encontrar un pilote que cumpla con la solicitación";
+        return result;
+      }
       let Qestr = Qestructural(diam, Fc, Fy, 1);
       let volume = Volume(diam, lengthR, 1);
       result[0]["vol"] = volume;
@@ -399,6 +416,11 @@ export const MeyerhofLenIterAux = (
           lengthR = length;
         }
         length += 100;
+      }
+      if (Qadm < Qsol) {
+        result[0]["Qadm"] =
+          "No se pudo encontrar un pilote que cumpla con la solicitación";
+        return result;
       }
       let Qestr = Qestructural(diam, Fc, Fy, 1000);
       let volume = Volume(diam / 100, lengthR / 100, 1);
@@ -430,7 +452,7 @@ export const MeyerhofDiamIterQsol = (
     const Fc = parseFloat(materials["fc"]);
     const Fy = parseFloat(materials["fy"]);
     const Qsol = parseFloat(solicitation["QsolValue"]);
-    let results = [];
+
     let Qadm = 0;
     let diam = 60;
     let diamR = 0;
@@ -457,6 +479,11 @@ export const MeyerhofDiamIterQsol = (
           diam += 10;
         }
       }
+      if (Qadm < Qsol) {
+        result[0]["Qadm"] =
+          "No se pudo encontrar un pilote que cumpla con la solicitación";
+        return result;
+      }
       let Qestr = Qestructural(diamR, Fc, Fy, 1);
       let volume = Volume(diamR, length, 1);
       result[0]["vol"] = volume;
@@ -465,9 +492,8 @@ export const MeyerhofDiamIterQsol = (
       result[0]["length"] = length;
       result[0]["Qest"] = Qestr;
       result[0]["Qsol"] = Qsol;
-      results.push(result);
-      let min = minVolume(results);
-      return min;
+
+      return result;
     }
     if (
       units["unitValue"] === "2" &&
@@ -492,6 +518,11 @@ export const MeyerhofDiamIterQsol = (
           diam += 10;
         }
       }
+      if (Qadm < Qsol) {
+        result[0]["Qadm"] =
+          "No se pudo encontrar un pilote que cumpla con la solicitación";
+        return result;
+      }
       let Qestr = Qestructural(diamR, Fc, Fy, 1000);
       let volume = Volume(diamR / 100, length / 100, 1);
       result[0]["vol"] = volume;
@@ -501,11 +532,9 @@ export const MeyerhofDiamIterQsol = (
       result[0]["Qest"] = Qestr;
       result[0]["Qsol"] = Qsol;
 
-      results.push(result);
-      let min = minVolume(results);
-      return min;
+      return result;
     } else {
-      return results;
+      return result;
     }
   } catch (error) {
     console.log(error);
@@ -548,6 +577,11 @@ export const MeyerhofLenIterQsol = (
           lengthR = length;
         }
         length += 100;
+      }
+      if (Qadm < Qsol) {
+        result[0]["Qadm"] =
+          "No se pudo encontrar un pilote que cumpla con la solicitación";
+        return result;
       }
       let Qestr = Qestructural(diam, Fc, Fy, 1);
       let volume = Volume(diam, lengthR, 1);
@@ -705,7 +739,7 @@ export const CaquotKeriselDiamIter = (
       result[0]["length"] = length * 100;
       result[0]["Qest"] = Qestr;
       result[0]["diam"] = diamR;
-      result[0]["Qadm"] = Qadm * 1000;
+      result[0]["Qadm"] = roundToCero(Qadm * 1000);
       return result;
     }
     if (
@@ -739,7 +773,7 @@ export const CaquotKeriselDiamIter = (
       result[0]["diam"] = diamR / 100;
       result[0]["length"] = length;
       result[0]["Qest"] = Qestr;
-      result[0]["Qadm"] = Qadm;
+      result[0]["Qadm"] = roundToCero(Qadm);
       return result;
     }
   } catch (error) {
@@ -785,7 +819,7 @@ export const CaquotKeriselLenIter = (
       result[0]["Qest"] = Qestr;
       result[0]["diam"] = diam * 100;
       result[0]["length"] = lengthR * 100;
-      result[0]["Qadm"] = Qadm * 1000;
+      result[0]["Qadm"] = roundToCero(Qadm * 1000);
       return result;
     }
     if (
@@ -811,7 +845,7 @@ export const CaquotKeriselLenIter = (
       result[0]["Qest"] = Qestr;
       result[0]["diam"] = diam;
       result[0]["length"] = lengthR;
-      result[0]["Qadm"] = Qadm;
+      result[0]["Qadm"] = roundToCero(Qadm);
       return result;
     }
   } catch (error) {
@@ -827,6 +861,7 @@ export const CaquotKeriselQsolWth = (
   materials,
   solicitation
 ) => {
+  const result = [{ Qadm: 0, Qest: 0, Qsol: 0, diam: 0, length: 0, vol: 0 }];
   let results = [];
   try {
     const Fc = parseFloat(materials["fc"]);
@@ -862,6 +897,12 @@ export const CaquotKeriselQsolWth = (
           diam += 10;
         }
       }
+      if (results.length == 0) {
+        result[0]["Qadm"] =
+          "No se pudo encontrar un pilote que cumpla con la solicitación";
+        result.push(result);
+        return result;
+      }
 
       let min = minVolume(results);
       return min;
@@ -896,7 +937,12 @@ export const CaquotKeriselQsolWth = (
           diam += 10;
         }
       }
-
+      if (results.length == 0) {
+        result[0]["Qadm"] =
+          "No se pudo encontrar un pilote que cumpla con la solicitación";
+        result.push(result);
+        return result;
+      }
       let min = minVolume(results);
       return min;
     }
@@ -944,6 +990,11 @@ export const CaquotKeriselLenIterAux = (
         }
         length += 1;
       }
+      if (Qadm < Qsol) {
+        result[0]["Qadm"] =
+          "No se pudo encontrar un pilote que cumpla con la solicitación";
+        return result;
+      }
       let Qestr = Qestructural(diam * 100, Fc, Fy, 1);
       let volume = Volume(diam * 100, lengthR * 100, 1);
       result[0]["vol"] = volume;
@@ -951,7 +1002,8 @@ export const CaquotKeriselLenIterAux = (
       result[0]["Qsol"] = Qsol;
       result[0]["diam"] = diam * 100;
       result[0]["length"] = lengthR * 100;
-      result[0]["Qadm"] = Qadm;
+      result[0]["Qadm"] = roundToCero(Qadm);
+
       return result;
     }
     if (
@@ -973,6 +1025,11 @@ export const CaquotKeriselLenIterAux = (
         }
         length += 1;
       }
+      if (Qadm < Qsol) {
+        result[0]["Qadm"] =
+          "No se pudo encontrar un pilote que cumpla con la solicitación";
+        return result;
+      }
       let Qestr = Qestructural(diam * 100, Fc, Fy, 1000);
       let volume = Volume(diam, lengthR, 1);
       result[0]["vol"] = volume;
@@ -980,7 +1037,7 @@ export const CaquotKeriselLenIterAux = (
       result[0]["Qsol"] = Qsol;
       result[0]["diam"] = diam;
       result[0]["length"] = lengthR;
-      result[0]["Qadm"] = Qadm;
+      result[0]["Qadm"] = roundToCero(Qadm);
       return result;
     }
   } catch (error) {
@@ -1039,6 +1096,11 @@ export const CaquotKeriselDiamIterQsol = (
           diam += 10;
         }
       }
+      if (Qadm < Qsol) {
+        result[0]["Qadm"] =
+          "No se pudo encontrar un pilote que cumpla con la solicitación";
+        return result;
+      }
 
       let Qestr = Qestructural(diam, Fc, Fy, 1);
       let volume = Volume(diam, length, 1);
@@ -1047,7 +1109,7 @@ export const CaquotKeriselDiamIterQsol = (
       result[0]["Qsol"] = Qsol;
       result[0]["diam"] = diamR;
       result[0]["length"] = length;
-      result[0]["Qadm"] = Qadm;
+      result[0]["Qadm"] = roundToCero(Qadm);
       return result;
     }
 
@@ -1074,6 +1136,11 @@ export const CaquotKeriselDiamIterQsol = (
         }
       }
 
+      if (Qadm < Qsol) {
+        result[0]["Qadm"] =
+          "No se pudo encontrar un pilote que cumpla con la solicitación";
+        return result;
+      }
       let Qestr = Qestructural(diamR, Fc, Fy, 1000);
       let volume = Volume(diamR / 100, length, 1);
       result[0]["vol"] = volume;
@@ -1081,7 +1148,7 @@ export const CaquotKeriselDiamIterQsol = (
       result[0]["length"] = length;
       result[0]["Qsol"] = Qsol;
       result[0]["Qest"] = Qestr;
-      result[0]["Qadm"] = Qadm;
+      result[0]["Qadm"] = roundToCero(Qadm);
       return result;
     }
   } catch (error) {
@@ -1128,6 +1195,11 @@ export const CaquotKeriselLenIterQsol = (
         }
         length += 1;
       }
+      if (Qadm < Qsol) {
+        result[0]["Qadm"] =
+          "No se pudo encontrar un pilote que cumpla con la solicitación";
+        return result;
+      }
       let Qestr = Qestructural(diam * 100, Fc, Fy, 1);
       let volume = Volume(diam * 100, lengthR * 100, 1);
       result[0]["vol"] = volume;
@@ -1135,7 +1207,7 @@ export const CaquotKeriselLenIterQsol = (
       result[0]["Qsol"] = Qsol;
       result[0]["diam"] = diam * 100;
       result[0]["length"] = lengthR * 100;
-      result[0]["Qadm"] = Qadm;
+      result[0]["Qadm"] = roundToCero(Qadm);
       return result;
     }
     if (
@@ -1157,6 +1229,11 @@ export const CaquotKeriselLenIterQsol = (
         }
         length += 1;
       }
+      if (Qadm < Qsol) {
+        result[0]["Qadm"] =
+          "No se pudo encontrar un pilote que cumpla con la solicitación";
+        return result;
+      }
       let Qestr = Qestructural(diam * 100, Fc, Fy, 1000);
       let volume = Volume(diam, lengthR, 1);
       result[0]["vol"] = volume;
@@ -1164,7 +1241,7 @@ export const CaquotKeriselLenIterQsol = (
       result[0]["Qsol"] = Qsol;
       result[0]["diam"] = diam;
       result[0]["length"] = lengthR;
-      result[0]["Qadm"] = Qadm;
+      result[0]["Qadm"] = roundToCero(Qadm);
       return result;
     }
   } catch (error) {
@@ -1393,6 +1470,7 @@ export const PGCQsolWth = (
 ) => {
   let results = [];
   try {
+    const result = [{ Qadm: 0, Qest: 0, Qsol: 0, diam: 0, length: 0, vol: 0 }];
     const Fc = parseFloat(materials["fc"]);
     const Fy = parseFloat(materials["fy"]);
     const Qsol = parseFloat(solicitation["QsolValue"]);
@@ -1426,6 +1504,12 @@ export const PGCQsolWth = (
         } else {
           diam += 10;
         }
+      }
+      if (results.length == 0) {
+        result[0]["Qadm"] =
+          "No se pudo encontrar un pilote que cumpla con la solicitación";
+        result.push(result);
+        return result;
       }
 
       let min = minVolume(results);
@@ -1461,6 +1545,12 @@ export const PGCQsolWth = (
         } else {
           diam += 10;
         }
+      }
+      if (results.length == 0) {
+        result[0]["Qadm"] =
+          "No se pudo encontrar un pilote que cumpla con la solicitación";
+        result.push(result);
+        return result;
       }
 
       let min = minVolume(results);
@@ -1510,6 +1600,11 @@ export const PGCLenIterAux = (
         }
         length += 1;
       }
+      if (Qadm < Qsol) {
+        result[0]["Qadm"] =
+          "No se pudo encontrar un pilote que cumpla con la solicitación";
+        return result;
+      }
 
       let Qestr = Qestructural(diam * 100, Fc, Fy, 1);
       let volume = Volume(diam * 100, lengthR * 100, 1);
@@ -1539,6 +1634,11 @@ export const PGCLenIterAux = (
           lengthR = length;
         }
         length += 1;
+      }
+      if (Qadm < Qsol) {
+        result[0]["Qadm"] =
+          "No se pudo encontrar un pilote que cumpla con la solicitación";
+        return result;
       }
       let Qestr = Qestructural(diam * 100, Fc, Fy, 1000);
       let volume = Volume(diam, lengthR, 1);
@@ -1595,8 +1695,10 @@ export const PGCLenInterQsol = (
         length += 1;
       }
 
-      if (Qsol > Qadm) {
-        return "No se encontró una longitud que cumpla con la solicitación de carga ingresada. Por favor modifique el diámetro del pilote";
+      if (Qadm < Qsol) {
+        result[0]["Qadm"] =
+          "No se pudo encontrar un pilote que cumpla con la solicitación";
+        return result;
       }
 
       let Qestr = Qestructural(diam * 100, Fc, Fy, 1);
@@ -1629,8 +1731,10 @@ export const PGCLenInterQsol = (
         length += 1;
       }
 
-      if (Qsol > Qadm) {
-        return "No se encontró una longitud que cumpla con la solicitación de carga ingresada. Por favor modifique el diámetro del pilote";
+      if (Qadm < Qsol) {
+        result[0]["Qadm"] =
+          "No se pudo encontrar un pilote que cumpla con la solicitación";
+        return result;
       }
       let Qestr = Qestructural(diam * 100, Fc, Fy, 1000);
       let volume = Volume(diam, lengthR, 1);
@@ -1693,6 +1797,12 @@ export const PGCDiamIterQsol = (
           diam += 10;
         }
       }
+      if (results.length == 0) {
+        result[0]["Qadm"] =
+          "No se pudo encontrar un pilote que cumpla con la solicitación";
+        result.push(result);
+        return result;
+      }
       let min = minVolume(results);
       return min;
     }
@@ -1725,6 +1835,12 @@ export const PGCDiamIterQsol = (
         } else {
           diam += 10;
         }
+      }
+      if (results.length == 0) {
+        result[0]["Qadm"] =
+          "No se pudo encontrar un pilote que cumpla con la solicitación";
+        result.push(result);
+        return result;
       }
       let min = minVolume(results);
       return min;

@@ -1,4 +1,4 @@
-import { sqrt, tan, pow, sin, unit, pi } from "mathjs";
+import { sqrt, tan, pow, sin, unit, pi, count } from "mathjs";
 import { roundToCero } from "./CaquotKerisel";
 
 //Valores de N*c y N*q
@@ -248,6 +248,8 @@ export const MethodPGC = (
       verticalStresses = vertEfectStress(soilList, 0, factor1, factor4);
     }
 
+    console.log("verticalStresses: " + verticalStresses);
+
     let Fsrelleno = 0;
     let counter = 0;
 
@@ -300,6 +302,8 @@ export const MethodPGC = (
             alpha = 1;
           }
 
+          
+
           Fs += verticalStresses[counter] * b * K + alpha * cohesion;
 
           FsLim += N160values[counter] * 0.1;
@@ -335,16 +339,17 @@ export const MethodPGC = (
     if (Fs > FsLim) {
       Fs = FsLim;
     }
+    console.log("Fs: " + Fs);
 
     if (diameter >= 1.2) {
       Qp = (120 / (diameter * 100)) * Qp;
     }
-
+    
     let ap = pi * pow(diameter / 2, 2);
     let alat = 2 * pi * (diameter / 2) * Lefect;
-
+    
     Qadm = (Qp * ap) / 3 + (Fs * alat) / 2;
-
+    
     return roundToCero(Qadm * factor4);
   } catch (error) {
     console.log(error);

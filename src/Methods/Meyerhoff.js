@@ -78,6 +78,7 @@ export const MeyerhoffKgfLen = (diam, length, soilList) => {
       return "No se cumple la condición de que la longitud efectiva del pilote debe ser mayor o igual a 6 veces el diámetro del pilote. \n Por favor, modifique las dimensiones ingresadas.";
     }
     Nf = NfAcum / estratosF;
+    console.log("Nf: " + Nf);
 
     if (Np == 0) {
       Np = parseFloat(soilList[estatrosTot - 1]["ngp"]);
@@ -88,12 +89,16 @@ export const MeyerhoffKgfLen = (diam, length, soilList) => {
     if (Np > 30) {
       Np = 30;
     }
+    console.log("Np: " + Np);
 
     Qp = (4 * Np * (pi * pow(diam / 2, 2))) / 3;
 
     Qf = (4 * Nf * ((2 * pi * (diam / 2) * Lefect) / 200)) / 3;
     Fn = 2 * pi * (diam / 2) * fricc * Lrelleno;
 
+    console.log("Qp: " + Qp);
+    console.log("Qf: " + Qf);
+    console.log("Fn: " + Fn);
     Qadm = Qp + Qf - Fn;
     Qadm = roundToCero(Qadm);
 

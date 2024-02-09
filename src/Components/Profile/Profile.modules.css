@@ -64,22 +64,28 @@
 }
 .type{
     margin-left: 1.6em;
+    margin-right: .3em;
+    font-size: 15px;
 }
 .espesor{
     margin-right: -1em;
+    font-size: 15px;
 }
 
 .cohesion{
     margin-left: .6em;
+    font-size: 15px;
 }
 
 .phi {
-    margin-left: .4em;
+    margin-left: .5em;
+    font-size: 15px;
 }
 
 
 .ngp{
-    margin-left: -.7em;
+    margin-left: -.3em;
+    font-size: 15px;
 }
 
 .units{
@@ -94,7 +100,7 @@
 } 
 
 .uEspesor{
-    margin-left: 16em;
+    margin-left: 15.7em;
     font-size: 12px;
 }
 
