@@ -11,6 +11,61 @@ import { CaquotKeriselBothDim, roundToCero } from "./CaquotKerisel";
 
 import { MethodPGC } from "./PerezGuerraCarrillo";
 
+const checkProfileCM = (soilList) => {
+  var boolCm = false;
+  var boolM = false;
+  console.log("afuera");
+  for (let i = 0; i < soilList.length; i++) {
+    console.log(soilList[i]["espesor"].length);
+    if (soilList[i]["espesor"].length > 2) {
+      console.log("entra");
+      //Si es mayor que 2 entonces se trata de cm
+      boolCm = true;
+    } else {
+      boolM = true;
+    }
+  }
+
+  if (!boolM) {
+    return true;
+  }
+  if (boolM) {
+    return false;
+  }
+};
+
+const checkProfileM = (soilList) => {
+  var boolCm = false;
+  var boolM = false;
+  console.log("afuera");
+  for (let i = 0; i < soilList.length; i++) {
+    console.log(soilList[i]["espesor"].length);
+    if (soilList[i]["espesor"].length > 2) {
+      console.log("entra");
+      //Si es mayor que 2 entonces se trata de cm
+      boolCm = true;
+    } else {
+      boolM = true;
+    }
+  }
+
+  if (!boolCm) {
+    return true;
+  }
+  if (boolCm) {
+    return false;
+  }
+};
+
+const checkLen = (l) => {
+  if ((l = !"" && l.length > 2)) {
+    console.log("entra en checkLen");
+    //Se trata de cm
+    return true;
+  } else {
+    return false;
+  }
+};
 const minVolume = (list) => {
   try {
     let min;
@@ -64,6 +119,13 @@ export const MeyerhoffBothDim = (soilList, units, dimensions, materials) => {
       result[0]["diam"] = diam;
       result[0]["length"] = length;
       result[0]["Qest"] = Qestr;
+
+      if (!checkLen(dimensions["lengthValue"]) || !checkProfileCM(soilList)) {
+        result[0]["Qadm"] =
+          "Error en el cálculo, verifique las dimensiones ingresadas";
+        return result;
+      }
+
       return result;
     }
 
@@ -89,6 +151,12 @@ export const MeyerhoffBothDim = (soilList, units, dimensions, materials) => {
       result[0]["diam"] = diam / 100;
       result[0]["length"] = length / 100;
       result[0]["Qest"] = Qestr;
+
+      if (checkLen(dimensions["lengthValue"]) || !checkProfileM(soilList)) {
+        result[0]["Qadm"] =
+          "Error en el cálculo, verifique las dimensiones ingresadas";
+        return result;
+      }
       return result;
     }
   } catch (e) {
@@ -136,6 +204,11 @@ export const MeyerhofDiamIter = (soilList, units, dimensions, materials) => {
       result[0]["diam"] = diamR;
       result[0]["length"] = length;
       result[0]["Qest"] = Qestr;
+      if (!checkLen(dimensions["lengthValue"]) || !checkProfileCM(soilList)) {
+        result[0]["Qadm"] =
+          "Error en el cálculo, verifique las dimensiones ingresadas";
+        return result;
+      }
       return result;
     }
     if (
@@ -168,6 +241,11 @@ export const MeyerhofDiamIter = (soilList, units, dimensions, materials) => {
       result[0]["diam"] = diamR / 100;
       result[0]["length"] = length / 100;
       result[0]["Qest"] = Qestr;
+      if (checkLen(dimensions["lengthValue"]) || !checkProfileM(soilList)) {
+        result[0]["Qadm"] =
+          "Error en el cálculo, verifique las dimensiones ingresadas";
+        return result;
+      }
       return result;
     } else {
       return result;
@@ -211,6 +289,11 @@ export const MeyerhofLenIter = (soilList, units, dimensions, materials) => {
       result[0]["Qadm"] = Qadm;
       result[0]["diam"] = diam;
       result[0]["Qest"] = Qestr;
+      if (!checkProfileCM(soilList)) {
+        result[0]["Qadm"] =
+          "Error en el cálculo, verifique las dimensiones ingresadas";
+        return result;
+      }
       return result;
     }
     if (
@@ -236,6 +319,11 @@ export const MeyerhofLenIter = (soilList, units, dimensions, materials) => {
       result[0]["Qadm"] = Qadm;
       result[0]["diam"] = diam / 100;
       result[0]["Qest"] = Qestr;
+      if (!checkProfileM(soilList)) {
+        result[0]["Qadm"] =
+          "Error en el cálculo, verifique las dimensiones ingresadas";
+        return result;
+      }
       return result;
     } else {
       return result;
@@ -267,6 +355,11 @@ export const MeyerhofQsolWth = (
       !dimensions["lengthIter"] &&
       dimensions["withoutDim"]
     ) {
+      if (!checkProfileCM(soilList)) {
+        result[0]["Qadm"] =
+          "Error en el cálculo, verifique las dimensiones ingresadas";
+        return result;
+      }
       while (diam <= 200) {
         let res = MeyerhofLenIterAux(
           soilList,
@@ -306,6 +399,11 @@ export const MeyerhofQsolWth = (
       !dimensions["lengthIter"] &&
       dimensions["withoutDim"]
     ) {
+      if (!checkProfileM(soilList)) {
+        result[0]["Qadm"] =
+          "Error en el cálculo, verifique las dimensiones ingresadas";
+        return result;
+      }
       while (diam <= 200) {
         let res = MeyerhofLenIterAux(
           soilList,
@@ -463,6 +561,11 @@ export const MeyerhofDiamIterQsol = (
       !dimensions["lengthIter"] &&
       !dimensions["withoutDim"]
     ) {
+      if (!checkProfileCM(soilList)) {
+        result[0]["Qadm"] =
+          "Error en el cálculo, verifique las dimensiones ingresadas";
+        return result;
+      }
       const length = parseFloat(dimensions["lengthValue"]);
       while (diam <= 200 && Qsol > Qadm) {
         let Qres = MeyerhoffKgf(diam, length, soilList);
@@ -501,6 +604,11 @@ export const MeyerhofDiamIterQsol = (
       !dimensions["lengthIter"] &&
       !dimensions["withoutDim"]
     ) {
+      if (!checkProfileM(soilList)) {
+        result[0]["Qadm"] =
+          "Error en el cálculo, verifique las dimensiones ingresadas";
+        return result;
+      }
       const length = parseFloat(dimensions["lengthValue"]) * 100;
 
       while (diam <= 200 && Qsol > Qadm) {
@@ -568,6 +676,11 @@ export const MeyerhofLenIterQsol = (
       for (let i = 0; i < soilList.length; i++) {
         Lestratos += parseFloat(soilList[i]["espesor"]);
       }
+      if (!checkProfileCM(soilList)) {
+        result[0]["Qadm"] =
+          "Error en el cálculo, verifique las dimensiones ingresadas";
+        return result;
+      }
       const diam = parseFloat(dimensions["diamValue"]);
       while (Lestratos > length && Qsol > Qadm && length <= 30 * diam) {
         let Qres = 0;
@@ -601,6 +714,11 @@ export const MeyerhofLenIterQsol = (
     ) {
       for (let i = 0; i < soilList.length; i++) {
         Lestratos += parseFloat(soilList[i]["espesor"]);
+      }
+      if (!checkProfileM(soilList)) {
+        result[0]["Qadm"] =
+          "Error en el cálculo, verifique las dimensiones ingresadas";
+        return result;
       }
       const diam = parseFloat(dimensions["diamValue"]) * 100;
       while (Lestratos * 100 > length && Qsol > Qadm && length <= 30 * diam) {
@@ -656,6 +774,11 @@ export const CaquotKeriselBD = (soilList, units, dimensions, materials) => {
       result[0]["diam"] = diam * 100;
       result[0]["length"] = length * 100;
       result[0]["Qest"] = Qestr;
+      if (!checkLen(dimensions["lengthValue"]) || !checkProfileCM(soilList)) {
+        result[0]["Qadm"] =
+          "Error en el cálculo, verifique las dimensiones ingresadas";
+        return result;
+      }
       return result;
     }
 
@@ -680,6 +803,11 @@ export const CaquotKeriselBD = (soilList, units, dimensions, materials) => {
       result[0]["diam"] = diam;
       result[0]["length"] = length;
       result[0]["Qest"] = Qestr;
+      if (checkLen(dimensions["lengthValue"]) || !checkProfileM(soilList)) {
+        result[0]["Qadm"] =
+          "Error en el cálculo, verifique las dimensiones ingresadas";
+        return result;
+      }
       return result;
     }
   } catch (error) {
@@ -740,6 +868,11 @@ export const CaquotKeriselDiamIter = (
       result[0]["Qest"] = Qestr;
       result[0]["diam"] = diamR;
       result[0]["Qadm"] = roundToCero(Qadm * 1000);
+      if (!checkLen(dimensions["lengthValue"]) || !checkProfileCM(soilList)) {
+        result[0]["Qadm"] =
+          "Error en el cálculo, verifique las dimensiones ingresadas";
+        return result;
+      }
       return result;
     }
     if (
@@ -773,6 +906,11 @@ export const CaquotKeriselDiamIter = (
       result[0]["diam"] = diamR / 100;
       result[0]["length"] = length;
       result[0]["Qest"] = Qestr;
+      if (checkLen(dimensions["lengthValue"]) || !checkProfileM(soilList)) {
+        result[0]["Qadm"] =
+          "Error en el cálculo, verifique las dimensiones ingresadas";
+        return result;
+      }
       result[0]["Qadm"] = roundToCero(Qadm);
       return result;
     }
@@ -802,6 +940,11 @@ export const CaquotKeriselLenIter = (
       dimensions["lengthIter"] &&
       !dimensions["withoutDim"]
     ) {
+      if (!checkProfileCM(soilList)) {
+        result[0]["Qadm"] =
+          "Error en el cálculo, verifique las dimensiones ingresadas";
+        return result;
+      }
       const diam = parseFloat(dimensions["diamValue"]) / 100;
       while (length <= 30 * diam) {
         let Qres = 0;
@@ -828,6 +971,11 @@ export const CaquotKeriselLenIter = (
       dimensions["lengthIter"] &&
       !dimensions["withoutDim"]
     ) {
+      if (!checkProfileM(soilList)) {
+        result[0]["Qadm"] =
+          "Error en el cálculo, verifique las dimensiones ingresadas";
+        return result;
+      }
       const diam = parseFloat(dimensions["diamValue"]);
       while (length <= 30 * diam) {
         let Qres = 0;
@@ -874,6 +1022,11 @@ export const CaquotKeriselQsolWth = (
       !dimensions["lengthIter"] &&
       dimensions["withoutDim"]
     ) {
+      if (!checkProfileCM(soilList)) {
+        result[0]["Qadm"] =
+          "Error en el cálculo, verifique las dimensiones ingresadas";
+        return result;
+      }
       while (diam <= 200) {
         let res = CaquotKeriselLenIterAux(
           soilList,
@@ -914,6 +1067,11 @@ export const CaquotKeriselQsolWth = (
       !dimensions["lengthIter"] &&
       dimensions["withoutDim"]
     ) {
+      if (!checkProfileM(soilList)) {
+        result[0]["Qadm"] =
+          "Error en el cálculo, verifique las dimensiones ingresadas";
+        return result;
+      }
       while (diam <= 200) {
         let res = CaquotKeriselLenIterAux(
           soilList,
@@ -1070,6 +1228,11 @@ export const CaquotKeriselDiamIterQsol = (
       !dimensions["lengthIter"] &&
       !dimensions["withoutDim"]
     ) {
+      if (!checkLen(dimensions["lengthValue"]) || !checkProfileCM(soilList)) {
+        result[0]["Qadm"] =
+          "Error en el cálculo, verifique las dimensiones ingresadas";
+        return result;
+      }
       for (let i = 0; i < soilList.length; i++) {
         Lestratos += parseFloat(soilList[i]["espesor"]);
       }
@@ -1119,6 +1282,11 @@ export const CaquotKeriselDiamIterQsol = (
       !dimensions["lengthIter"] &&
       !dimensions["withoutDim"]
     ) {
+      if (checkLen(dimensions["lengthValue"]) || !checkProfileM(soilList)) {
+        result[0]["Qadm"] =
+          "Error en el cálculo, verifique las dimensiones ingresadas";
+        return result;
+      }
       while (diam <= 200 && Qsol > Qadm) {
         let Qres = CaquotKeriselBothDim(diam / 100, length, soilList, 1, 1, 1);
 
@@ -1181,6 +1349,11 @@ export const CaquotKeriselLenIterQsol = (
       dimensions["lengthIter"] &&
       !dimensions["withoutDim"]
     ) {
+      if (!checkProfileCM(soilList)) {
+        result[0]["Qadm"] =
+          "Error en el cálculo, verifique las dimensiones ingresadas";
+        return result;
+      }
       for (let i = 0; i < soilList.length; i++) {
         Lestratos += parseFloat(soilList[i]["espesor"]);
       }
@@ -1216,6 +1389,11 @@ export const CaquotKeriselLenIterQsol = (
       dimensions["lengthIter"] &&
       !dimensions["withoutDim"]
     ) {
+      if (!checkProfileM(soilList)) {
+        result[0]["Qadm"] =
+          "Error en el cálculo, verifique las dimensiones ingresadas";
+        return result;
+      }
       for (let i = 0; i < soilList.length; i++) {
         Lestratos += parseFloat(soilList[i]["espesor"]);
       }
@@ -1277,6 +1455,11 @@ export const PGCBothDim = (soilList, units, dimensions, materials, NF) => {
       result[0]["diam"] = diam * 100;
       result[0]["length"] = length * 100;
       result[0]["Qest"] = Qestr;
+      if (!checkLen(dimensions["lengthValue"]) || !checkProfileCM(soilList)) {
+        result[0]["Qadm"] =
+          "Error en el cálculo, verifique las dimensiones ingresadas";
+        return result;
+      }
       return result;
     }
     if (
@@ -1300,6 +1483,11 @@ export const PGCBothDim = (soilList, units, dimensions, materials, NF) => {
       result[0]["diam"] = diam;
       result[0]["length"] = length;
       result[0]["Qest"] = Qestr;
+      if (checkLen(dimensions["lengthValue"]) || !checkProfileM(soilList)) {
+        result[0]["Qadm"] =
+          "Error en el cálculo, verifique las dimensiones ingresadas";
+        return result;
+      }
       return result;
     }
   } catch (error) {
@@ -1323,6 +1511,11 @@ export const PGCLenIter = (soilList, units, dimensions, materials, NF) => {
       dimensions["lengthIter"] &&
       !dimensions["withoutDim"]
     ) {
+      if (!checkProfileCM(soilList)) {
+        result[0]["Qadm"] =
+          "Error en el cálculo, verifique las dimensiones ingresadas";
+        return result;
+      }
       const diam = parseFloat(dimensions["diamValue"]) / 100;
       while (length <= 30 * diam) {
         let Qres = 0;
@@ -1350,6 +1543,11 @@ export const PGCLenIter = (soilList, units, dimensions, materials, NF) => {
       dimensions["lengthIter"] &&
       !dimensions["withoutDim"]
     ) {
+      if (!checkProfileM(soilList)) {
+        result[0]["Qadm"] =
+          "Error en el cálculo, verifique las dimensiones ingresadas";
+        return result;
+      }
       const diam = parseFloat(dimensions["diamValue"]);
       while (length <= 30 * diam) {
         let Qres = 0;
@@ -1418,6 +1616,11 @@ export const PGCDiamIter = (soilList, units, dimensions, materials, NF) => {
       result[0]["Qest"] = Qestr;
       result[0]["diam"] = diamR;
       result[0]["Qadm"] = Qadm;
+      if (!checkLen(dimensions["lengthValue"]) || !checkProfileCM(soilList)) {
+        result[0]["Qadm"] =
+          "Error en el cálculo, verifique las dimensiones ingresadas";
+        return result;
+      }
       return result;
     }
     if (
@@ -1452,6 +1655,11 @@ export const PGCDiamIter = (soilList, units, dimensions, materials, NF) => {
       result[0]["length"] = length;
       result[0]["Qest"] = Qestr;
       result[0]["Qadm"] = Qadm;
+      if (checkLen(dimensions["lengthValue"]) || !checkProfileM(soilList)) {
+        result[0]["Qadm"] =
+          "Error en el cálculo, verifique las dimensiones ingresadas";
+        return result;
+      }
       return result;
     }
   } catch (error) {
@@ -1481,6 +1689,11 @@ export const PGCQsolWth = (
       !dimensions["lengthIter"] &&
       dimensions["withoutDim"]
     ) {
+      if (!checkProfileCM(soilList)) {
+        result[0]["Qadm"] =
+          "Error en el cálculo, verifique las dimensiones ingresadas";
+        return result;
+      }
       while (diam <= 200) {
         let res = PGCLenIterAux(
           soilList,
@@ -1522,6 +1735,11 @@ export const PGCQsolWth = (
       !dimensions["lengthIter"] &&
       dimensions["withoutDim"]
     ) {
+      if (!checkProfileM(soilList)) {
+        result[0]["Qadm"] =
+          "Error en el cálculo, verifique las dimensiones ingresadas";
+        return result;
+      }
       while (diam <= 200) {
         let res = PGCLenIterAux(
           soilList,
@@ -1681,6 +1899,11 @@ export const PGCLenInterQsol = (
       dimensions["lengthIter"] &&
       !dimensions["withoutDim"]
     ) {
+      if (!checkProfileCM(soilList)) {
+        result[0]["Qadm"] =
+          "Error en el cálculo, verifique las dimensiones ingresadas";
+        return result;
+      }
       for (let i = 0; i < soilList.length; i++) {
         Lestratos += parseFloat(soilList[i]["espesor"]);
       }
@@ -1717,6 +1940,11 @@ export const PGCLenInterQsol = (
       dimensions["lengthIter"] &&
       !dimensions["withoutDim"]
     ) {
+      if (!checkProfileM(soilList)) {
+        result[0]["Qadm"] =
+          "Error en el cálculo, verifique las dimensiones ingresadas";
+        return result;
+      }
       for (let i = 0; i < soilList.length; i++) {
         Lestratos += parseFloat(soilList[i]["espesor"]);
       }
@@ -1774,6 +2002,11 @@ export const PGCDiamIterQsol = (
       !dimensions["lengthIter"] &&
       !dimensions["withoutDim"]
     ) {
+      if (!checkLen(dimensions["lengthValue"]) || !checkProfileCM(soilList)) {
+        result[0]["Qadm"] =
+          "Error en el cálculo, verifique las dimensiones ingresadas";
+        return result;
+      }
       const length = parseFloat(dimensions["lengthValue"]) / 100;
       while (diam <= 200 && Qsol > Qadm) {
         Qadm = MethodPGC(soilList, diam / 100, length, NF, 100, 1000, 10);
@@ -1813,6 +2046,11 @@ export const PGCDiamIterQsol = (
       !dimensions["lengthIter"] &&
       !dimensions["withoutDim"]
     ) {
+      if (checkLen(dimensions["lengthValue"]) || !checkProfileM(soilList)) {
+        result[0]["Qadm"] =
+          "Error en el cálculo, verifique las dimensiones ingresadas";
+        return result;
+      }
       const length = parseFloat(dimensions["lengthValue"]);
       while (diam <= 200 && Qsol > Qadm) {
         Qadm = MethodPGC(soilList, diam / 100, length, NF, 1, 1, 1);

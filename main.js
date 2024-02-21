@@ -74,55 +74,8 @@ ipcMain.on("open-file", (event) => {
 // Definir la plantilla del menú
 const template = [
   {
-    label: "Archivo",
+    label: "View",
     submenu: [
-      {
-        label: "Nuevo Proyecto",
-        accelerator: "CmdOrCtrl+N",
-      },
-    ],
-  },
-  {
-    label: "Editar",
-    submenu: [
-      {
-        label: "Deshacer",
-        role: "undo",
-      },
-      {
-        label: "Rehacer",
-        role: "redo",
-      },
-      { type: "separator" },
-      {
-        label: "Cortar",
-        role: "cut",
-      },
-      {
-        label: "Copiar",
-        role: "copy",
-      },
-      {
-        label: "Pegar",
-        role: "paste",
-      },
-      {
-        label: "Seleccionar todo",
-        role: "selectAll",
-      },
-    ],
-  },
-  {
-    label: "Desarrollador",
-    submenu: [
-      {
-        label: "Herramientas de Desarrollo",
-        accelerator: "CmdOrCtrl+Shift+I",
-        click: () => {
-          win.webContents.toggleDevTools(); // Alternar las herramientas de desarrollo
-        },
-      },
-      { type: "separator" },
       {
         label: "Recargar",
         accelerator: "CmdOrCtrl+R", // Atajo de teclado para recargar la ventana

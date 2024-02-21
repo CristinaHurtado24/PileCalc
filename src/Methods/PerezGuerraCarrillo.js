@@ -248,7 +248,6 @@ export const MethodPGC = (
       verticalStresses = vertEfectStress(soilList, 0, factor1, factor4);
     }
 
-    console.log("verticalStresses: " + verticalStresses);
 
     let Fsrelleno = 0;
     let counter = 0;

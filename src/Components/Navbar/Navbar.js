@@ -30,6 +30,7 @@ export default function Navbar() {
     setCheckedState(updatedCheckedState);
   };
 
+
   return (
     <div className={styles.container}>
       <div className={styles.navContainer}>
