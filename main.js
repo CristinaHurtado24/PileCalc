@@ -77,6 +77,12 @@ const template = [
     label: "View",
     submenu: [
       {
+        label: "developer",
+        click: () => {
+          win.webContents.openDevTools();
+        },
+      },
+      {
         label: "Recargar",
         accelerator: "CmdOrCtrl+R", // Atajo de teclado para recargar la ventana
         click: () => {

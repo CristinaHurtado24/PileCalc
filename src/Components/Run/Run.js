@@ -33,6 +33,22 @@ import {
   CaquotKeriselLenIterQsol,
 } from "../../Methods/Methods";
 
+const checkError = (result) => {
+  try {
+    if (typeof result[0]["Qadm"] === "string") {
+      return true;
+    } else if (result[0]["Qadm"] == 0) {
+      result[0]["Qadm"] =
+        "No se encontraron soluciones. Intente con otro material o dimensiones.";
+      return true;
+    } else {
+      return false;
+    }
+  } catch (error) {
+    console.log(error);
+    return true;
+  }
+};
 export default function Run() {
   const { projectValues, updateProjectValues } = useContext(ProjectContext);
   const bothDimMeyer = MeyerhoffBothDim(
@@ -196,10 +212,13 @@ export default function Run() {
                       <Result result={bothDimMeyer}></Result>
                     </div>
                   </div>
-
-                  <div className={graphicStyles.container}>
-                    <Scene result={bothDimMeyer}></Scene>
-                  </div>
+                  {checkError(bothDimMeyer) ? (
+                    <div></div>
+                  ) : (
+                    <div className={graphicStyles.container}>
+                      <Scene result={bothDimMeyer}></Scene>
+                    </div>
+                  )}
                 </div>
               )}
             {projectValues.dimensions["diamIter"] &&
@@ -218,9 +237,13 @@ export default function Run() {
                     </div>
                   </div>
 
-                  <div className={graphicStyles.container}>
-                    <Scene result={diamIterMeyer}></Scene>
-                  </div>
+                  {checkError(diamIterMeyer) ? (
+                    <div></div>
+                  ) : (
+                    <div className={graphicStyles.container}>
+                      <Scene result={diamIterMeyer}></Scene>
+                    </div>
+                  )}
                 </div>
               )}
             {!projectValues.dimensions["diamIter"] &&
@@ -239,9 +262,13 @@ export default function Run() {
                     </div>
                   </div>
 
-                  <div className={graphicStyles.container}>
-                    <Scene result={lenIterMeyer}></Scene>
-                  </div>
+                  {checkError(lenIterMeyer) ? (
+                    <div></div>
+                  ) : (
+                    <div className={graphicStyles.container}>
+                      <Scene result={lenIterMeyer}></Scene>
+                    </div>
+                  )}
                 </div>
               )}
             {!projectValues.dimensions["diamIter"] &&
@@ -260,9 +287,13 @@ export default function Run() {
                     </div>
                   </div>
 
-                  <div className={graphicStyles.container}>
-                    <Scene result={QsolWTDimMeyerhof}></Scene>
-                  </div>
+                  {checkError(QsolWTDimMeyerhof) ? (
+                    <div></div>
+                  ) : (
+                    <div className={graphicStyles.container}>
+                      <Scene result={QsolWTDimMeyerhof}></Scene>
+                    </div>
+                  )}
                 </div>
               )}
             {!projectValues.dimensions["diamIter"] &&
@@ -280,10 +311,13 @@ export default function Run() {
                       <ResultQsol result={MeyerhofLenIterQsol1}></ResultQsol>
                     </div>
                   </div>
-
-                  <div className={graphicStyles.container}>
-                    <Scene result={MeyerhofLenIterQsol1}></Scene>
-                  </div>
+                  {checkError(MeyerhofLenIterQsol1) ? (
+                    <div></div>
+                  ) : (
+                    <div className={graphicStyles.container}>
+                      <Scene result={MeyerhofLenIterQsol1}></Scene>
+                    </div>
+                  )}
                 </div>
               )}
             {projectValues.dimensions["diamIter"] &&
@@ -302,9 +336,13 @@ export default function Run() {
                     </div>
                   </div>
 
-                  <div className={graphicStyles.container}>
-                    <Scene result={MeyerhofDiamIterQsol1}></Scene>
-                  </div>
+                  {checkError(MeyerhofDiamIterQsol1) ? (
+                    <div></div>
+                  ) : (
+                    <div className={graphicStyles.container}>
+                      <Scene result={MeyerhofDiamIterQsol1}></Scene>
+                    </div>
+                  )}
                 </div>
               )}
           </div>
@@ -333,10 +371,13 @@ export default function Run() {
                       <Result result={bothDimPGC}></Result>
                     </div>
                   </div>
-
-                  <div className={graphicStyles.container}>
-                    <Scene result={bothDimMeyer}></Scene>
-                  </div>
+                  {checkError(bothDimMeyer) ? (
+                    <div></div>
+                  ) : (
+                    <div className={graphicStyles.container}>
+                      <Scene result={bothDimMeyer}></Scene>
+                    </div>
+                  )}
                 </div>
               )}
             {projectValues.dimensions["diamIter"] &&
@@ -361,9 +402,13 @@ export default function Run() {
                     </div>
                   </div>
 
-                  <div className={graphicStyles.container}>
-                    <Scene result={diamIterMeyer}></Scene>
-                  </div>
+                  {checkError(diamIterMeyer) ? (
+                    <div></div>
+                  ) : (
+                    <div className={graphicStyles.container}>
+                      <Scene result={diamIterMeyer}></Scene>
+                    </div>
+                  )}
                 </div>
               )}
             {!projectValues.dimensions["diamIter"] &&
@@ -387,10 +432,13 @@ export default function Run() {
                       <Result result={lenIterPGC}></Result>
                     </div>
                   </div>
-
-                  <div className={graphicStyles.container}>
-                    <Scene result={lenIterMeyer}></Scene>
-                  </div>
+                  {checkError(lenIterMeyer) ? (
+                    <div></div>
+                  ) : (
+                    <div className={graphicStyles.container}>
+                      <Scene result={lenIterMeyer}></Scene>
+                    </div>
+                  )}
                 </div>
               )}
             {!projectValues.dimensions["diamIter"] &&
@@ -414,10 +462,13 @@ export default function Run() {
                       <ResultQsol result={QsolWTDimPGC}></ResultQsol>
                     </div>
                   </div>
-
-                  <div className={graphicStyles.container}>
-                    <Scene result={QsolWTDimMeyerhof}></Scene>
-                  </div>
+                  {checkError(QsolWTDimMeyerhof) ? (
+                    <div></div>
+                  ) : (
+                    <div className={graphicStyles.container}>
+                      <Scene result={QsolWTDimMeyerhof}></Scene>
+                    </div>
+                  )}
                 </div>
               )}
             {!projectValues.dimensions["diamIter"] &&
@@ -441,10 +492,13 @@ export default function Run() {
                       <ResultQsol result={PGCLenIterQsol}></ResultQsol>
                     </div>
                   </div>
-
-                  <div className={graphicStyles.container}>
-                    <Scene result={MeyerhofLenIterQsol1}></Scene>
-                  </div>
+                  {checkError(<Scene result={MeyerhofLenIterQsol1}></Scene>) ? (
+                    <div></div>
+                  ) : (
+                    <div className={graphicStyles.container}>
+                      <Scene result={MeyerhofLenIterQsol1}></Scene>
+                    </div>
+                  )}
                 </div>
               )}
             {projectValues.dimensions["diamIter"] &&
@@ -468,10 +522,13 @@ export default function Run() {
                       <ResultQsol result={PGCDiameIterQsol}></ResultQsol>
                     </div>
                   </div>
-
-                  <div className={graphicStyles.container}>
-                    <Scene result={MeyerhofDiamIterQsol1}></Scene>
-                  </div>
+                  {checkError(MeyerhofDiamIterQsol1) ? (
+                    <div></div>
+                  ) : (
+                    <div className={graphicStyles.container}>
+                      <Scene result={MeyerhofDiamIterQsol1}></Scene>
+                    </div>
+                  )}
                 </div>
               )}
           </div>
@@ -494,10 +551,13 @@ export default function Run() {
                       <Result result={bothDimKerisel}></Result>
                     </div>
                   </div>
-
-                  <div className={graphicStyles.container}>
-                    <Scene result={bothDimKerisel}></Scene>
-                  </div>
+                  {checkError(bothDimKerisel) ? (
+                    <div></div>
+                  ) : (
+                    <div className={graphicStyles.container}>
+                      <Scene result={bothDimKerisel}></Scene>
+                    </div>
+                  )}
                 </div>
               )}
             {projectValues.dimensions["diamIter"] &&
@@ -515,10 +575,13 @@ export default function Run() {
                       <Result result={diamIterKerisel}></Result>
                     </div>
                   </div>
-
-                  <div className={graphicStyles.container}>
-                    <Scene result={diamIterKerisel}></Scene>
-                  </div>
+                  {checkError(diamIterKerisel) ? (
+                    <div></div>
+                  ) : (
+                    <div className={graphicStyles.container}>
+                      <Scene result={diamIterKerisel}></Scene>
+                    </div>
+                  )}
                 </div>
               )}
             {!projectValues.dimensions["diamIter"] &&
@@ -536,10 +599,13 @@ export default function Run() {
                       <Result result={lenIterKerisel}></Result>
                     </div>
                   </div>
-
-                  <div className={graphicStyles.container}>
-                    <Scene result={lenIterKerisel}></Scene>
-                  </div>
+                  {checkError(lenIterKerisel) ? (
+                    <div></div>
+                  ) : (
+                    <div className={graphicStyles.container}>
+                      <Scene result={lenIterKerisel}></Scene>
+                    </div>
+                  )}
                 </div>
               )}
             {!projectValues.dimensions["diamIter"] &&
@@ -557,10 +623,13 @@ export default function Run() {
                       <ResultQsol result={QsolWTDimKerisel}></ResultQsol>
                     </div>
                   </div>
-
-                  <div className={graphicStyles.container}>
-                    <Scene result={QsolWTDimKerisel}></Scene>
-                  </div>
+                  {checkError(QsolWTDimKerisel) ? (
+                    <div></div>
+                  ) : (
+                    <div className={graphicStyles.container}>
+                      <Scene result={QsolWTDimKerisel}></Scene>
+                    </div>
+                  )}
                 </div>
               )}
             {!projectValues.dimensions["diamIter"] &&
@@ -578,10 +647,13 @@ export default function Run() {
                       <ResultQsol result={CKLenIterQsol}></ResultQsol>
                     </div>
                   </div>
-
-                  <div className={graphicStyles.container}>
-                    <Scene result={CKLenIterQsol}></Scene>
-                  </div>
+                  {checkError(CKLenIterQsol) ? (
+                    <div></div>
+                  ) : (
+                    <div className={graphicStyles.container}>
+                      <Scene result={CKLenIterQsol}></Scene>
+                    </div>
+                  )}
                 </div>
               )}
             {projectValues.dimensions["diamIter"] &&
@@ -599,10 +671,13 @@ export default function Run() {
                       <ResultQsol result={CKDiamIterQsol}></ResultQsol>
                     </div>
                   </div>
-
-                  <div className={graphicStyles.container}>
-                    <Scene result={CKDiamIterQsol}></Scene>
-                  </div>
+                  {checkError(CKDiamIterQsol) ? (
+                    <div></div>
+                  ) : (
+                    <div className={graphicStyles.container}>
+                      <Scene result={CKDiamIterQsol}></Scene>
+                    </div>
+                  )}
                 </div>
               )}
           </div>
@@ -632,10 +707,13 @@ export default function Run() {
                       <Result result={bothDimPGC}></Result>
                     </div>
                   </div>
-
-                  <div className={graphicStyles.container}>
-                    <Scene result={bothDimKerisel}></Scene>
-                  </div>
+                  {checkError(bothDimKerisel) ? (
+                    <div></div>
+                  ) : (
+                    <div className={graphicStyles.container}>
+                      <Scene result={bothDimKerisel}></Scene>
+                    </div>
+                  )}
                 </div>
               )}
             {projectValues.dimensions["diamIter"] &&
@@ -659,10 +737,13 @@ export default function Run() {
                       <Result result={diamIterPGC}></Result>
                     </div>
                   </div>
-
-                  <div className={graphicStyles.container}>
-                    <Scene result={diamIterKerisel}></Scene>
-                  </div>
+                  {checkError(diamIterKerisel) ? (
+                    <div></div>
+                  ) : (
+                    <div className={graphicStyles.container}>
+                      <Scene result={diamIterKerisel}></Scene>
+                    </div>
+                  )}
                 </div>
               )}
             {!projectValues.dimensions["diamIter"] &&
@@ -686,10 +767,13 @@ export default function Run() {
                       <Result result={lenIterPGC}></Result>
                     </div>
                   </div>
-
-                  <div className={graphicStyles.container}>
-                    <Scene result={lenIterKerisel}></Scene>
-                  </div>
+                  {checkError(lenIterKerisel) ? (
+                    <div></div>
+                  ) : (
+                    <div className={graphicStyles.container}>
+                      <Scene result={lenIterKerisel}></Scene>
+                    </div>
+                  )}
                 </div>
               )}
             {!projectValues.dimensions["diamIter"] &&
@@ -713,10 +797,13 @@ export default function Run() {
                       <ResultQsol result={QsolWTDimPGC}></ResultQsol>
                     </div>
                   </div>
-
-                  <div className={graphicStyles.container}>
-                    <Scene result={QsolWTDimKerisel}></Scene>
-                  </div>
+                  {checkError(QsolWTDimKerisel) ? (
+                    <div></div>
+                  ) : (
+                    <div className={graphicStyles.container}>
+                      <Scene result={QsolWTDimKerisel}></Scene>
+                    </div>
+                  )}
                 </div>
               )}
             {!projectValues.dimensions["diamIter"] &&
@@ -740,10 +827,13 @@ export default function Run() {
                       <ResultQsol result={PGCLenIterQsol}></ResultQsol>
                     </div>
                   </div>
-
-                  <div className={graphicStyles.container}>
-                    <Scene result={CKLenIterQsol}></Scene>
-                  </div>
+                  {checkError(CKLenIterQsol) ? (
+                    <div></div>
+                  ) : (
+                    <div className={graphicStyles.container}>
+                      <Scene result={CKLenIterQsol}></Scene>
+                    </div>
+                  )}
                 </div>
               )}
             {projectValues.dimensions["diamIter"] &&
@@ -767,10 +857,13 @@ export default function Run() {
                       <ResultQsol result={PGCDiameIterQsol}></ResultQsol>
                     </div>
                   </div>
-
-                  <div className={graphicStyles.container}>
-                    <Scene result={CKDiamIterQsol}></Scene>
-                  </div>
+                  {checkError(CKDiamIterQsol) ? (
+                    <div></div>
+                  ) : (
+                    <div className={graphicStyles.container}>
+                      <Scene result={CKDiamIterQsol}></Scene>
+                    </div>
+                  )}
                 </div>
               )}
           </div>
@@ -787,17 +880,19 @@ export default function Run() {
                     <h3 className={styles.titulo}>Resultados</h3>
                     <hr></hr>
                     <h3 className={styles.method}>
-                      Compilación de Pedro Carrillo (2008) (Solución
-                      Gráfica)
+                      Compilación de Pedro Carrillo (2008) (Solución Gráfica)
                     </h3>
                     <div className={styles.cont}>
                       <Result result={bothDimPGC}></Result>
                     </div>
                   </div>
-
-                  <div className={graphicStyles.container}>
-                    <Scene result={bothDimPGC}></Scene>
-                  </div>
+                  {checkError(bothDimPGC) ? (
+                    <div></div>
+                  ) : (
+                    <div className={graphicStyles.container}>
+                      <Scene result={bothDimPGC}></Scene>
+                    </div>
+                  )}
                 </div>
               )}
             {projectValues.dimensions["diamIter"] &&
@@ -809,17 +904,19 @@ export default function Run() {
                     <h3 className={styles.titulo}>Resultados</h3>
                     <hr></hr>
                     <h3 className={styles.method}>
-                      Compilación de Pedro Carrillo (2008) (Solución
-                      Gráfica)
+                      Compilación de Pedro Carrillo (2008) (Solución Gráfica)
                     </h3>
                     <div className={styles.cont}>
                       <Result result={diamIterPGC}></Result>
                     </div>
                   </div>
-
-                  <div className={graphicStyles.container}>
-                    <Scene result={diamIterPGC}></Scene>
-                  </div>
+                  {checkError(diamIterPGC) ? (
+                    <div></div>
+                  ) : (
+                    <div className={graphicStyles.container}>
+                      <Scene result={diamIterPGC}></Scene>
+                    </div>
+                  )}
                 </div>
               )}
             {!projectValues.dimensions["diamIter"] &&
@@ -831,17 +928,19 @@ export default function Run() {
                     <h3 className={styles.titulo}>Resultados</h3>
                     <hr></hr>
                     <h3 className={styles.method}>
-                      Compilación de Pedro Carrillo (2008) (Solución
-                      Gráfica)
+                      Compilación de Pedro Carrillo (2008) (Solución Gráfica)
                     </h3>
                     <div className={styles.cont}>
                       <Result result={lenIterPGC}></Result>
                     </div>
                   </div>
-
-                  <div className={graphicStyles.container}>
-                    <Scene result={lenIterPGC}></Scene>
-                  </div>
+                  {checkError(lenIterPGC) ? (
+                    <div></div>
+                  ) : (
+                    <div className={graphicStyles.container}>
+                      <Scene result={lenIterPGC}></Scene>
+                    </div>
+                  )}
                 </div>
               )}
             {!projectValues.dimensions["diamIter"] &&
@@ -853,17 +952,19 @@ export default function Run() {
                     <h3 className={styles.titulo}>Resultados</h3>
                     <hr></hr>
                     <h3 className={styles.method}>
-                      Compilación de Pedro Carrillo (2008) (Solución
-                      Gráfica)
+                      Compilación de Pedro Carrillo (2008) (Solución Gráfica)
                     </h3>
                     <div className={styles.cont}>
                       <ResultQsol result={QsolWTDimPGC}></ResultQsol>
                     </div>
                   </div>
-
-                  <div className={graphicStyles.container}>
-                    <Scene result={QsolWTDimPGC}></Scene>
-                  </div>
+                  {checkError(QsolWTDimPGC) ? (
+                    <div></div>
+                  ) : (
+                    <div className={graphicStyles.container}>
+                      <Scene result={QsolWTDimPGC}></Scene>
+                    </div>
+                  )}
                 </div>
               )}
             {!projectValues.dimensions["diamIter"] &&
@@ -875,17 +976,19 @@ export default function Run() {
                     <h3 className={styles.titulo}>Resultados</h3>
                     <hr></hr>
                     <h3 className={styles.method}>
-                      Compilación de Pedro Carrillo (2008) (Solución
-                      Gráfica)
+                      Compilación de Pedro Carrillo (2008) (Solución Gráfica)
                     </h3>
                     <div className={styles.cont}>
                       <ResultQsol result={PGCLenIterQsol}></ResultQsol>
                     </div>
                   </div>
-
-                  <div className={graphicStyles.container}>
-                    <Scene result={PGCLenIterQsol}></Scene>
-                  </div>
+                  {checkError(PGCLenIterQsol) ? (
+                    <div></div>
+                  ) : (
+                    <div className={graphicStyles.container}>
+                      <Scene result={PGCLenIterQsol}></Scene>
+                    </div>
+                  )}
                 </div>
               )}
             {projectValues.dimensions["diamIter"] &&
@@ -897,17 +1000,19 @@ export default function Run() {
                     <h3 className={styles.titulo}>Resultados</h3>
                     <hr></hr>
                     <h3 className={styles.method}>
-                      Compilación de Pedro Carrillo (2008) (Solución
-                      Gráfica)
+                      Compilación de Pedro Carrillo (2008) (Solución Gráfica)
                     </h3>
                     <div className={styles.cont}>
                       <ResultQsol result={PGCDiameIterQsol}></ResultQsol>
                     </div>
                   </div>
-
-                  <div className={graphicStyles.container}>
-                    <Scene result={PGCDiameIterQsol}></Scene>
-                  </div>
+                  {checkError(PGCDiameIterQsol) ? (
+                    <div></div>
+                  ) : (
+                    <div className={graphicStyles.container}>
+                      <Scene result={PGCDiameIterQsol}></Scene>
+                    </div>
+                  )}
                 </div>
               )}
           </div>
@@ -924,8 +1029,7 @@ export default function Run() {
                     <h3 className={styles.titulo}>Resultados</h3>
                     <hr></hr>
                     <h3 className={styles.method}>
-                      Compilación de Pedro Carrillo (2008) (Solución
-                      Gráfica)
+                      Compilación de Pedro Carrillo (2008) (Solución Gráfica)
                     </h3>
                     <div className={styles.cont}>
                       <Result result={bothDimPGC}></Result>
@@ -938,10 +1042,13 @@ export default function Run() {
                       <Result result={bothDimKerisel}></Result>
                     </div>
                   </div>
-
-                  <div className={graphicStyles.container}>
-                    <Scene result={bothDimPGC}></Scene>
-                  </div>
+                  {checkError(bothDimPGC) ? (
+                    <div></div>
+                  ) : (
+                    <div className={graphicStyles.container}>
+                      <Scene result={bothDimPGC}></Scene>
+                    </div>
+                  )}
                 </div>
               )}
             {projectValues.dimensions["diamIter"] &&
@@ -953,8 +1060,7 @@ export default function Run() {
                     <h3 className={styles.titulo}>Resultados</h3>
                     <hr></hr>
                     <h3 className={styles.method}>
-                      Compilación de Pedro Carrillo (2008) (Solución
-                      Gráfica)
+                      Compilación de Pedro Carrillo (2008) (Solución Gráfica)
                     </h3>
                     <div className={styles.cont}>
                       <Result result={diamIterPGC}></Result>
@@ -967,10 +1073,13 @@ export default function Run() {
                       <Result result={diamIterKerisel}></Result>
                     </div>
                   </div>
-
-                  <div className={graphicStyles.container}>
-                    <Scene result={diamIterPGC}></Scene>
-                  </div>
+                  {checkError(diamIterPGC) ? (
+                    <div></div>
+                  ) : (
+                    <div className={graphicStyles.container}>
+                      <Scene result={diamIterPGC}></Scene>
+                    </div>
+                  )}
                 </div>
               )}
             {!projectValues.dimensions["diamIter"] &&
@@ -982,8 +1091,7 @@ export default function Run() {
                     <h3 className={styles.titulo}>Resultados</h3>
                     <hr></hr>
                     <h3 className={styles.method}>
-                      Compilación de Pedro Carrillo (2008) (Solución
-                      Gráfica)
+                      Compilación de Pedro Carrillo (2008) (Solución Gráfica)
                     </h3>
                     <div className={styles.cont}>
                       <Result result={lenIterPGC}></Result>
@@ -995,10 +1103,13 @@ export default function Run() {
                       <Result result={lenIterKerisel}></Result>
                     </div>
                   </div>
-
-                  <div className={graphicStyles.container}>
-                    <Scene result={lenIterPGC}></Scene>
-                  </div>
+                  {checkError(lenIterPGC) ? (
+                    <div></div>
+                  ) : (
+                    <div className={graphicStyles.container}>
+                      <Scene result={lenIterPGC}></Scene>
+                    </div>
+                  )}
                 </div>
               )}
             {!projectValues.dimensions["diamIter"] &&
@@ -1010,8 +1121,7 @@ export default function Run() {
                     <h3 className={styles.titulo}>Resultados</h3>
                     <hr></hr>
                     <h3 className={styles.method}>
-                      Compilación de Pedro Carrillo (2008) (Solución
-                      Gráfica)
+                      Compilación de Pedro Carrillo (2008) (Solución Gráfica)
                     </h3>
                     <div className={styles.cont}>
                       <ResultQsol result={QsolWTDimPGC}></ResultQsol>
@@ -1023,10 +1133,13 @@ export default function Run() {
                       <ResultQsol result={QsolWTDimKerisel}></ResultQsol>
                     </div>
                   </div>
-
-                  <div className={graphicStyles.container}>
-                    <Scene result={QsolWTDimPGC}></Scene>
-                  </div>
+                  {checkError(QsolWTDimPGC) ? (
+                    <div></div>
+                  ) : (
+                    <div className={graphicStyles.container}>
+                      <Scene result={QsolWTDimPGC}></Scene>
+                    </div>
+                  )}
                 </div>
               )}
             {!projectValues.dimensions["diamIter"] &&
@@ -1038,8 +1151,7 @@ export default function Run() {
                     <h3 className={styles.titulo}>Resultados</h3>
                     <hr></hr>
                     <h3 className={styles.method}>
-                      Compilación de Pedro Carrillo (2008) (Solución
-                      Gráfica)
+                      Compilación de Pedro Carrillo (2008) (Solución Gráfica)
                     </h3>
                     <div className={styles.cont}>
                       <ResultQsol result={PGCLenIterQsol}></ResultQsol>
@@ -1051,10 +1163,13 @@ export default function Run() {
                       <ResultQsol result={CKLenIterQsol}></ResultQsol>
                     </div>
                   </div>
-
-                  <div className={graphicStyles.container}>
-                    <Scene result={PGCLenIterQsol}></Scene>
-                  </div>
+                  {checkError(PGCLenIterQsol) ? (
+                    <div></div>
+                  ) : (
+                    <div className={graphicStyles.container}>
+                      <Scene result={PGCLenIterQsol}></Scene>
+                    </div>
+                  )}
                 </div>
               )}
             {projectValues.dimensions["diamIter"] &&
@@ -1066,8 +1181,7 @@ export default function Run() {
                     <h3 className={styles.titulo}>Resultados</h3>
                     <hr></hr>
                     <h3 className={styles.method}>
-                      Compilación de Pedro Carrillo (2008) (Solución
-                      Gráfica)
+                      Compilación de Pedro Carrillo (2008) (Solución Gráfica)
                     </h3>
                     <div className={styles.cont}>
                       <ResultQsol result={PGCDiameIterQsol}></ResultQsol>
@@ -1079,10 +1193,13 @@ export default function Run() {
                       <ResultQsol result={CKDiamIterQsol}></ResultQsol>
                     </div>
                   </div>
-
-                  <div className={graphicStyles.container}>
-                    <Scene result={PGCDiameIterQsol}></Scene>
-                  </div>
+                  {checkError(PGCDiameIterQsol) ? (
+                    <div></div>
+                  ) : (
+                    <div className={graphicStyles.container}>
+                      <Scene result={PGCDiameIterQsol}></Scene>
+                    </div>
+                  )}
                 </div>
               )}
           </div>
