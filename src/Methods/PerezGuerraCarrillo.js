@@ -82,6 +82,7 @@ const N60 = (soilList, conv1) => {
       }
     }
 
+    console.log("N60: " + ArrayN60);
     return ArrayN60;
   } catch (error) {
     console.log(error);
@@ -120,6 +121,7 @@ const vertEfectStress = (soilList, NF, conv1, conv4) => {
       }
     }
 
+    console.log("esfuerzos efectivos: " + stressArray);
     return stressArray;
   } catch (error) {
     console.log(error);
@@ -141,10 +143,34 @@ const N160 = (soilList, NF, conv1, conv4, N60) => {
     }
 
     for (let i = 0; i < N60.length; i++) {
+      console.log("N60 1: " + N60[i]);
       let N160 = N60[i] * sqrt(10 / stress[i]);
       ArrayN160.push(N160);
     }
 
+    console.log("N160: " + ArrayN160);
+    return ArrayN160;
+  } catch (error) {
+    console.log(error);
+    return "Error en la función N160";
+  }
+};
+
+const N160Lim = (soilList, conv1, conv4, N60) => {
+  try {
+    const ArrayN160 = [];
+
+    let stress;
+
+    stress = vertEfectStress(soilList, 0, conv1, conv4);
+
+    for (let i = 0; i < N60.length; i++) {
+      console.log("N60 1: " + N60[i]);
+      let N160 = N60[i] * sqrt(10 / stress[i]);
+      ArrayN160.push(N160);
+    }
+
+    console.log("N160: " + ArrayN160);
     return ArrayN160;
   } catch (error) {
     console.log(error);
@@ -166,6 +192,7 @@ export const MethodPGC = (
     //factor4 es 1000 para kgf/cm3 y 1 para ton/m3
     let N60values = N60(soilList, factor1);
     let N160values = N160(soilList, NF, factor1, factor4, N60values);
+    let N160Limit = N160Lim(soilList, factor1, factor4, N60values);
 
     let Qp = 0;
     let Lefect = 0;
@@ -223,20 +250,36 @@ export const MethodPGC = (
       aux++;
     }
 
-    let densP = parseFloat(soilList[aux - 1]["peso"]) * factor4;
-
-    st = densP * Lc;
+    console.log("Lc: " + Lc);
+    console.log("Lcritica: " + Lcritica);
+    console.log("aux: " + aux);
+    let densP;
+    if (
+      NF["NFStart"] == "" ||
+      NF["NF"] === false ||
+      parseFloat(NF["NFStart"]) > Lc
+    ) {
+      densP = parseFloat(soilList[aux - 1]["peso"]) * factor4;
+      st = densP * Lc;
+      console.log("st no llega NF: " + st);
+    }
+    if (NF["NFStart"] != "" && parseFloat(NF["NFStart"]) < Lc) {
+      let peso = parseFloat(soilList[aux - 1]["peso"]) * factor4;
+      st = peso * Lc - 1 * (Lc - parseFloat(NF["NFStart"]));
+      console.log("st NF: " + st);
+    }
 
     cu = parseFloat(soilList[cont]["cohesion"]) * factor5;
 
     Qp = 9 * cu + st * Nqp;
 
-    let qpmax = N160values[length - 1] * 20;
+    let qpmax = N160Limit[length - 1] * 20;
 
     if (Qp > qpmax) {
       Qp = qpmax;
     }
 
+    console.log("Qp: " + Qp);
     //Capacidad por fuste
 
     let verticalStresses;
@@ -248,7 +291,7 @@ export const MethodPGC = (
       verticalStresses = vertEfectStress(soilList, 0, factor1, factor4);
     }
 
-
+    console.log("vertical stresses FS: " + verticalStresses);
     let Fsrelleno = 0;
     let counter = 0;
 
@@ -273,6 +316,7 @@ export const MethodPGC = (
           if (alpha > 1) {
             alpha = 1;
           }
+
           Fsrelleno += verticalStresses[counter] * b * K + alpha * cohesion;
           espesor = espesor - 1;
           counter++;
@@ -301,11 +345,9 @@ export const MethodPGC = (
             alpha = 1;
           }
 
-          
-
           Fs += verticalStresses[counter] * b * K + alpha * cohesion;
 
-          FsLim += N160values[counter] * 0.1;
+          FsLim += N160Limit[counter] * 0.1;
           espesor = espesor - 1;
           counter++;
         }
@@ -318,11 +360,12 @@ export const MethodPGC = (
         while (espesor > 0 && counter < length) {
           Fs += verticalStresses[counter] * b * K;
 
-          FsLim += N160values[counter] * 0.1;
+          FsLim += N160Limit[counter] * 0.1;
           espesor = espesor - 1;
           counter++;
         }
       }
+      console.log("counter" + counter);
     }
 
     Fs = Fs - Fsrelleno;
@@ -335,20 +378,21 @@ export const MethodPGC = (
       return "No se cumple la condición de que la longitud efectiva del pilote debe ser mayor o igual a 6 veces el diámetro del pilote. \n Por favor, modifique las dimensiones ingresadas.";
     }
 
+    console.log("Fs: " + Fs);
+    console.log("FsLim: " + FsLim);
     if (Fs > FsLim) {
       Fs = FsLim;
     }
-    console.log("Fs: " + Fs);
 
     if (diameter >= 1.2) {
       Qp = (120 / (diameter * 100)) * Qp;
     }
-    
+
     let ap = pi * pow(diameter / 2, 2);
     let alat = 2 * pi * (diameter / 2) * Lefect;
-    
+
     Qadm = (Qp * ap) / 3 + (Fs * alat) / 2;
-    
+
     return roundToCero(Qadm * factor4);
   } catch (error) {
     console.log(error);
