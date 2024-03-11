@@ -83,12 +83,6 @@ const template = [
           win.reload(); // Método para recargar la ventana principal
         },
       },
-      {
-        label: "dev tools",
-        click: () => {
-          win.webContents.openDevTools();
-        },
-      },
     ],
   },
 ];
